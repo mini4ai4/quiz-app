@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Мои Тесты</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1a1a2e;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .app { width: 100%; max-width: 480px; }
+
+  /* ===== ЭКРАН ВЫБОРА ТЕСТА ===== */
+  #screen-home { text-align: center; }
+
+  .logo {
+    font-size: 48px;
+    margin: 30px 0 10px;
+  }
+  .logo-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #e94560;
+    margin-bottom: 6px;
+  }
+  .logo-sub {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 30px;
+  }
+
+  .quiz-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+
+  .quiz-card {
+    background: #16213e;
+    border: 2px solid #0f3460;
+    border-radius: 16px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .quiz-card:hover, .quiz-card:active {
+    border-color: #e94560;
+    background: #1a2a50;
+    transform: scale(1.02);
+  }
+  .quiz-card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .quiz-card-meta { font-size: 13px; color: #888; }
+
+  .empty-state {
+    background: #16213e;
+    border: 2px dashed #333;
+    border-radius: 16px;
+    padding: 40px 20px;
+    color: #555;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ===== КНОПКА ===== */
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: #e94560; color: #fff; }
+  .btn-secondary { background: #16213e; color: #ccc; border: 2px solid #333; margin-top: 10px; }
+
+  /* ===== ЭКРАН ВОПРОСА ===== */
+  #screen-quiz { display: none; }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #16213e;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #e94560;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+  .progress-text { font-size: 13px; color: #aaa; white-space: nowrap; }
+
+  .question-num {
+    font-size: 13px;
+    color: #e94560;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .question-text {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 28px;
+    min-height: 80px;
+  }
+
+  .answers { display: flex; flex-direction: column; gap: 12px; }
+
+  .answer-btn {
+    width: 100%;
+    padding: 16px 18px;
+    border: 2px solid #0f3460;
+    border-radius: 14px;
+    background: #16213e;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .answer-btn:active { transform: scale(0.98); }
+  .answer-btn:hover { border-color: #3a5a9f; background: #1c2a50; }
+
+  .answer-btn.correct {
+    background: #0d6b3a;
+    border-color: #1adb6e;
+    color: #fff;
+  }
+  .answer-btn.wrong {
+    background: #6b1a1a;
+    border-color: #e94560;
+    color: #fff;
+  }
+  .answer-btn.show-correct {
+    background: #0d6b3a;
+    border-color: #1adb6e;
+    opacity: 0.7;
+  }
+  .answer-btn:disabled { cursor: default; }
+
+  .answer-icon {
+    float: right;
+    font-size: 20px;
+    margin-left: 8px;
+  }
+
+  .feedback {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    display: none;
+    line-height: 1.4;
+  }
+  .feedback.correct { background: #0d3a22; color: #1adb6e; border: 1px solid #1adb6e44; }
+  .feedback.wrong { background: #3a0d0d; color: #ff6b6b; border: 1px solid #e9456044; }
+
+  .next-btn {
+    margin-top: 20px;
+    display: none;
+  }
+
+  /* ===== ЭКРАН РЕЗУЛЬТАТА ===== */
+  #screen-result { display: none; text-align: center; }
+
+  .result-emoji { font-size: 72px; margin: 30px 0 16px; }
+  .result-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .result-subtitle { font-size: 16px; color: #aaa; margin-bottom: 30px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: #16213e;
+    border-radius: 14px;
+    padding: 18px 12px;
+  }
+  .stat-num { font-size: 36px; font-weight: 800; }
+  .stat-num.green { color: #1adb6e; }
+  .stat-num.red { color: #e94560; }
+  .stat-num.blue { color: #4da6ff; }
+  .stat-label { font-size: 13px; color: #888; margin-top: 4px; }
+
+  .circle-progress {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 28px;
+  }
+  .circle-progress svg { transform: rotate(-90deg); }
+  .circle-bg { fill: none; stroke: #16213e; stroke-width: 12; }
+  .circle-fill { fill: none; stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+  .circle-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  /* ===== ЭКРАН РАЗБОРА ОШИБОК ===== */
+  #screen-review { display: none; }
+  .review-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #e94560; }
+  .review-item {
+    background: #16213e;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    border-left: 4px solid #e94560;
+  }
+  .review-item.correct-item { border-left-color: #1adb6e; }
+  .review-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+  .review-your { font-size: 14px; color: #e94560; margin-bottom: 4px; }
+  .review-correct { font-size: 14px; color: #1adb6e; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== ГЛАВНЫЙ ЭКРАН ===== -->
+  <div id="screen-home">
+    <div class="logo">🧠</div>
+    <div class="logo-title">Мои Тесты</div>
+    <div class="logo-sub">Практикуйся и запоминай</div>
+
+    <div class="quiz-list" id="quiz-list">
+      <!-- заполняется JS -->
+    </div>
+  </div>
+
+  <!-- ===== ЭКРАН ВОПРОСА ===== -->
+  <div id="screen-quiz">
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text">1 / 10</div>
+    </div>
+    <div class="question-num" id="question-num">Вопрос 1</div>
+    <div class="question-text" id="question-text"></div>
+    <div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn btn-primary next-btn" id="next-btn" onclick="nextQuestion()">Следующий вопрос →</button>
+  </div>
+
+  <!-- ===== ЭКРАН РЕЗУЛЬТАТА ===== -->
+  <div id="screen-result">
+    <div class="result-emoji" id="result-emoji">🎉</div>
+    <div class="result-title" id="result-title">Отличный результат!</div>
+    <div class="result-subtitle" id="result-subtitle"></div>
+
+    <div class="circle-progress">
+      <svg width="130" height="130" viewBox="0 0 130 130">
+        <circle class="circle-bg" cx="65" cy="65" r="54"/>
+        <circle class="circle-fill" id="circle-fill" cx="65" cy="65" r="54"
+          stroke-dasharray="339" stroke-dashoffset="339"/>
+      </svg>
+      <div class="circle-text" id="circle-pct">0%</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num green" id="stat-correct">0</div>
+        <div class="stat-label">Правильных</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num red" id="stat-wrong">0</div>
+        <div class="stat-label">Ошибок</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num blue" id="stat-total">0</div>
+        <div class="stat-label">Всего вопросов</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-pct" style="color:#f0c040">0%</div>
+        <div class="stat-label">Правильных</div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" onclick="showReview()" id="btn-review">📋 Разбор ошибок</button>
+    <button class="btn btn-secondary" onclick="retryQuiz()">🔁 Пройти снова</button>
+    <button class="btn btn-secondary" onclick="goHome()" style="margin-top:10px">🏠 К списку тестов</button>
+  </div>
+
+  <!-- ===== ЭКРАН РАЗБОРА ===== -->
+  <div id="screen-review">
+    <div class="review-title">📋 Разбор ошибок</div>
+    <div id="review-list"></div>
+    <button class="btn btn-secondary" onclick="showResult()" style="margin-top:10px">← Назад к результату</button>
+    <button class="btn btn-secondary" onclick="goHome()" style="margin-top:10px">🏠 К списку тестов</button>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// БАЗА ВОПРОСОВ (заполняется из questions.json)
+// ============================================================
+let allQuizzes = [];
+let currentQuiz = null;
+let currentQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let mistakes = []; // {question, yourAnswer, correctAnswer}
+let answered = false;
+
+// ============================================================
+// ЗАГРУЗКА ДАННЫХ
+// ============================================================
+async function loadQuestions() {
+  try {
+    const r = await fetch('questions.json?t=' + Date.now());
+    const data = await r.json();
+    allQuizzes = data.quizzes || [];
+  } catch(e) {
+    allQuizzes = [];
+  }
+  renderHome();
+}
+
+// ============================================================
+// ГЛАВНЫЙ ЭКРАН
+// ============================================================
+function renderHome() {
+  const list = document.getElementById('quiz-list');
+  if (allQuizzes.length === 0) {
+    list.innerHTML = `<div class="empty-state">
+      📸 Тестов пока нет<br><br>
+      Сфотографируй свои бумажные тесты и отправь мне в Telegram — я добавлю их сюда!
+    </div>`;
+    return;
+  }
+  list.innerHTML = allQuizzes.map((q, i) => `
+    <div class="quiz-card" onclick="startQuiz(${i})">
+      <div class="quiz-card-title">${q.title}</div>
+      <div class="quiz-card-meta">${q.questions.length} вопросов${q.description ? ' · ' + q.description : ''}</div>
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// СТАРТ ТЕСТА
+// ============================================================
+function startQuiz(idx) {
+  currentQuiz = allQuizzes[idx];
+  currentQuestions = shuffle([...currentQuiz.questions]);
+  currentIdx = 0;
+  score = 0;
+  mistakes = [];
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function retryQuiz() {
+  currentQuestions = shuffle([...currentQuiz.questions]);
+  currentIdx = 0;
+  score = 0;
+  mistakes = [];
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+// ============================================================
+// ВОПРОС
+// ============================================================
+function renderQuestion() {
+  answered = false;
+  const q = currentQuestions[currentIdx];
+  const total = currentQuestions.length;
+
+  document.getElementById('progress-fill').style.width = ((currentIdx / total) * 100) + '%';
+  document.getElementById('progress-text').textContent = (currentIdx + 1) + ' / ' + total;
+  document.getElementById('question-num').textContent = 'Вопрос ' + (currentIdx + 1);
+  document.getElementById('question-text').textContent = q.question;
+
+  // Перемешать варианты
+  const opts = shuffle(q.options.map((text, i) => ({ text, correct: i === q.correct })));
+
+  const answersEl = document.getElementById('answers');
+  answersEl.innerHTML = opts.map((opt, i) => `
+    <button class="answer-btn" onclick="selectAnswer(this, ${opt.correct})">
+      ${opt.text}
+    </button>
+  `).join('');
+
+  document.getElementById('feedback').style.display = 'none';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('next-btn').style.display = 'none';
+}
+
+function selectAnswer(btn, isCorrect) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestions[currentIdx];
+  const allBtns = document.querySelectorAll('.answer-btn');
+
+  // Отключить все кнопки
+  allBtns.forEach(b => b.disabled = true);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    btn.innerHTML += '<span class="answer-icon">✅</span>';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    btn.innerHTML += '<span class="answer-icon">❌</span>';
+    // Подсветить правильный
+    allBtns.forEach(b => {
+      if (b !== btn) {
+        // Найти правильную кнопку
+        const text = b.textContent.trim();
+        const correctText = q.options[q.correct];
+        if (text === correctText) {
+          b.classList.add('show-correct');
+          b.innerHTML += '<span class="answer-icon">✅</span>';
+        }
+      }
+    });
+    mistakes.push({
+      question: q.question,
+      yourAnswer: btn.textContent.trim(),
+      correctAnswer: q.options[q.correct]
+    });
+  }
+
+  // Фидбек
+  const fb = document.getElementById('feedback');
+  if (isCorrect) {
+    fb.className = 'feedback correct';
+    fb.textContent = '✅ Правильно!';
+  } else {
+    fb.className = 'feedback wrong';
+    fb.textContent = '❌ Неверно. Правильный ответ выделен зелёным.';
+  }
+  fb.style.display = 'block';
+
+  // Кнопка "Далее"
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.style.display = 'block';
+  if (currentIdx + 1 >= currentQuestions.length) {
+    nextBtn.textContent = '🏁 Завершить тест';
+  } else {
+    nextBtn.textContent = 'Следующий вопрос →';
+  }
+}
+
+function nextQuestion() {
+  currentIdx++;
+  if (currentIdx >= currentQuestions.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ============================================================
+// РЕЗУЛЬТАТ
+// ============================================================
+function showResult() {
+  const total = currentQuestions.length;
+  const pct = Math.round((score / total) * 100);
+
+  let emoji, title;
+  if (pct >= 90) { emoji = '🏆'; title = 'Отличный результат!'; }
+  else if (pct >= 70) { emoji = '🎯'; title = 'Хороший результат!'; }
+  else if (pct >= 50) { emoji = '📚'; title = 'Нужно повторить!'; }
+  else { emoji = '💪'; title = 'Учиться, учиться!'; }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-subtitle').textContent = currentQuiz.title;
+
+  document.getElementById('stat-correct').textContent = score;
+  document.getElementById('stat-wrong').textContent = total - score;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-pct').textContent = pct + '%';
+  document.getElementById('circle-pct').textContent = pct + '%';
+
+  // Анимация круга
+  const circumference = 339;
+  const offset = circumference - (pct / 100) * circumference;
+  const circle = document.getElementById('circle-fill');
+  circle.style.stroke = pct >= 70 ? '#1adb6e' : pct >= 50 ? '#f0c040' : '#e94560';
+  setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
+
+  // Скрыть кнопку разбора если нет ошибок
+  document.getElementById('btn-review').style.display = mistakes.length > 0 ? 'block' : 'none';
+
+  showScreen('screen-result');
+}
+
+function showReview() {
+  const list = document.getElementById('review-list');
+  if (mistakes.length === 0) {
+    list.innerHTML = '<div style="color:#1adb6e;font-size:18px;text-align:center;padding:20px">🎉 Ошибок нет!</div>';
+  } else {
+    list.innerHTML = mistakes.map((m, i) => `
+      <div class="review-item">
+        <div class="review-q">${i+1}. ${m.question}</div>
+        <div class="review-your">❌ Ваш ответ: ${m.yourAnswer}</div>
+        <div class="review-correct">✅ Правильно: ${m.correctAnswer}</div>
+      </div>
+    `).join('');
+  }
+  showScreen('screen-review');
+}
+
+// ============================================================
+// НАВИГАЦИЯ
+// ============================================================
+function showScreen(id) {
+  ['screen-home','screen-quiz','screen-result','screen-review'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  });
+}
+
+function goHome() {
+  showScreen('screen-home');
+}
+
+// ============================================================
+// УТИЛИТЫ
+// ============================================================
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ============================================================
+// СТАРТ
+// ============================================================
+loadQuestions();
+</script>
+</body>
+</html>
