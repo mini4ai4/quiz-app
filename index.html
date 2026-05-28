@@ -382,23 +382,24 @@
   }
   .donate-btn {
     display: inline-block;
-    padding: 10px 18px;
-    background: linear-gradient(135deg, #1a3a6e, #2575fc);
+    padding: 9px 18px;
+    background: rgba(255,255,255,0.18);
     color: #fff;
     font-size: 15px;
     font-weight: 700;
     border-radius: 12px;
     text-decoration: none;
     transition: all 0.15s;
-    border: 1.5px solid #2575fc55;
+    border: 1.5px solid rgba(255,255,255,0.35);
+    backdrop-filter: blur(6px);
   }
   .donate-btn:active { transform: scale(0.96); }
-  .donate-btn:hover { background: linear-gradient(135deg, #2575fc, #6a11cb); }
+  .donate-btn:hover { background: rgba(255,255,255,0.28); }
   .donate-custom {
-    background: linear-gradient(135deg, #2a1a00, #b8680a);
-    border-color: #f0a030;
+    background: rgba(240,192,64,0.25);
+    border-color: rgba(240,192,64,0.6);
   }
-  .donate-custom:hover { background: linear-gradient(135deg, #b8680a, #f0a030); }
+  .donate-custom:hover { background: rgba(240,192,64,0.38); }
 
   /* Question source label */
   .q-source {
@@ -416,19 +417,6 @@
 
   <!-- ===== HOME SCREEN ===== -->
   <div id="screen-home">
-
-    <!-- Support section -->
-    <div class="support-box" style="margin-top:20px; margin-bottom:8px;">
-      <div class="support-title">☕ Support this app</div>
-      <div class="support-sub">Apple Pay &amp; all cards accepted</div>
-      <div class="donate-btns">
-        <a class="donate-btn" href="https://buy.stripe.com/fZu5kDdJB8YAdr28UL6J207" target="_blank">$5</a>
-        <a class="donate-btn" href="https://buy.stripe.com/28E7sL20TdeQbiUb2T6J208" target="_blank">$10</a>
-        <a class="donate-btn" href="https://buy.stripe.com/aFa7sL34XcaMdr2db16J209" target="_blank">$20</a>
-        <a class="donate-btn donate-custom" href="https://buy.stripe.com/28E00jcFxgr25YA9YP6J206" target="_blank">Custom 💛</a>
-      </div>
-    </div>
-
     <div class="hero">
       <div class="hero-emoji">🧠</div>
       <div class="hero-title">My Quizzes</div>
@@ -438,6 +426,15 @@
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
+
+      <!-- Support section inside hero -->
+      <div class="donate-btns" style="margin-top:20px; position:relative; z-index:1;">
+        <a class="donate-btn" href="https://buy.stripe.com/fZu5kDdJB8YAdr28UL6J207" target="_blank">☕ $5</a>
+        <a class="donate-btn" href="https://buy.stripe.com/28E7sL20TdeQbiUb2T6J208" target="_blank">$10</a>
+        <a class="donate-btn" href="https://buy.stripe.com/aFa7sL34XcaMdr2db16J209" target="_blank">$20</a>
+        <a class="donate-btn donate-custom" href="https://buy.stripe.com/28E00jcFxgr25YA9YP6J206" target="_blank">Custom 💛</a>
+      </div>
+      <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:8px; position:relative; z-index:1;">Apple Pay &amp; all cards</div>
     </div>
 
     <div class="section-label">Available Tests</div>
