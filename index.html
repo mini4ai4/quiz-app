@@ -428,7 +428,6 @@
 </div>
 
 <script>
-let allQuizzes = [];
 let currentQuiz = null;
 let currentQuestions = [];
 let currentIdx = 0;
@@ -436,14 +435,39 @@ let score = 0;
 let mistakes = [];
 let answered = false;
 
-async function loadQuestions() {
-  try {
-    const r = await fetch('questions.json?t=' + Date.now());
-    const data = await r.json();
-    allQuizzes = data.quizzes || [];
-  } catch(e) {
-    allQuizzes = [];
+// ============================================================
+// QUESTIONS DATABASE (embedded for instant loading)
+// ============================================================
+let allQuizzes = [
+  {
+    title: "Clinical Integration 1 Quiz #1 (CI1 · Q1)",
+    description: "The Soma Institute — OLDRFICARA, OPPQRST & SOAP Notes",
+    questions: [
+      { question: "What makes your pain worse?", options: ["A","O","I","R"], correct: 0 },
+      { question: "On a pain scale from 1-10, can you rate your level of pain?", options: ["I","D","A","C"], correct: 0 },
+      { question: "When did the pain start?", options: ["D","O","A","F"], correct: 1 },
+      { question: "Can you describe your neck pain for me?", options: ["O","L","D","C"], correct: 3 },
+      { question: "Is there anything that makes your pain better?", options: ["R","F","A","O"], correct: 0 },
+      { question: "Does the pain travel anywhere else in your body?", options: ["Q","R","S","T"], correct: 1 },
+      { question: "When you are experiencing your neck pain, how long does it last?", options: ["O","P","R","T"], correct: 3 },
+      { question: "Because Jane still has some trigger points and tightness in her neck after your treatment, you recommend that she perform some stretches for her neck at home and you show her how they should be done. Where do you record the stretches you showed her to perform at home in your SOAP note?", options: ["S","O","A","P"], correct: 3 },
+      { question: "While looking at Jane about her neck pain, you observed her neck was laterally flexed more to the right side and she grimaced if she moved her neck too much. Where would you record this in your SOAP note?", options: ["S","O","A","P"], correct: 1 },
+      { question: "Jane is very happy with the work you have performed on her neck and wants to know when she should schedule another appointment. You tell Jane that because she still has trigger points and tightness in her neck, she would benefit from having massage once a week over the next four weeks. She tells you to go ahead and schedule those appointments. Where would you record her upcoming treatments in your SOAP note?", options: ["S","O","A","P"], correct: 3 },
+      { question: "After your treatment, Jane states her pain has decreased and she is already feeling better. Where would you record this information in your SOAP note?", options: ["S","O","A","P"], correct: 2 },
+      { question: "After you finish the treatment, you re-run the active range of motion tests and you observe that Jane has more range of motion than she did before the treatment started. Where would you record this information in your SOAP note?", options: ["S","O","A","P"], correct: 2 },
+      { question: "You palpate the muscles of Jane's neck to determine what muscles need to be treated and you find a trigger point in her right levator scapula muscle. Where would you record this finding in your SOAP note?", options: ["S","O","A","P"], correct: 1 },
+      { question: "After performing a few more tests, you decided that you would use heat on Jane's neck for 15 minutes, perform trigger point work and myofascial release for a total treatment time of 30 minutes. Where would you record this in your SOAP note?", options: ["S","O","A","P"], correct: 1 },
+      { question: "After you complete OLDRFICARA, you document what Jane has told you about her neck pain. Where would you record this information in your SOAP note?", options: ["S","O","A","P"], correct: 0 },
+      { question: "When a client states that they have Carpal Tunnel Syndrome during the initial intake, where does the therapist record this information?", options: ["On the informed consent form","Under the S in SOAP Notes","On a star diagram","Under the O in SOAP Notes"], correct: 1 },
+      { question: "If you need to refer your client to a primary care physician, where do you record that information in your SOAP note?", options: ["S","O","A","P"], correct: 3 },
+      { question: "Palpation findings (4 T's of palpation) such as hypertonicity in an area, temperature differences, or an area being too tender to work should be recorded in which part of the SOAP note?", options: ["S","O","A","P"], correct: 1 },
+      { question: "Which letter in SOAP is used to record information regarding the result of the therapist's treatment?", options: ["S","O","A","P"], correct: 2 },
+      { question: "Which letter correctly corresponds to the SOAP acronym?", options: ["S – Severity","O – Observations","A – Associated","P – Plan"], correct: 3 }
+    ]
   }
+];
+
+function loadQuestions() {
   renderHome();
 }
 
