@@ -1,74 +1,144 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Мои Тесты</title>
+<title>My Quizzes</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: #1a1a2e;
+    background: #0f0c29;
     color: #fff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 16px;
+    padding: 0 16px 32px;
   }
 
   .app { width: 100%; max-width: 480px; }
 
-  /* ===== ЭКРАН ВЫБОРА ТЕСТА ===== */
-  #screen-home { text-align: center; }
+  /* ===== HOME SCREEN ===== */
+  #screen-home { padding-top: 0; }
 
-  .logo {
-    font-size: 48px;
-    margin: 30px 0 10px;
+  /* Colorful hero banner */
+  .hero {
+    margin: 0 -16px 28px;
+    padding: 48px 24px 36px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 40%, #e94560 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
   }
-  .logo-title {
-    font-size: 28px;
-    font-weight: 800;
-    color: #e94560;
-    margin-bottom: 6px;
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
   }
-  .logo-sub {
-    font-size: 14px;
-    color: #aaa;
-    margin-bottom: 30px;
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: -30px;
+    width: 220px; height: 220px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .hero-emoji { font-size: 56px; margin-bottom: 10px; position: relative; z-index: 1; }
+  .hero-title {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    position: relative; z-index: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 6px;
+    position: relative; z-index: 1;
+  }
+
+  /* Decorative dots */
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+    position: relative; z-index: 1;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+  }
+  .dot.active { background: #fff; width: 22px; border-radius: 4px; }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 14px;
   }
 
   .quiz-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 
   .quiz-card {
-    background: #16213e;
-    border: 2px solid #0f3460;
-    border-radius: 16px;
+    background: linear-gradient(135deg, #1a1a3e 0%, #16213e 100%);
+    border: 1.5px solid #2a2a5e;
+    border-radius: 18px;
     padding: 18px 20px;
     cursor: pointer;
     transition: all 0.2s;
     text-align: left;
+    position: relative;
+    overflow: hidden;
   }
+  .quiz-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, #6a11cb, #2575fc);
+    border-radius: 18px 0 0 18px;
+  }
+  .quiz-card:nth-child(2)::before { background: linear-gradient(180deg, #f093fb, #f5576c); }
+  .quiz-card:nth-child(3)::before { background: linear-gradient(180deg, #4facfe, #00f2fe); }
+  .quiz-card:nth-child(4)::before { background: linear-gradient(180deg, #43e97b, #38f9d7); }
   .quiz-card:hover, .quiz-card:active {
-    border-color: #e94560;
-    background: #1a2a50;
-    transform: scale(1.02);
+    border-color: #4a4a8e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
-  .quiz-card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .quiz-card-meta { font-size: 13px; color: #888; }
+  .quiz-card-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; padding-left: 8px; }
+  .quiz-card-meta { font-size: 13px; color: #888; padding-left: 8px; }
+  .quiz-card-arrow {
+    position: absolute;
+    right: 18px; top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    font-size: 20px;
+  }
 
   .empty-state {
-    background: #16213e;
-    border: 2px dashed #333;
-    border-radius: 16px;
+    background: linear-gradient(135deg, #1a1a3e 0%, #16213e 100%);
+    border: 2px dashed #2a2a5e;
+    border-radius: 18px;
     padding: 40px 20px;
-    color: #555;
+    color: #666;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.8;
+    text-align: center;
   }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
 
-  /* ===== КНОПКА ===== */
+  /* ===== BUTTONS ===== */
   .btn {
     display: block;
     width: 100%;
@@ -82,17 +152,21 @@
     letter-spacing: 0.3px;
   }
   .btn:active { transform: scale(0.97); }
-  .btn-primary { background: #e94560; color: #fff; }
-  .btn-secondary { background: #16213e; color: #ccc; border: 2px solid #333; margin-top: 10px; }
+  .btn-primary {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(37,117,252,0.4);
+  }
+  .btn-secondary { background: #16213e; color: #ccc; border: 1.5px solid #2a2a5e; margin-top: 10px; }
 
-  /* ===== ЭКРАН ВОПРОСА ===== */
-  #screen-quiz { display: none; }
+  /* ===== QUIZ SCREEN ===== */
+  #screen-quiz { display: none; padding-top: 20px; }
 
   .progress-wrap {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   .progress-bar {
     flex: 1;
@@ -103,34 +177,40 @@
   }
   .progress-fill {
     height: 100%;
-    background: #e94560;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
     border-radius: 99px;
     transition: width 0.4s ease;
   }
-  .progress-text { font-size: 13px; color: #aaa; white-space: nowrap; }
+  .progress-text { font-size: 13px; color: #888; white-space: nowrap; }
 
-  .question-num {
-    font-size: 13px;
-    color: #e94560;
+  .question-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #6a11cb33, #2575fc33);
+    border: 1px solid #2575fc55;
+    color: #7ab8ff;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 14px;
   }
+
   .question-text {
     font-size: 20px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.45;
     margin-bottom: 28px;
     min-height: 80px;
   }
 
-  .answers { display: flex; flex-direction: column; gap: 12px; }
+  .answers { display: flex; flex-direction: column; gap: 10px; }
 
   .answer-btn {
     width: 100%;
-    padding: 16px 18px;
-    border: 2px solid #0f3460;
+    padding: 15px 18px;
+    border: 1.5px solid #2a2a5e;
     border-radius: 14px;
     background: #16213e;
     color: #fff;
@@ -140,35 +220,31 @@
     text-align: left;
     transition: all 0.15s;
     line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
   }
   .answer-btn:active { transform: scale(0.98); }
   .answer-btn:hover { border-color: #3a5a9f; background: #1c2a50; }
-
   .answer-btn.correct {
-    background: #0d6b3a;
+    background: linear-gradient(135deg, #0d6b3a, #0a8a4a);
     border-color: #1adb6e;
-    color: #fff;
   }
   .answer-btn.wrong {
-    background: #6b1a1a;
+    background: linear-gradient(135deg, #6b1a1a, #8a1a1a);
     border-color: #e94560;
-    color: #fff;
   }
   .answer-btn.show-correct {
-    background: #0d6b3a;
-    border-color: #1adb6e;
-    opacity: 0.7;
+    background: linear-gradient(135deg, #0d6b3a88, #0a8a4a88);
+    border-color: #1adb6e88;
   }
   .answer-btn:disabled { cursor: default; }
-
-  .answer-icon {
-    float: right;
-    font-size: 20px;
-    margin-left: 8px;
-  }
+  .answer-text { flex: 1; }
+  .answer-icon { font-size: 20px; flex-shrink: 0; }
 
   .feedback {
-    margin-top: 18px;
+    margin-top: 16px;
     padding: 14px 18px;
     border-radius: 12px;
     font-size: 15px;
@@ -179,43 +255,40 @@
   .feedback.correct { background: #0d3a22; color: #1adb6e; border: 1px solid #1adb6e44; }
   .feedback.wrong { background: #3a0d0d; color: #ff6b6b; border: 1px solid #e9456044; }
 
-  .next-btn {
-    margin-top: 20px;
-    display: none;
-  }
+  .next-btn { margin-top: 20px; display: none; }
 
-  /* ===== ЭКРАН РЕЗУЛЬТАТА ===== */
-  #screen-result { display: none; text-align: center; }
+  /* ===== RESULT SCREEN ===== */
+  #screen-result { display: none; text-align: center; padding-top: 20px; }
 
-  .result-emoji { font-size: 72px; margin: 30px 0 16px; }
-  .result-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
-  .result-subtitle { font-size: 16px; color: #aaa; margin-bottom: 30px; }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 28px;
+  .result-hero {
+    background: linear-gradient(135deg, #1a1a3e, #16213e);
+    border: 1.5px solid #2a2a5e;
+    border-radius: 22px;
+    padding: 32px 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
   }
-  .stat-card {
-    background: #16213e;
-    border-radius: 14px;
-    padding: 18px 12px;
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(106,17,203,0.2);
+    border-radius: 50%;
   }
-  .stat-num { font-size: 36px; font-weight: 800; }
-  .stat-num.green { color: #1adb6e; }
-  .stat-num.red { color: #e94560; }
-  .stat-num.blue { color: #4da6ff; }
-  .stat-label { font-size: 13px; color: #888; margin-top: 4px; }
+  .result-emoji { font-size: 64px; margin-bottom: 12px; position: relative; z-index: 1; }
+  .result-title { font-size: 24px; font-weight: 800; margin-bottom: 6px; position: relative; z-index: 1; }
+  .result-subtitle { font-size: 14px; color: #aaa; position: relative; z-index: 1; }
 
   .circle-progress {
     position: relative;
     width: 130px;
     height: 130px;
-    margin: 0 auto 28px;
+    margin: 0 auto 20px;
   }
   .circle-progress svg { transform: rotate(-90deg); }
-  .circle-bg { fill: none; stroke: #16213e; stroke-width: 12; }
+  .circle-bg { fill: none; stroke: #1a1a3e; stroke-width: 12; }
   .circle-fill { fill: none; stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
   .circle-text {
     position: absolute;
@@ -225,56 +298,89 @@
     font-weight: 800;
   }
 
-  /* ===== ЭКРАН РАЗБОРА ОШИБОК ===== */
-  #screen-review { display: none; }
-  .review-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; color: #e94560; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .stat-card {
+    background: linear-gradient(135deg, #1a1a3e, #16213e);
+    border: 1.5px solid #2a2a5e;
+    border-radius: 14px;
+    padding: 16px 10px;
+  }
+  .stat-num { font-size: 34px; font-weight: 800; }
+  .stat-num.green { color: #1adb6e; }
+  .stat-num.red { color: #e94560; }
+  .stat-num.blue { color: #4da6ff; }
+  .stat-num.yellow { color: #f0c040; }
+  .stat-label { font-size: 12px; color: #888; margin-top: 3px; }
+
+  /* ===== REVIEW SCREEN ===== */
+  #screen-review { display: none; padding-top: 20px; }
+
+  .review-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .review-title { font-size: 22px; font-weight: 800; }
+
   .review-item {
-    background: #16213e;
+    background: linear-gradient(135deg, #1a1a3e, #16213e);
     border-radius: 14px;
     padding: 16px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     border-left: 4px solid #e94560;
   }
-  .review-item.correct-item { border-left-color: #1adb6e; }
+  .review-item.ok { border-left-color: #1adb6e; }
   .review-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
   .review-your { font-size: 14px; color: #e94560; margin-bottom: 4px; }
   .review-correct { font-size: 14px; color: #1adb6e; }
-
-  .hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- ===== ГЛАВНЫЙ ЭКРАН ===== -->
+  <!-- ===== HOME SCREEN ===== -->
   <div id="screen-home">
-    <div class="logo">🧠</div>
-    <div class="logo-title">Мои Тесты</div>
-    <div class="logo-sub">Практикуйся и запоминай</div>
-
-    <div class="quiz-list" id="quiz-list">
-      <!-- заполняется JS -->
+    <div class="hero">
+      <div class="hero-emoji">🧠</div>
+      <div class="hero-title">My Quizzes</div>
+      <div class="hero-sub">Practice and remember</div>
+      <div class="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
     </div>
+
+    <div class="section-label">Available Tests</div>
+    <div class="quiz-list" id="quiz-list"></div>
   </div>
 
-  <!-- ===== ЭКРАН ВОПРОСА ===== -->
+  <!-- ===== QUIZ SCREEN ===== -->
   <div id="screen-quiz">
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <div class="progress-text" id="progress-text">1 / 10</div>
     </div>
-    <div class="question-num" id="question-num">Вопрос 1</div>
+    <div class="question-badge" id="question-num">Question 1</div>
     <div class="question-text" id="question-text"></div>
     <div class="answers" id="answers"></div>
     <div class="feedback" id="feedback"></div>
-    <button class="btn btn-primary next-btn" id="next-btn" onclick="nextQuestion()">Следующий вопрос →</button>
+    <button class="btn btn-primary next-btn" id="next-btn" onclick="nextQuestion()">Next Question →</button>
   </div>
 
-  <!-- ===== ЭКРАН РЕЗУЛЬТАТА ===== -->
+  <!-- ===== RESULT SCREEN ===== -->
   <div id="screen-result">
-    <div class="result-emoji" id="result-emoji">🎉</div>
-    <div class="result-title" id="result-title">Отличный результат!</div>
-    <div class="result-subtitle" id="result-subtitle"></div>
+    <div class="result-hero">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <div class="result-title" id="result-title">Great job!</div>
+      <div class="result-subtitle" id="result-subtitle"></div>
+    </div>
 
     <div class="circle-progress">
       <svg width="130" height="130" viewBox="0 0 130 130">
@@ -288,52 +394,48 @@
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-num green" id="stat-correct">0</div>
-        <div class="stat-label">Правильных</div>
+        <div class="stat-label">Correct</div>
       </div>
       <div class="stat-card">
         <div class="stat-num red" id="stat-wrong">0</div>
-        <div class="stat-label">Ошибок</div>
+        <div class="stat-label">Mistakes</div>
       </div>
       <div class="stat-card">
         <div class="stat-num blue" id="stat-total">0</div>
-        <div class="stat-label">Всего вопросов</div>
+        <div class="stat-label">Total Questions</div>
       </div>
       <div class="stat-card">
-        <div class="stat-num" id="stat-pct" style="color:#f0c040">0%</div>
-        <div class="stat-label">Правильных</div>
+        <div class="stat-num yellow" id="stat-pct">0%</div>
+        <div class="stat-label">Score</div>
       </div>
     </div>
 
-    <button class="btn btn-primary" onclick="showReview()" id="btn-review">📋 Разбор ошибок</button>
-    <button class="btn btn-secondary" onclick="retryQuiz()">🔁 Пройти снова</button>
-    <button class="btn btn-secondary" onclick="goHome()" style="margin-top:10px">🏠 К списку тестов</button>
+    <button class="btn btn-primary" onclick="showReview()" id="btn-review">📋 Review Mistakes</button>
+    <button class="btn btn-secondary" onclick="retryQuiz()">🔁 Try Again</button>
+    <button class="btn btn-secondary" onclick="goHome()">🏠 Back to Tests</button>
   </div>
 
-  <!-- ===== ЭКРАН РАЗБОРА ===== -->
+  <!-- ===== REVIEW SCREEN ===== -->
   <div id="screen-review">
-    <div class="review-title">📋 Разбор ошибок</div>
+    <div class="review-header">
+      <div class="review-title">📋 Review Mistakes</div>
+    </div>
     <div id="review-list"></div>
-    <button class="btn btn-secondary" onclick="showResult()" style="margin-top:10px">← Назад к результату</button>
-    <button class="btn btn-secondary" onclick="goHome()" style="margin-top:10px">🏠 К списку тестов</button>
+    <button class="btn btn-secondary" onclick="showResult()">← Back to Results</button>
+    <button class="btn btn-secondary" onclick="goHome()">🏠 Back to Tests</button>
   </div>
 
 </div>
 
 <script>
-// ============================================================
-// БАЗА ВОПРОСОВ (заполняется из questions.json)
-// ============================================================
 let allQuizzes = [];
 let currentQuiz = null;
 let currentQuestions = [];
 let currentIdx = 0;
 let score = 0;
-let mistakes = []; // {question, yourAnswer, correctAnswer}
+let mistakes = [];
 let answered = false;
 
-// ============================================================
-// ЗАГРУЗКА ДАННЫХ
-// ============================================================
 async function loadQuestions() {
   try {
     const r = await fetch('questions.json?t=' + Date.now());
@@ -345,51 +447,40 @@ async function loadQuestions() {
   renderHome();
 }
 
-// ============================================================
-// ГЛАВНЫЙ ЭКРАН
-// ============================================================
 function renderHome() {
   const list = document.getElementById('quiz-list');
   if (allQuizzes.length === 0) {
     list.innerHTML = `<div class="empty-state">
-      📸 Тестов пока нет<br><br>
-      Сфотографируй свои бумажные тесты и отправь мне в Telegram — я добавлю их сюда!
+      <div class="empty-icon">📸</div>
+      No tests yet<br><br>
+      Take a photo of your printed test and send it to me in Telegram — I'll add it here!
     </div>`;
     return;
   }
   list.innerHTML = allQuizzes.map((q, i) => `
     <div class="quiz-card" onclick="startQuiz(${i})">
       <div class="quiz-card-title">${q.title}</div>
-      <div class="quiz-card-meta">${q.questions.length} вопросов${q.description ? ' · ' + q.description : ''}</div>
+      <div class="quiz-card-meta">${q.questions.length} questions${q.description ? ' · ' + q.description : ''}</div>
+      <div class="quiz-card-arrow">›</div>
     </div>
   `).join('');
 }
 
-// ============================================================
-// СТАРТ ТЕСТА
-// ============================================================
 function startQuiz(idx) {
   currentQuiz = allQuizzes[idx];
   currentQuestions = shuffle([...currentQuiz.questions]);
-  currentIdx = 0;
-  score = 0;
-  mistakes = [];
+  currentIdx = 0; score = 0; mistakes = [];
   showScreen('screen-quiz');
   renderQuestion();
 }
 
 function retryQuiz() {
   currentQuestions = shuffle([...currentQuiz.questions]);
-  currentIdx = 0;
-  score = 0;
-  mistakes = [];
+  currentIdx = 0; score = 0; mistakes = [];
   showScreen('screen-quiz');
   renderQuestion();
 }
 
-// ============================================================
-// ВОПРОС
-// ============================================================
 function renderQuestion() {
   answered = false;
   const q = currentQuestions[currentIdx];
@@ -397,158 +488,109 @@ function renderQuestion() {
 
   document.getElementById('progress-fill').style.width = ((currentIdx / total) * 100) + '%';
   document.getElementById('progress-text').textContent = (currentIdx + 1) + ' / ' + total;
-  document.getElementById('question-num').textContent = 'Вопрос ' + (currentIdx + 1);
+  document.getElementById('question-num').textContent = 'Question ' + (currentIdx + 1);
   document.getElementById('question-text').textContent = q.question;
 
-  // Перемешать варианты
   const opts = shuffle(q.options.map((text, i) => ({ text, correct: i === q.correct })));
-
-  const answersEl = document.getElementById('answers');
-  answersEl.innerHTML = opts.map((opt, i) => `
+  document.getElementById('answers').innerHTML = opts.map(opt => `
     <button class="answer-btn" onclick="selectAnswer(this, ${opt.correct})">
-      ${opt.text}
+      <span class="answer-text">${opt.text}</span>
+      <span class="answer-icon"></span>
     </button>
   `).join('');
 
   document.getElementById('feedback').style.display = 'none';
-  document.getElementById('feedback').className = 'feedback';
   document.getElementById('next-btn').style.display = 'none';
 }
 
 function selectAnswer(btn, isCorrect) {
   if (answered) return;
   answered = true;
-
   const q = currentQuestions[currentIdx];
   const allBtns = document.querySelectorAll('.answer-btn');
-
-  // Отключить все кнопки
   allBtns.forEach(b => b.disabled = true);
 
   if (isCorrect) {
     btn.classList.add('correct');
-    btn.innerHTML += '<span class="answer-icon">✅</span>';
+    btn.querySelector('.answer-icon').textContent = '✅';
     score++;
   } else {
     btn.classList.add('wrong');
-    btn.innerHTML += '<span class="answer-icon">❌</span>';
-    // Подсветить правильный
+    btn.querySelector('.answer-icon').textContent = '❌';
     allBtns.forEach(b => {
-      if (b !== btn) {
-        // Найти правильную кнопку
-        const text = b.textContent.trim();
-        const correctText = q.options[q.correct];
-        if (text === correctText) {
-          b.classList.add('show-correct');
-          b.innerHTML += '<span class="answer-icon">✅</span>';
-        }
+      const txt = b.querySelector('.answer-text').textContent.trim();
+      if (txt === q.options[q.correct]) {
+        b.classList.add('show-correct');
+        b.querySelector('.answer-icon').textContent = '✅';
       }
     });
     mistakes.push({
       question: q.question,
-      yourAnswer: btn.textContent.trim(),
+      yourAnswer: btn.querySelector('.answer-text').textContent.trim(),
       correctAnswer: q.options[q.correct]
     });
   }
 
-  // Фидбек
   const fb = document.getElementById('feedback');
-  if (isCorrect) {
-    fb.className = 'feedback correct';
-    fb.textContent = '✅ Правильно!';
-  } else {
-    fb.className = 'feedback wrong';
-    fb.textContent = '❌ Неверно. Правильный ответ выделен зелёным.';
-  }
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  fb.textContent = isCorrect ? '✅ Correct!' : '❌ Wrong. The correct answer is highlighted in green.';
   fb.style.display = 'block';
 
-  // Кнопка "Далее"
   const nextBtn = document.getElementById('next-btn');
   nextBtn.style.display = 'block';
-  if (currentIdx + 1 >= currentQuestions.length) {
-    nextBtn.textContent = '🏁 Завершить тест';
-  } else {
-    nextBtn.textContent = 'Следующий вопрос →';
-  }
+  nextBtn.textContent = currentIdx + 1 >= currentQuestions.length ? '🏁 Finish Quiz' : 'Next Question →';
 }
 
 function nextQuestion() {
   currentIdx++;
-  if (currentIdx >= currentQuestions.length) {
-    showResult();
-  } else {
-    renderQuestion();
-  }
+  currentIdx >= currentQuestions.length ? showResult() : renderQuestion();
 }
 
-// ============================================================
-// РЕЗУЛЬТАТ
-// ============================================================
 function showResult() {
   const total = currentQuestions.length;
   const pct = Math.round((score / total) * 100);
-
   let emoji, title;
-  if (pct >= 90) { emoji = '🏆'; title = 'Отличный результат!'; }
-  else if (pct >= 70) { emoji = '🎯'; title = 'Хороший результат!'; }
-  else if (pct >= 50) { emoji = '📚'; title = 'Нужно повторить!'; }
-  else { emoji = '💪'; title = 'Учиться, учиться!'; }
+  if (pct >= 90) { emoji = '🏆'; title = 'Excellent result!'; }
+  else if (pct >= 70) { emoji = '🎯'; title = 'Good job!'; }
+  else if (pct >= 50) { emoji = '📚'; title = 'Keep studying!'; }
+  else { emoji = '💪'; title = 'You can do better!'; }
 
   document.getElementById('result-emoji').textContent = emoji;
   document.getElementById('result-title').textContent = title;
   document.getElementById('result-subtitle').textContent = currentQuiz.title;
-
   document.getElementById('stat-correct').textContent = score;
   document.getElementById('stat-wrong').textContent = total - score;
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-pct').textContent = pct + '%';
   document.getElementById('circle-pct').textContent = pct + '%';
 
-  // Анимация круга
   const circumference = 339;
-  const offset = circumference - (pct / 100) * circumference;
   const circle = document.getElementById('circle-fill');
   circle.style.stroke = pct >= 70 ? '#1adb6e' : pct >= 50 ? '#f0c040' : '#e94560';
-  setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
-
-  // Скрыть кнопку разбора если нет ошибок
+  setTimeout(() => { circle.style.strokeDashoffset = circumference - (pct / 100) * circumference; }, 100);
   document.getElementById('btn-review').style.display = mistakes.length > 0 ? 'block' : 'none';
-
   showScreen('screen-result');
 }
 
 function showReview() {
   const list = document.getElementById('review-list');
-  if (mistakes.length === 0) {
-    list.innerHTML = '<div style="color:#1adb6e;font-size:18px;text-align:center;padding:20px">🎉 Ошибок нет!</div>';
-  } else {
-    list.innerHTML = mistakes.map((m, i) => `
-      <div class="review-item">
-        <div class="review-q">${i+1}. ${m.question}</div>
-        <div class="review-your">❌ Ваш ответ: ${m.yourAnswer}</div>
-        <div class="review-correct">✅ Правильно: ${m.correctAnswer}</div>
-      </div>
-    `).join('');
-  }
+  list.innerHTML = mistakes.length === 0
+    ? '<div style="color:#1adb6e;font-size:18px;text-align:center;padding:20px">🎉 No mistakes!</div>'
+    : mistakes.map((m, i) => `
+        <div class="review-item">
+          <div class="review-q">${i+1}. ${m.question}</div>
+          <div class="review-your">❌ Your answer: ${m.yourAnswer}</div>
+          <div class="review-correct">✅ Correct: ${m.correctAnswer}</div>
+        </div>`).join('');
   showScreen('screen-review');
 }
 
-// ============================================================
-// НАВИГАЦИЯ
-// ============================================================
 function showScreen(id) {
   ['screen-home','screen-quiz','screen-result','screen-review'].forEach(s => {
     document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
 }
-
-function goHome() {
-  showScreen('screen-home');
-}
-
-// ============================================================
-// УТИЛИТЫ
-// ============================================================
+function goHome() { showScreen('screen-home'); }
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -557,9 +599,6 @@ function shuffle(arr) {
   return arr;
 }
 
-// ============================================================
-// СТАРТ
-// ============================================================
 loadQuestions();
 </script>
 </body>
