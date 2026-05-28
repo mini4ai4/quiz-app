@@ -1135,7 +1135,7 @@ function renderHome() {
   const bankTotal = allQuizzes.filter(x => !x.isFinal).reduce((s, x) => s + x.questions.length, 0);
   list.innerHTML = allQuizzes.map((q, i) => {
     const meta = q.isFinal
-      ? `100 questions · drawn from ${bankTotal}-question bank`
+      ? `100 random questions · drawn from ${bankTotal}-question bank`
       : `${q.questions.length} questions${q.description ? ' · ' + q.description : ''}`;
     return `
     <div class="quiz-card${q.isFinal ? ' final' : ''}" onclick="startQuiz(${i})">
