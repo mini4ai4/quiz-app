@@ -160,7 +160,24 @@
   .btn-secondary { background: #16213e; color: #ccc; border: 1.5px solid #2a2a5e; margin-top: 10px; }
 
   /* ===== QUIZ SCREEN ===== */
-  #screen-quiz { display: none; padding-top: 20px; }
+  #screen-quiz { display: none; padding-top: 12px; }
+
+  .quiz-topbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .back-home-btn {
+    background: none;
+    border: none;
+    color: #7ab8ff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    letter-spacing: 0.2px;
+  }
+  .back-home-btn:active { opacity: 0.6; }
 
   .progress-wrap {
     display: flex;
@@ -443,6 +460,9 @@
 
   <!-- ===== QUIZ SCREEN ===== -->
   <div id="screen-quiz">
+    <div class="quiz-topbar">
+      <button class="back-home-btn" onclick="goHome()">← Tests</button>
+    </div>
     <div class="progress-wrap">
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <div class="progress-text" id="progress-text">1 / 10</div>
