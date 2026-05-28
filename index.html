@@ -211,8 +211,31 @@
     letter-spacing: 1px;
     padding: 4px 12px;
     border-radius: 99px;
+  }
+
+  .question-toprow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 14px;
   }
+  .question-toprow .question-badge { margin-bottom: 0; }
+
+  .translate-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 99px;
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .translate-btn:hover { background: rgba(255,255,255,0.15); }
+  .translate-btn:active { transform: scale(0.95); }
+  .translate-btn:disabled { opacity: 0.5; cursor: default; }
 
   .question-text {
     font-size: 20px;
@@ -468,7 +491,10 @@
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
       <div class="progress-text" id="progress-text">1 / 10</div>
     </div>
-    <div class="question-badge" id="question-num">Question 1</div>
+    <div class="question-toprow">
+      <div class="question-badge" id="question-num">Question 1</div>
+      <button class="translate-btn" id="translate-btn" onclick="toggleTranslate()">🇷🇺 RU</button>
+    </div>
     <div class="question-text" id="question-text"></div>
     <div class="q-source" id="question-source" style="display:none"></div>
     <div class="answers" id="answers"></div>
@@ -531,6 +557,9 @@
 
 <script>
 let currentQuiz = null;
+let isTranslated = false;
+let originalQuestionText = '';
+let originalOptionTexts = [];
 let currentQuestions = [];
 let currentIdx = 0;
 let score = 0;
@@ -1118,6 +1147,45 @@ function buildFinalExam() {
   return pool;
 }
 
+async function toggleTranslate() {
+  const tBtn = document.getElementById('translate-btn');
+
+  if (isTranslated) {
+    // Restore original English
+    document.getElementById('question-text').textContent = originalQuestionText;
+    document.querySelectorAll('.answer-text').forEach((el, i) => {
+      if (originalOptionTexts[i] !== undefined) el.textContent = originalOptionTexts[i];
+    });
+    tBtn.textContent = '🇷🇺 RU';
+    isTranslated = false;
+    return;
+  }
+
+  tBtn.textContent = '⏳';
+  tBtn.disabled = true;
+
+  const texts = [originalQuestionText, ...originalOptionTexts];
+  try {
+    const translations = await Promise.all(
+      texts.map(text =>
+        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=en|ru')
+          .then(r => r.json())
+          .then(d => d.responseData.translatedText || text)
+          .catch(() => text)
+      )
+    );
+    document.getElementById('question-text').textContent = translations[0];
+    document.querySelectorAll('.answer-text').forEach((el, i) => {
+      if (translations[i + 1] !== undefined) el.textContent = translations[i + 1];
+    });
+    tBtn.textContent = '🇺🇸 EN';
+    isTranslated = true;
+  } catch(e) {
+    tBtn.textContent = '🇷🇺 RU';
+  }
+  tBtn.disabled = false;
+}
+
 function loadQuestions() {
   renderHome();
 }
@@ -1190,6 +1258,14 @@ function renderQuestion() {
 
   document.getElementById('feedback').style.display = 'none';
   document.getElementById('next-btn').style.display = 'none';
+
+  // Reset translate state
+  isTranslated = false;
+  originalQuestionText = q.question;
+  originalOptionTexts = Array.from(document.querySelectorAll('.answer-text')).map(el => el.textContent);
+  const tBtn = document.getElementById('translate-btn');
+  tBtn.textContent = '🇷🇺 RU';
+  tBtn.disabled = false;
 }
 
 function selectAnswer(btn, isCorrect) {
