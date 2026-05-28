@@ -354,6 +354,52 @@
     box-shadow: 0 8px 24px rgba(240,192,64,0.25);
   }
 
+  /* ===== SUPPORT / DONATE ===== */
+  .support-box {
+    margin-top: 32px;
+    background: linear-gradient(135deg, #0d1a2e 0%, #0a1020 100%);
+    border: 1.5px solid #1e3a5f;
+    border-radius: 18px;
+    padding: 20px 18px 18px;
+    text-align: center;
+  }
+  .support-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ccc;
+    margin-bottom: 4px;
+  }
+  .support-sub {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 14px;
+  }
+  .donate-btns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .donate-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #1a3a6e, #2575fc);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.15s;
+    border: 1.5px solid #2575fc55;
+  }
+  .donate-btn:active { transform: scale(0.96); }
+  .donate-btn:hover { background: linear-gradient(135deg, #2575fc, #6a11cb); }
+  .donate-custom {
+    background: linear-gradient(135deg, #2a1a00, #b8680a);
+    border-color: #f0a030;
+  }
+  .donate-custom:hover { background: linear-gradient(135deg, #b8680a, #f0a030); }
+
   /* Question source label */
   .q-source {
     font-size: 12px;
@@ -383,6 +429,18 @@
 
     <div class="section-label">Available Tests</div>
     <div class="quiz-list" id="quiz-list"></div>
+
+    <!-- Support section -->
+    <div class="support-box">
+      <div class="support-title">☕ Support this app</div>
+      <div class="support-sub">Apple Pay &amp; all cards accepted</div>
+      <div class="donate-btns">
+        <a class="donate-btn" href="https://buy.stripe.com/fZu5kDdJB8YAdr28UL6J207" target="_blank">$5</a>
+        <a class="donate-btn" href="https://buy.stripe.com/28E7sL20TdeQbiUb2T6J208" target="_blank">$10</a>
+        <a class="donate-btn" href="https://buy.stripe.com/aFa7sL34XcaMdr2db16J209" target="_blank">$20</a>
+        <a class="donate-btn donate-custom" href="https://buy.stripe.com/28E00jcFxgr25YA9YP6J206" target="_blank">Custom 💛</a>
+      </div>
+    </div>
   </div>
 
   <!-- ===== QUIZ SCREEN ===== -->
