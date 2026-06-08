@@ -706,10 +706,11 @@
     <button class="clinical-back" id="clinical-region-back" onclick="showClinical()">← All Regions</button>
     <div class="region-header">
       <div class="region-header-emoji" id="region-emoji-header"></div>
-      <div>
+      <div style="flex:1">
         <div class="region-header-title" id="region-title-header"></div>
         <div class="region-header-sub" id="region-sub-header"></div>
       </div>
+      <button class="translate-btn" id="region-translate-btn" onclick="toggleRegionTranslate()" style="flex-shrink:0">🇷🇺 RU</button>
     </div>
     <div class="clinical-section-label">Client Complaints → Tests</div>
     <div id="symptom-list"></div>
@@ -829,6 +830,8 @@ let currentQuiz = null;
 let isTranslated = false;
 let isClinicalTranslated = false;
 let originalClinicalTexts = {};
+let isRegionTranslated = false;
+let originalRegionTexts = [];
 let originalQuestionText = '';
 let originalOptionTexts = [];
 let currentQuestions = [];
@@ -1640,6 +1643,42 @@ async function toggleTranslate() {
   tBtn.disabled = false;
 }
 
+async function toggleRegionTranslate() {
+  const tBtn = document.getElementById('region-translate-btn');
+  const complaints = document.querySelectorAll('#symptom-list .symptom-text');
+  const conditions = document.querySelectorAll('#symptom-list .symptom-condition');
+
+  if (isRegionTranslated) {
+    complaints.forEach((el, i) => { if (originalRegionTexts[i]) el.textContent = originalRegionTexts[i].complaint; });
+    conditions.forEach((el, i) => { if (originalRegionTexts[i]) el.textContent = originalRegionTexts[i].condition; });
+    tBtn.textContent = '🇷🇺 RU';
+    isRegionTranslated = false;
+    return;
+  }
+
+  tBtn.textContent = '⏳';
+  tBtn.disabled = true;
+
+  const allTexts = originalRegionTexts.flatMap(s => [s.complaint, s.condition]);
+  try {
+    const translations = await Promise.all(
+      allTexts.map(text =>
+        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=en|ru')
+          .then(r => r.json())
+          .then(d => d.responseData.translatedText || text)
+          .catch(() => text)
+      )
+    );
+    complaints.forEach((el, i) => { el.textContent = translations[i * 2]; });
+    conditions.forEach((el, i) => { el.textContent = translations[i * 2 + 1]; });
+    tBtn.textContent = '🇺🇸 EN';
+    isRegionTranslated = true;
+  } catch(e) {
+    tBtn.textContent = '🇷🇺 RU';
+  }
+  tBtn.disabled = false;
+}
+
 async function toggleClinicalTranslate() {
   const tBtn = document.getElementById('clinical-translate-btn');
 
@@ -2298,6 +2337,12 @@ function showRegion(key) {
   document.getElementById('region-emoji-header').textContent = r.emoji;
   document.getElementById('region-title-header').textContent = r.label;
   document.getElementById('region-sub-header').textContent = r.sub;
+
+  // Reset region translation state
+  isRegionTranslated = false;
+  originalRegionTexts = r.symptoms.map(s => ({ complaint: s.complaint, condition: s.condition }));
+  const rBtn = document.getElementById('region-translate-btn');
+  if (rBtn) { rBtn.textContent = '🇷🇺 RU'; rBtn.disabled = false; }
 
   const list = document.getElementById('symptom-list');
   list.innerHTML = r.symptoms.map(s => `
