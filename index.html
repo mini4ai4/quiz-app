@@ -93,35 +93,49 @@
     0%, 100% { transform: translate(0,0); }
     50% { transform: translate(40px,-30px); }
   }
-  .hero-emoji { font-size: 56px; margin-bottom: 10px; position: relative; z-index: 1; }
+  .hero-emoji {
+    width: 88px; height: 88px;
+    border-radius: 26px;
+    margin: 0 auto 16px;
+    position: relative; z-index: 1;
+    background: linear-gradient(135deg, rgba(106,17,203,0.6), rgba(37,117,252,0.5));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(106,17,203,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+    overflow: hidden;
+  }
+  .hero-emoji img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; }
+  .hero-emoji-fallback { font-size: 48px; line-height: 1; }
   .hero-title {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 900;
     letter-spacing: -0.5px;
     position: relative; z-index: 1;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #fff 0%, rgba(200,180,255,0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 8px;
   }
   .hero-sub {
-    font-size: 15px;
-    color: rgba(255,255,255,0.8);
-    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-top: 4px;
     position: relative; z-index: 1;
   }
 
   /* Decorative dots */
-  .dots {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 16px;
-    position: relative; z-index: 1;
-  }
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.4);
-  }
-  .dot.active { background: #fff; width: 22px; border-radius: 4px; }
+  .dots { display: none; }
 
   .section-label {
     font-size: 11px;
@@ -479,51 +493,73 @@
   }
 
   /* ===== SUPPORT / DONATE ===== */
-  .support-box {
-    margin-top: 32px;
-    background: linear-gradient(135deg, #0d1a2e 0%, #0a1020 100%);
-    border: 1.5px solid #1e3a5f;
-    border-radius: 18px;
-    padding: 20px 18px 18px;
-    text-align: center;
+  .support-box { display: none; }
+  .donate-section {
+    margin-top: 20px;
+    position: relative; z-index: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 16px;
   }
-  .support-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: #ccc;
-    margin-bottom: 4px;
-  }
-  .support-sub {
-    font-size: 12px;
-    color: #555;
-    margin-bottom: 14px;
+  .donate-heading {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
   }
   .donate-btns {
     display: flex;
     gap: 8px;
     justify-content: center;
-    flex-wrap: wrap;
   }
   .donate-btn {
-    display: inline-block;
-    padding: 9px 18px;
-    background: rgba(255,255,255,0.18);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 6px;
+    background: rgba(255,255,255,0.07);
     color: #fff;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 14px;
     text-decoration: none;
     transition: all 0.15s;
-    border: 1.5px solid rgba(255,255,255,0.35);
-    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
   }
-  .donate-btn:active { transform: scale(0.96); }
-  .donate-btn:hover { background: rgba(255,255,255,0.28); }
+  .donate-btn .d-icon { font-size: 20px; line-height: 1; }
+  .donate-btn .d-amt { font-size: 14px; font-weight: 800; }
+  .donate-btn:active { transform: scale(0.95); }
+  .donate-btn:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.2); }
   .donate-custom {
-    background: rgba(240,192,64,0.25);
-    border-color: rgba(240,192,64,0.6);
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(240,192,64,0.2), rgba(232,134,10,0.15));
+    border: 1px solid rgba(240,192,64,0.4);
+    border-radius: 14px;
+    color: #f0c040;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: all 0.15s;
   }
-  .donate-custom:hover { background: rgba(240,192,64,0.38); }
+  .donate-custom:hover { background: linear-gradient(135deg, rgba(240,192,64,0.3), rgba(232,134,10,0.25)); }
+  .donate-pay-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
 
   /* Question source label */
   .q-source {
@@ -774,24 +810,31 @@
   <!-- ===== HOME SCREEN ===== -->
   <div id="screen-home">
     <div class="hero">
-      <div class="hero-emoji">🧠</div>
+      <div class="hero-emoji">
+        <img src="icons/icon-brain.png" alt="Brain" onerror="this.parentElement.innerHTML='<span class=hero-emoji-fallback>🧠</span>'">
+      </div>
       <div class="hero-title">Big Brain Energy — Soma Edition</div>
-      <div class="hero-sub">Practice and remember</div>
-      <div class="dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
+      <div class="hero-sub">✦ Practice &amp; Remember</div>
 
-      <!-- Support section inside hero -->
-      <div style="font-size:13px; color:rgba(255,255,255,0.75); margin-top:20px; position:relative; z-index:1; font-weight:600;">Enjoying the app? Treat me 🙏</div>
-      <div class="donate-btns" style="margin-top:10px; position:relative; z-index:1;">
-        <a class="donate-btn" href="https://buy.stripe.com/fZu5kDdJB8YAdr28UL6J207" target="_blank">☕ $5</a>
-        <a class="donate-btn" href="https://buy.stripe.com/28E7sL20TdeQbiUb2T6J208" target="_blank">🍫 $10</a>
-        <a class="donate-btn" href="https://buy.stripe.com/aFa7sL34XcaMdr2db16J209" target="_blank">🍣 $20</a>
-        <a class="donate-btn donate-custom" href="https://buy.stripe.com/28E00jcFxgr25YA9YP6J206" target="_blank">Custom 💛</a>
+      <div class="donate-section">
+        <div class="donate-heading">Enjoying the app? Treat me 🙏</div>
+        <div class="donate-btns">
+          <a class="donate-btn" href="https://buy.stripe.com/fZu5kDdJB8YAdr28UL6J207" target="_blank">
+            <span class="d-icon">☕</span>
+            <span class="d-amt">$5</span>
+          </a>
+          <a class="donate-btn" href="https://buy.stripe.com/28E7sL20TdeQbiUb2T6J208" target="_blank">
+            <span class="d-icon">🍫</span>
+            <span class="d-amt">$10</span>
+          </a>
+          <a class="donate-btn" href="https://buy.stripe.com/aFa7sL34XcaMdr2db16J209" target="_blank">
+            <span class="d-icon">🍣</span>
+            <span class="d-amt">$20</span>
+          </a>
+        </div>
+        <a class="donate-custom" href="https://buy.stripe.com/28E00jcFxgr25YA9YP6J206" target="_blank">Custom amount 💛</a>
+        <div class="donate-pay-note">🔒 Apple Pay &amp; all cards</div>
       </div>
-      <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:8px; position:relative; z-index:1;">Apple Pay &amp; all cards</div>
     </div>
 
     <div class="section-label">Clinical Tools</div>
