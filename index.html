@@ -1683,6 +1683,7 @@ async function toggleClinicalTranslate() {
   const tBtn = document.getElementById('clinical-translate-btn');
 
   if (isClinicalTranslated) {
+    document.getElementById('test-detail-for').textContent = '🎯 Tests for: ' + originalClinicalTexts.testsFor;
     const whySection = document.getElementById('test-detail-why');
     if (originalClinicalTexts.why) {
       whySection.style.display = 'block';
@@ -1700,6 +1701,7 @@ async function toggleClinicalTranslate() {
   tBtn.disabled = true;
 
   const fields = [
+    { id: 'test-detail-for', text: originalClinicalTexts.testsFor, prefix: '🎯 Тестирует: ' },
     { id: 'test-why-text', text: originalClinicalTexts.why },
     { id: 'test-client-text', text: originalClinicalTexts.client },
     { id: 'test-therapist-text', text: originalClinicalTexts.therapist },
@@ -1716,7 +1718,7 @@ async function toggleClinicalTranslate() {
       )
     );
     fields.forEach((f, i) => {
-      document.getElementById(f.id).textContent = translations[i];
+      document.getElementById(f.id).textContent = (f.prefix || '') + translations[i];
     });
     tBtn.textContent = '🇺🇸 EN';
     isClinicalTranslated = true;
@@ -2376,7 +2378,7 @@ function showTest(regionKey, testKey) {
   const tBtn = document.getElementById('clinical-translate-btn');
   if (tBtn) { tBtn.textContent = '🇷🇺 RU'; tBtn.disabled = false; }
 
-  originalClinicalTexts = { why: t.why || '', client: t.client, therapist: t.therapist, positive: t.positive };
+  originalClinicalTexts = { testsFor: t.testsFor, why: t.why || '', client: t.client, therapist: t.therapist, positive: t.positive };
 
   document.getElementById('test-detail-name').textContent = t.name;
   document.getElementById('test-detail-for').textContent = '🎯 Tests for: ' + t.testsFor;
