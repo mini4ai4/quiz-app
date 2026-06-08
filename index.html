@@ -721,8 +721,13 @@
   <div id="screen-clinical-test">
     <button class="clinical-back" id="clinical-test-back" onclick="showRegion(currentRegionKey)">← Back</button>
     <div class="test-detail-header">
-      <div class="test-detail-name" id="test-detail-name"></div>
-      <div class="test-detail-for" id="test-detail-for"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div>
+          <div class="test-detail-name" id="test-detail-name"></div>
+          <div class="test-detail-for" id="test-detail-for"></div>
+        </div>
+        <button class="translate-btn" id="clinical-translate-btn" onclick="toggleClinicalTranslate()" style="flex-shrink:0;margin-top:4px">🇷🇺 RU</button>
+      </div>
     </div>
     <div id="test-detail-why" class="test-section" style="display:none">
       <div class="test-section-label">Why Test? (Symptoms)</div>
@@ -822,6 +827,8 @@
 <script>
 let currentQuiz = null;
 let isTranslated = false;
+let isClinicalTranslated = false;
+let originalClinicalTexts = {};
 let originalQuestionText = '';
 let originalOptionTexts = [];
 let currentQuestions = [];
@@ -1633,6 +1640,53 @@ async function toggleTranslate() {
   tBtn.disabled = false;
 }
 
+async function toggleClinicalTranslate() {
+  const tBtn = document.getElementById('clinical-translate-btn');
+
+  if (isClinicalTranslated) {
+    const whySection = document.getElementById('test-detail-why');
+    if (originalClinicalTexts.why) {
+      whySection.style.display = 'block';
+      document.getElementById('test-why-text').textContent = originalClinicalTexts.why;
+    }
+    document.getElementById('test-client-text').textContent = originalClinicalTexts.client;
+    document.getElementById('test-therapist-text').textContent = originalClinicalTexts.therapist;
+    document.getElementById('test-positive-text').textContent = originalClinicalTexts.positive;
+    tBtn.textContent = '🇷🇺 RU';
+    isClinicalTranslated = false;
+    return;
+  }
+
+  tBtn.textContent = '⏳';
+  tBtn.disabled = true;
+
+  const fields = [
+    { id: 'test-why-text', text: originalClinicalTexts.why },
+    { id: 'test-client-text', text: originalClinicalTexts.client },
+    { id: 'test-therapist-text', text: originalClinicalTexts.therapist },
+    { id: 'test-positive-text', text: originalClinicalTexts.positive },
+  ].filter(f => f.text);
+
+  try {
+    const translations = await Promise.all(
+      fields.map(f =>
+        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(f.text) + '&langpair=en|ru')
+          .then(r => r.json())
+          .then(d => d.responseData.translatedText || f.text)
+          .catch(() => f.text)
+      )
+    );
+    fields.forEach((f, i) => {
+      document.getElementById(f.id).textContent = translations[i];
+    });
+    tBtn.textContent = '🇺🇸 EN';
+    isClinicalTranslated = true;
+  } catch(e) {
+    tBtn.textContent = '🇷🇺 RU';
+  }
+  tBtn.disabled = false;
+}
+
 function loadQuestions() {
   renderHome();
 }
@@ -2271,6 +2325,14 @@ function showFirstTest(regionKey, testKeys) {
 function showTest(regionKey, testKey) {
   currentRegionKey = regionKey;
   const t = clinicalRegions[regionKey].tests[testKey];
+
+  // Reset translation state
+  isClinicalTranslated = false;
+  const tBtn = document.getElementById('clinical-translate-btn');
+  if (tBtn) { tBtn.textContent = '🇷🇺 RU'; tBtn.disabled = false; }
+
+  originalClinicalTexts = { why: t.why || '', client: t.client, therapist: t.therapist, positive: t.positive };
+
   document.getElementById('test-detail-name').textContent = t.name;
   document.getElementById('test-detail-for').textContent = '🎯 Tests for: ' + t.testsFor;
 
