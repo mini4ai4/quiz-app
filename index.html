@@ -124,54 +124,71 @@
   .dot.active { background: #fff; width: 22px; border-radius: 4px; }
 
   .section-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #888;
-    margin-bottom: 14px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin: 22px 0 10px 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::before {
+    content: '';
+    width: 3px; height: 14px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #a78bfa, #60a5fa);
+    flex-shrink: 0;
   }
 
   .quiz-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 
   .quiz-card {
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.05);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.09);
     border-radius: 18px;
-    padding: 18px 20px;
+    padding: 13px 14px 13px 13px;
     cursor: pointer;
     transition: all 0.2s;
     text-align: left;
     position: relative;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 13px;
   }
-  .quiz-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: linear-gradient(180deg, #6a11cb, #2575fc);
-    border-radius: 18px 0 0 18px;
-  }
-  .quiz-card:nth-child(2)::before { background: linear-gradient(180deg, #f093fb, #f5576c); }
-  .quiz-card:nth-child(3)::before { background: linear-gradient(180deg, #4facfe, #00f2fe); }
-  .quiz-card:nth-child(4)::before { background: linear-gradient(180deg, #43e97b, #38f9d7); }
   .quiz-card:hover, .quiz-card:active {
-    background: rgba(255,255,255,0.07);
-    border-color: rgba(255,255,255,0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(106,17,203,0.2);
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.35);
   }
-  .quiz-card-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; padding-left: 8px; }
-  .quiz-card-meta { font-size: 13px; color: #888; padding-left: 8px; }
+  .quiz-card-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  }
+  .quiz-card-icon span {
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.3px;
+    text-align: center;
+    line-height: 1.2;
+    font-family: -apple-system, 'SF Pro Display', sans-serif;
+  }
+  .quiz-card-body { flex: 1; min-width: 0; }
+  .quiz-card-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; color: #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .quiz-card-meta { font-size: 12px; color: rgba(255,255,255,0.45); }
   .quiz-card-arrow {
-    position: absolute;
-    right: 18px; top: 50%;
-    transform: translateY(-50%);
-    color: #555;
-    font-size: 20px;
+    color: rgba(255,255,255,0.25);
+    font-size: 22px;
+    flex-shrink: 0;
+    line-height: 1;
   }
 
   .empty-state {
@@ -452,18 +469,13 @@
 
   /* ===== FINAL EXAM CARD ===== */
   .quiz-card.final {
-    background: rgba(240,192,64,0.06);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(240,192,64,0.07);
     border: 1px solid rgba(240,192,64,0.3);
   }
-  .quiz-card.final::before {
-    background: linear-gradient(180deg, #f0c040, #e8860a) !important;
-  }
-  .quiz-card.final .quiz-card-title { color: #f0c040; }
+  .quiz-card.final .quiz-card-title { color: #f0c040; font-size: 16px; }
   .quiz-card.final:hover, .quiz-card.final:active {
-    border-color: #f0c040;
-    box-shadow: 0 8px 24px rgba(240,192,64,0.25);
+    border-color: rgba(240,192,64,0.5);
+    box-shadow: 0 8px 28px rgba(240,192,64,0.2);
   }
 
   /* ===== SUPPORT / DONATE ===== */
@@ -784,11 +796,15 @@
 
     <div class="section-label">Clinical Tools</div>
     <div class="quiz-list" style="margin-bottom:8px">
-      <div class="quiz-card" onclick="showClinical()" style="background:linear-gradient(135deg,#0f3443,#11998e20); border-color:#11998e55;">
-        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#11998e,#38ef7d);border-radius:18px 0 0 18px;"></div>
-        <div class="quiz-card-title">🔬 Clinical Reasoning</div>
-        <div class="quiz-card-meta">Symptom → Which test to use</div>
-        <div class="quiz-card-arrow">→</div>
+      <div class="quiz-card" onclick="showClinical()" style="background:rgba(17,153,142,0.08); border-color:rgba(17,153,142,0.3);">
+        <div class="quiz-card-icon" style="background:linear-gradient(135deg,#11998e,#38ef7d)">
+          <span style="font-size:18px">🔬</span>
+        </div>
+        <div class="quiz-card-body">
+          <div class="quiz-card-title" style="color:#38ef7d">Clinical Reasoning</div>
+          <div class="quiz-card-meta">Symptom → Which test to use</div>
+        </div>
+        <div class="quiz-card-arrow">›</div>
       </div>
     </div>
     <div class="section-label">Available Tests</div>
@@ -1868,14 +1884,40 @@ function renderHome() {
     const meta = q.isFinal
       ? `100 random questions · drawn from ${bankTotal}-question bank`
       : `${q.questions.length} questions${q.description ? ' · ' + q.description : ''}`;
+    const style = getQuizStyle(q.title);
+    const displayTitle = q.title.replace(/^[^\w\s]+\s*/, '');
     return `
     <div class="quiz-card${q.isFinal ? ' final' : ''}" onclick="startQuiz(${i})">
-      <div class="quiz-card-title">${q.title}</div>
-      <div class="quiz-card-meta">${meta}</div>
+      <div class="quiz-card-icon" style="background:linear-gradient(135deg,${style.c1},${style.c2})">
+        <span>${style.abbr}</span>
+      </div>
+      <div class="quiz-card-body">
+        <div class="quiz-card-title">${displayTitle}</div>
+        <div class="quiz-card-meta">${meta}</div>
+      </div>
       <div class="quiz-card-arrow">›</div>
     </div>
   `;
   }).join('');
+}
+
+function getQuizStyle(title) {
+  if (title.includes('Final Exam'))           return { c1:'#f0c040', c2:'#e8860a', abbr:'★' };
+  if (title.includes('PD') || title.includes('Professional Dev')) return { c1:'#a855f7', c2:'#7c3aed', abbr:'PD' };
+  if (title.includes('MSA 1') || title.match(/MSA1/)) return { c1:'#3b82f6', c2:'#1d4ed8', abbr:'M1' };
+  if (title.includes('MSA2'))                 return { c1:'#06b6d4', c2:'#0284c7', abbr:'M2' };
+  if (title.includes('MSA3'))                 return { c1:'#10b981', c2:'#047857', abbr:'M3' };
+  if (title.includes('Physiology') || title.includes('Phys')) return { c1:'#f97316', c2:'#c2410c', abbr:'Ph' };
+  if (title.includes('CA1'))                  return { c1:'#ec4899', c2:'#be185d', abbr:'C1' };
+  if (title.includes('CA2'))                  return { c1:'#ef4444', c2:'#b91c1c', abbr:'C2' };
+  if (title.includes('CMT1'))                 return { c1:'#22c55e', c2:'#15803d', abbr:'CT' };
+  if (title.includes('CMTP'))                 return { c1:'#14b8a6', c2:'#0f766e', abbr:'CP' };
+  if (title.includes('CMT2'))                 return { c1:'#84cc16', c2:'#4d7c0f', abbr:'C2' };
+  if (title.includes('CI1') || title.includes('Integration 1')) return { c1:'#0ea5e9', c2:'#0369a1', abbr:'I1' };
+  if (title.includes('CI2'))                  return { c1:'#8b5cf6', c2:'#6d28d9', abbr:'I2' };
+  if (title.includes('CI3'))                  return { c1:'#f59e0b', c2:'#b45309', abbr:'I3' };
+  if (title.includes('Kines'))                return { c1:'#eab308', c2:'#a16207', abbr:'Ki' };
+  return                                             { c1:'#6366f1', c2:'#4338ca', abbr:'??' };
 }
 
 function startQuiz(idx) {
