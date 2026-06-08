@@ -450,6 +450,204 @@
     font-style: italic;
     padding-left: 2px;
   }
+
+  /* ===== CLINICAL REASONING ===== */
+  #screen-clinical, #screen-clinical-region, #screen-clinical-test { display: none; padding-top: 12px; }
+
+  .clinical-hero {
+    margin: 0 -16px 24px;
+    padding: 32px 24px 28px;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .clinical-hero::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+  .clinical-hero-emoji { font-size: 44px; margin-bottom: 8px; position: relative; z-index: 1; }
+  .clinical-hero-title { font-size: 24px; font-weight: 900; position: relative; z-index: 1; }
+  .clinical-hero-sub { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 4px; position: relative; z-index: 1; }
+
+  .region-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .region-card {
+    background: linear-gradient(135deg, #1a1a3e, #16213e);
+    border: 1.5px solid #2a2a5e;
+    border-radius: 18px;
+    padding: 20px 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .region-card:hover, .region-card:active {
+    border-color: #38ef7d;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(56,239,125,0.2);
+  }
+  .region-emoji { font-size: 36px; margin-bottom: 8px; }
+  .region-label { font-size: 14px; font-weight: 700; color: #fff; }
+  .region-count { font-size: 11px; color: #888; margin-top: 2px; }
+
+  .symptom-card {
+    background: linear-gradient(135deg, #1a1a3e, #16213e);
+    border: 1.5px solid #2a2a5e;
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .symptom-card:hover, .symptom-card:active {
+    border-color: #38ef7d;
+    box-shadow: 0 4px 16px rgba(56,239,125,0.15);
+  }
+  .symptom-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #38ef7d; margin-bottom: 6px; }
+  .symptom-text { font-size: 14px; color: #ddd; line-height: 1.5; }
+  .symptom-condition { font-size: 12px; color: #888; margin-top: 6px; }
+  .symptom-tests-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .test-tag {
+    background: rgba(56,239,125,0.15);
+    border: 1px solid rgba(56,239,125,0.3);
+    color: #38ef7d;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .test-detail-header {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .test-detail-name { font-size: 22px; font-weight: 900; color: #fff; }
+  .test-detail-for { font-size: 13px; color: rgba(255,255,255,0.85); margin-top: 4px; }
+
+  .test-section {
+    background: #16213e;
+    border: 1.5px solid #2a2a5e;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .test-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #38ef7d;
+    margin-bottom: 8px;
+  }
+  .test-section-text {
+    font-size: 14px;
+    color: #ddd;
+    line-height: 1.6;
+  }
+  .test-positive {
+    background: rgba(233,69,96,0.15);
+    border: 1.5px solid rgba(233,69,96,0.4);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .test-positive .test-section-label { color: #e94560; }
+  .test-positive .test-section-text { color: #ffb3be; }
+
+  .btn-youtube {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: all 0.15s;
+  }
+  .btn-youtube:hover { background: #cc0000; }
+
+  .clinical-back {
+    background: none;
+    border: none;
+    color: #38ef7d;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .region-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: linear-gradient(135deg, #1a1a3e, #16213e);
+    border-radius: 14px;
+    border: 1.5px solid #2a2a5e;
+  }
+  .region-header-emoji { font-size: 32px; }
+  .region-header-title { font-size: 20px; font-weight: 800; }
+  .region-header-sub { font-size: 12px; color: #888; }
+
+  .clinical-section-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #888;
+    margin-bottom: 12px;
+  }
+
+  .test-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .test-nav-btn {
+    background: #16213e;
+    border: 1.5px solid #2a2a5e;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .test-nav-btn.active, .test-nav-btn:hover {
+    background: rgba(56,239,125,0.15);
+    border-color: #38ef7d;
+    color: #38ef7d;
+  }
 </style>
 </head>
 <body>
@@ -478,8 +676,74 @@
       <div style="font-size:11px; color:rgba(255,255,255,0.45); margin-top:8px; position:relative; z-index:1;">Apple Pay &amp; all cards</div>
     </div>
 
+    <div class="section-label">Clinical Tools</div>
+    <div class="quiz-list" style="margin-bottom:8px">
+      <div class="quiz-card" onclick="showClinical()" style="background:linear-gradient(135deg,#0f3443,#11998e20); border-color:#11998e55;">
+        <div style="position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,#11998e,#38ef7d);border-radius:18px 0 0 18px;"></div>
+        <div class="quiz-card-title">🔬 Clinical Reasoning</div>
+        <div class="quiz-card-meta">Symptom → Which test to use</div>
+        <div class="quiz-card-arrow">→</div>
+      </div>
+    </div>
     <div class="section-label">Available Tests</div>
     <div class="quiz-list" id="quiz-list"></div>
+  </div>
+
+  <!-- ===== CLINICAL REASONING — REGION SELECTOR ===== -->
+  <div id="screen-clinical">
+    <button class="clinical-back" onclick="goHome()">← Back to Home</button>
+    <div class="clinical-hero">
+      <div class="clinical-hero-emoji">🔬</div>
+      <div class="clinical-hero-title">Clinical Reasoning</div>
+      <div class="clinical-hero-sub">Select body region to find the right test</div>
+    </div>
+    <div class="clinical-section-label">Body Region</div>
+    <div class="region-grid" id="region-grid"></div>
+  </div>
+
+  <!-- ===== CLINICAL REASONING — SYMPTOM LIST ===== -->
+  <div id="screen-clinical-region">
+    <button class="clinical-back" id="clinical-region-back" onclick="showClinical()">← All Regions</button>
+    <div class="region-header">
+      <div class="region-header-emoji" id="region-emoji-header"></div>
+      <div>
+        <div class="region-header-title" id="region-title-header"></div>
+        <div class="region-header-sub" id="region-sub-header"></div>
+      </div>
+    </div>
+    <div class="clinical-section-label">Client Complaints → Tests</div>
+    <div id="symptom-list"></div>
+    <div class="clinical-section-label" style="margin-top:8px">All Tests in This Region</div>
+    <div class="test-nav" id="test-nav-all"></div>
+  </div>
+
+  <!-- ===== CLINICAL REASONING — TEST DETAIL ===== -->
+  <div id="screen-clinical-test">
+    <button class="clinical-back" id="clinical-test-back" onclick="showRegion(currentRegionKey)">← Back</button>
+    <div class="test-detail-header">
+      <div class="test-detail-name" id="test-detail-name"></div>
+      <div class="test-detail-for" id="test-detail-for"></div>
+    </div>
+    <div id="test-detail-why" class="test-section" style="display:none">
+      <div class="test-section-label">Why Test? (Symptoms)</div>
+      <div class="test-section-text" id="test-why-text"></div>
+    </div>
+    <div class="test-section">
+      <div class="test-section-label">👤 Client Position</div>
+      <div class="test-section-text" id="test-client-text"></div>
+    </div>
+    <div class="test-section">
+      <div class="test-section-label">🙌 Therapist Action</div>
+      <div class="test-section-text" id="test-therapist-text"></div>
+    </div>
+    <div class="test-positive">
+      <div class="test-section-label">✅ Positive Test (+)</div>
+      <div class="test-section-text" id="test-positive-text"></div>
+    </div>
+    <a id="test-youtube-btn" class="btn-youtube" target="_blank">
+      ▶ Watch on YouTube
+    </a>
+    <button class="btn btn-secondary" onclick="showRegion(currentRegionKey)">← Back to Region</button>
   </div>
 
   <!-- ===== QUIZ SCREEN ===== -->
@@ -1534,9 +1798,10 @@ function showReview() {
 }
 
 function showScreen(id) {
-  ['screen-home','screen-quiz','screen-result','screen-review'].forEach(s => {
+  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test'].forEach(s => {
     document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
+  window.scrollTo(0,0);
 }
 function goHome() { showScreen('screen-home'); }
 function shuffle(arr) {
@@ -1545,6 +1810,486 @@ function shuffle(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+// ============================================================
+// CLINICAL REASONING DATA
+// ============================================================
+const clinicalRegions = {
+  wrist: {
+    label: "Wrist",
+    emoji: "🖐️",
+    sub: "4 special tests",
+    symptoms: [
+      {
+        complaint: "Client wakes with numb hands; numbness/tingling in lateral 3.5 fingers; wrist pain; does repetitive actions",
+        condition: "Possible: Carpal Tunnel Syndrome",
+        tests: ["phalens","reverse_phalens","tinels"]
+      },
+      {
+        complaint: "Radial side wrist pain; swelling at lateral wrist; weakness of the thumb; pain ulnar deviating wrist",
+        condition: "Possible: de Quervain's Tenosynovitis",
+        tests: ["finkelstein"]
+      }
+    ],
+    tests: {
+      phalens: {
+        name: "Phalen's Test",
+        testsFor: "Carpal Tunnel Syndrome",
+        why: "Client wakes with numb hands; N/T in lateral 3.5 fingers; wrist pain; repetitive action activities",
+        client: "Hold both forearms parallel to floor in front of body. Flex both wrists dorsum to dorsum, fingers facing the floor. Hold position up to 60 seconds.",
+        therapist: "Observes",
+        positive: "Nerve pain in lateral 3.5 digits",
+        yt: "phalen+test+massage+therapy+carpal+tunnel"
+      },
+      reverse_phalens: {
+        name: "Reverse Phalen's Test",
+        testsFor: "Carpal Tunnel Syndrome",
+        why: "Client wakes with numb hands; N/T in lateral 3.5 fingers; wrist pain; repetitive actions",
+        client: "Hold both forearms parallel to floor. Extend both wrists fully, place hands palm to palm, fingers pointing toward ceiling ("prayer position"). Hold up to 60 seconds.",
+        therapist: "Observes",
+        positive: "Nerve pain in lateral 3.5 digits",
+        yt: "reverse+phalen+test+massage+therapy"
+      },
+      tinels: {
+        name: "Tinel's Test",
+        testsFor: "Carpal Tunnel Syndrome",
+        why: "Client wakes with numb hands; N/T in lateral 3.5 fingers; wrist pain; repetitive actions",
+        client: "Seated with forearm supinated, wrist and fingers relaxed",
+        therapist: "Firmly taps over median nerve at proximal row of carpal bones (through the flexor retinaculum) for 30 seconds",
+        positive: "Nerve pain in lateral 3.5 digits",
+        yt: "tinel+test+carpal+tunnel+massage+therapy"
+      },
+      finkelstein: {
+        name: "Finkelstein's Test",
+        testsFor: "de Quervain's Tenosynovitis (Extensor pollicis brevis & Abductor pollicis longus tendons)",
+        why: "Radial side wrist pain; possibly swelling at lateral wrist; increased pain and weakness over radial styloid process; pain in lateral wrist when ulnar deviating wrist",
+        client: "Place thumb inside closed fist, then ulnar deviate wrist actively",
+        therapist: "Moves client's wrist into further ulnar deviation",
+        positive: "Sharp pain over radial styloid process as tendons are stretched; client will want to release position immediately",
+        yt: "finkelstein+test+de+quervain+massage+therapy"
+      }
+    }
+  },
+  elbow: {
+    label: "Elbow",
+    emoji: "💪",
+    sub: "6 special tests",
+    symptoms: [
+      {
+        complaint: "Sharp local pain at LATERAL epicondyle; overuse / repetitive wrist extension",
+        condition: "Possible: Lateral Epicondylitis (Tennis Elbow)",
+        tests: ["mills","tennis_elbow","cozens"]
+      },
+      {
+        complaint: "Sharp local pain at MEDIAL epicondyle; overuse / repetitive wrist flexion",
+        condition: "Possible: Medial Epicondylitis (Golfer's Elbow)",
+        tests: ["reverse_mills","golfers_elbow"]
+      },
+      {
+        complaint: "Sharp local pain at medial or lateral elbow; hypermobility/instability; audible 'pop' during injury",
+        condition: "Possible: Sprain of radial or ulnar collateral ligament",
+        tests: ["valgus_varus"]
+      }
+    ],
+    tests: {
+      mills: {
+        name: "Mill's Test",
+        testsFor: "Lateral Epicondylitis",
+        why: "Sharp local pain at common extensor tendon; overuse/repetitive wrist extension",
+        client: "Elbow extended, wrist loosely extended",
+        therapist: "Palpate lateral epicondyle with thumb; pronate forearm; passively flex wrist (produces excessive flexion at the wrist)",
+        positive: "Increase in pain at the lateral epicondyle (common extensor tendon)",
+        yt: "mill+test+lateral+epicondylitis+massage+therapy"
+      },
+      tennis_elbow: {
+        name: "Tennis Elbow Test",
+        testsFor: "Lateral Epicondylitis",
+        why: "Sharp local pain at common extensor tendon; overuse",
+        client: "Standing or seated. Elbow extended. From the Mill's position (wrist flexed, forearm pronated).",
+        therapist: "Wrap one hand around client's elbow (thumb pressing on extensor tendons just distal to lateral epicondyle). Other hand grasps client's wrist. Apply resistance as client tries to extend their wrist.",
+        positive: "Pain at the lateral epicondyle; loss of strength",
+        yt: "tennis+elbow+test+massage+therapy+cozen"
+      },
+      cozens: {
+        name: "Cozen's Test",
+        testsFor: "Lateral Epicondylitis",
+        why: "Sharp local pain at lateral epicondyle; pain during wrist extension",
+        client: "Standing or seated. Elbow stabilized, forearm pronated. Patient makes a fist.",
+        therapist: "Stabilize elbow with examiner's thumb on lateral epicondyle. Apply steady pressure against dorsum of hand to flex wrist against resistance.",
+        positive: "Pain in lateral epicondyle area",
+        yt: "cozen+test+lateral+epicondylitis"
+      },
+      reverse_mills: {
+        name: "Reverse Mill's Test",
+        testsFor: "Medial Epicondylitis",
+        why: "Sharp local pain at common flexor tendon; overuse/repetitive wrist flexion",
+        client: "Elbow extended, wrist extended loosely",
+        therapist: "Produces excessive extension at the wrist",
+        positive: "Increase in pain at the medial epicondyle (common flexor tendon)",
+        yt: "reverse+mill+test+medial+epicondylitis+massage+therapy"
+      },
+      golfers_elbow: {
+        name: "Golfer's Elbow Test",
+        testsFor: "Medial Epicondylitis",
+        why: "Sharp local pain at common flexor tendon; overuse",
+        client: "Standing or seated. From Reverse Mill's position. Elbow slightly flexed, hand supinated.",
+        therapist: "Grasp client's hand with thumb pressing on flexor tendons just distal to medial epicondyle. Other hand resists as client tries to flex their wrist. Examiner palpates medial epicondyle.",
+        positive: "Pain/tenderness over medial epicondyle; loss of strength",
+        yt: "golfer+elbow+test+medial+epicondylitis+massage+therapy"
+      },
+      valgus_varus: {
+        name: "Valgus / Varus Stress Test",
+        testsFor: "Radial or Ulnar Collateral Ligament Stability",
+        why: "Sharp local pain at medial or lateral elbow; hypermobility/instability; audible 'pop' if injury occurred",
+        client: "Elbow extended with hand in supination",
+        therapist: "Valgus: Support lateral elbow, apply valgus stress (stresses ulnar collateral ligament). Varus: Support medial elbow, apply varus stress (stresses radial collateral ligament).",
+        positive: "Gapping apparent; excessive joint play; possible pain at ligament site",
+        yt: "valgus+varus+stress+test+elbow+massage+therapy"
+      }
+    }
+  },
+  shoulder: {
+    label: "Shoulder",
+    emoji: "🦾",
+    sub: "6 special tests",
+    symptoms: [
+      {
+        complaint: "Pain in shoulder; limited movement that interferes with daily activities (ADLs)",
+        condition: "ROM limitation — check which direction is restricted",
+        tests: ["apley"]
+      },
+      {
+        complaint: "Inability to abduct shoulder; weakness with abduction; pain with abduction of shoulder",
+        condition: "Possible: Supraspinatus tear or rupture",
+        tests: ["codmans"]
+      },
+      {
+        complaint: "Sharp local pain at supraspinatus insertion; pain with abduction; weakness with abduction; history of repetitive trauma",
+        condition: "Possible: Supraspinatus Tendonitis or Strain",
+        tests: ["empty_can"]
+      },
+      {
+        complaint: "Sharp local pain near acromion; pain specifically between 60°–135° of shoulder abduction; history of repeated stress or poor posture",
+        condition: "Possible: Subacromial Impingement",
+        tests: ["painful_arc"]
+      },
+      {
+        complaint: "Sharp local pain over bicipital groove with activity (overhead actions); weakness in shoulder returning from flexion",
+        condition: "Possible: Biceps Long Head Tendinitis",
+        tests: ["speeds"]
+      },
+      {
+        complaint: "Tenderness/pain around AC joint; pain with overhead activities",
+        condition: "Possible: AC Joint Hypermobility or Ligament Tear",
+        tests: ["crossover"]
+      }
+    ],
+    tests: {
+      apley: {
+        name: "Apley Scratch Test",
+        testsFor: "Range of motion limitations in the shoulder",
+        why: "Client complains of pain during shoulder movement interfering with ADLs",
+        client: "Stand; bring one arm into abduction and lateral rotation while the other arm is brought into adduction and medial rotation. Repeat with arms in opposite directions.",
+        therapist: "Notes limitations in ROM; compares both sides",
+        positive: "Client is unable to reach down the back as far with the affected arm compared to the unaffected arm",
+        yt: "apley+scratch+test+shoulder+massage+therapy"
+      },
+      codmans: {
+        name: "Codman's Drop Arm Test",
+        testsFor: "Supraspinatus tear or rupture",
+        why: "Client is unable to abduct (rupture), or is weak with action; pain with abduction",
+        client: "Seated or standing. Abduct the affected arm to approx. 90°. Attempt to actively maintain position; if unable, slowly lower (adduct) arm back down.",
+        therapist: "Passively abduct client's shoulder to ~90° and release arm. If client is unable to adduct, may place slight resistance load on arm.",
+        positive: "Cannot maintain shoulder abduction = rupture of tendon; holds abduction with weakness/pain = strain of tendon",
+        yt: "codman+drop+arm+test+supraspinatus+massage+therapy"
+      },
+      empty_can: {
+        name: "Empty Can Test (Supraspinatus Strength)",
+        testsFor: "Supraspinatus tendonitis or strain",
+        why: "Sharp/local pain at supraspinatus insertion; pain with abduction; weakness with abduction; history of repetitive trauma",
+        client: "Standing or seated. Bring both arms into 45° of horizontal adduction (arms forward and down, like emptying a can).",
+        therapist: "Instruct client from this position to internally rotate (empty can). Then resist a downward pressure applied to the distal arm.",
+        positive: "Sharp/local pain and/or weakness",
+        yt: "empty+can+test+supraspinatus+massage+therapy"
+      },
+      painful_arc: {
+        name: "Painful Arc Test",
+        testsFor: "Subacromial impingement of supraspinatus tendon and subacromial bursa",
+        why: "Sharp/local pain near acromion; pain approx. 60°–130° of abduction; poor shoulder posture; history of repetitive stress",
+        client: "Stands with arms at side",
+        therapist: "Instruct client to perform full abduction of humerus (without external rotation at 90° as in AROM). Th. may assist client to 130° if unable to perform actively.",
+        positive: "Sharp/local pain that begins at approx. 60° and subsides after 130° (tissues compressed between humerus and acromion during 'painful arc')",
+        yt: "painful+arc+test+shoulder+impingement+massage+therapy"
+      },
+      speeds: {
+        name: "Speed's Test",
+        testsFor: "Biceps long head tendinitis",
+        why: "Sharp/local pain over bicipital groove with activity (overhead actions); weakness with use of shoulder returning from flexion",
+        client: "Seated position. Shoulder flexed to 90°, elbow fully extended, forearm supinated.",
+        therapist: "Perform resisted shoulder flexion by bracing at forearm; palpate long head of biceps tendon (BLH) with thumb to locate lesion site",
+        positive: "Pain with resisted shoulder flexion",
+        yt: "speed+test+biceps+tendinitis+massage+therapy"
+      },
+      crossover: {
+        name: "Cross-Over Test",
+        testsFor: "Hypermobility of AC joint; tear or rupture of AC ligament",
+        why: "Tenderness/pain around AC joint; point tenderness with palpation; pain with overhead activities",
+        client: "Seated or standing",
+        therapist: "Brings client's arm across the chest in full horizontal adduction",
+        positive: "Gapping of AC joint; sharp/local pain at AC joint/ligament",
+        yt: "cross+over+test+AC+joint+shoulder+massage+therapy"
+      }
+    }
+  },
+  lumbar: {
+    label: "Lumbar Spine",
+    emoji: "🦴",
+    sub: "5 special tests",
+    symptoms: [
+      {
+        complaint: "Sharp local low back pain that increases with facet joints being 'loaded up'; pain radiating into leg; muscle weakness; loss of sensation",
+        condition: "Possible: Facet Joint Irritation (FJI) or Space-Occupying Lesion (SOL)",
+        tests: ["kemps"]
+      },
+      {
+        complaint: "Sharp low back pain AND nerve pain/numbness traveling DOWN posterior leg and into foot",
+        condition: "Possible: Sciatica / Sciatic nerve vs. Hamstrings / Disc herniation",
+        tests: ["slr"]
+      },
+      {
+        complaint: "Nerve pain in anterior or medial thigh; weakness in anterior/medial thigh",
+        condition: "Possible: Femoral Nerve Impingement at L2–L4",
+        tests: ["femoral"]
+      },
+      {
+        complaint: "Pain and numbness in low back OR traveling down leg; worse with bearing down or coughing",
+        condition: "Possible: Abnormal intrathecal pressure (disc herniation, space-occupying lesion)",
+        tests: ["valsalva"]
+      },
+      {
+        complaint: "Restricted or asymmetric lumbar mobility; stiffness at specific vertebral level",
+        condition: "Hypermobility or Hypomobility of lumbar vertebrae",
+        tests: ["spring"]
+      }
+    ],
+    tests: {
+      kemps: {
+        name: "Kemp's Test (Compression Test)",
+        testsFor: "FJI or SOL of lumbar spine",
+        why: "Sharp local low back pain that increases when facet joints are 'loaded up'; nerve pain extending into any part of leg; muscle weakness; loss of sensation",
+        client: "Standing or seated. While standing or seated, slowly extend, side-bend, and rotate the thorax and lumbar spine to the affected side. Can be accomplished by having client reach back, turn, and attempt to touch the inside of their own knee.",
+        therapist: "Observes (standing version). Seated: compress down on shoulders while client is in position.",
+        positive: "Pain remaining local in low back = FJI. Pain radiating or other neurological signs in the affected leg = nerve root involvement, SOL.",
+        yt: "kemp+test+lumbar+spine+massage+therapy"
+      },
+      slr: {
+        name: "Straight Leg Raise with Braggard's Sign",
+        testsFor: "Sciatica, Sciatic Nerve vs. Hamstrings",
+        why: "Sharp low back pain and nerve pain down the leg and often to the plantar surface of the foot",
+        client: "Client is supine",
+        therapist: "Stand on side of leg to test (nerve pain in the leg). Grasp client's heel and bring leg into hip flexion with knee extended up to 70–75°. If painful, lower the leg FROM POINT OF PAIN about 10–20°, then dorsiflex the foot and flex the neck (Braggard's Sign).",
+        positive: "Increased pain or numbness in either leg = nerve involvement and/or hamstring contracture. If numbness increases with Braggard's = disc involvement. If pain/numbness does NOT return with Braggard's = hamstring contracture.",
+        yt: "straight+leg+raise+braggard+sign+massage+therapy"
+      },
+      femoral: {
+        name: "Femoral Stretch Test (Side-lying Prone Knee Bend)",
+        testsFor: "Femoral Nerve Impingement at level of L2–L4",
+        why: "Anterior/medial thigh nerve pain and/or weakness",
+        client: "Side-lying on table, test side up. Test knee is flexed to 90°.",
+        therapist: "Cradle top leg at knee, supporting lower leg. Extend hip while stabilizing greater trochanter. Then passively extend client's hip.",
+        positive: "Nerve pain/weakness in the anterior and/or medial thigh or medial leg develops or increases",
+        yt: "femoral+stretch+test+side+lying+knee+bend+massage+therapy"
+      },
+      valsalva: {
+        name: "Valsalva's Test",
+        testsFor: "Abnormal intrathecal pressure on the spine",
+        why: "Nerve pain, muscle weakness, loss of sensation, loss/diminished bladder or bowel control, pelvic floor pain",
+        client: "Seated in a chair and leaning forward supporting themselves with elbows over knees. Client bears down as if having a bowel movement (or does a deep cough).",
+        therapist: "Observes (instruct client to take a deep breath and bear down)",
+        positive: "Increase in nerve pain or loss of function indicates intrathecal pathology (possible disc herniation or space-occupying lesion)",
+        yt: "valsalva+test+lumbar+disc+massage+therapy"
+      },
+      spring: {
+        name: "Spring Test (PROM of Lumbar Spine)",
+        testsFor: "Hypermobility or hypomobility of lumbar vertebrae",
+        why: "Restricted/asymmetric lumbar mobility; stiffness at specific vertebral level",
+        client: "Prone",
+        therapist: "Stand with thumb or hypothenar eminence over the spinous process of lumbar vertebrae. Apply Superior and downward force for flexion; Inferior and downward force for extension — 'spring' through the spinous process of each vertebra to assess anterior-posterior motion.",
+        positive: "Increase or decrease in motion at one vertebra compared to another (hypermobility or hypomobility)",
+        yt: "spring+test+lumbar+PROM+massage+therapy"
+      }
+    }
+  },
+  cervical: {
+    label: "Cervical / Neck",
+    emoji: "🧠",
+    sub: "6 special tests",
+    symptoms: [
+      {
+        complaint: "Anterior/lateral neck pain (dull/achy); pain following scalene trigger point referral pattern (upper back, chest, arm, hand); cramping in neck",
+        condition: "Possible: Active Scalene Trigger Points",
+        tests: ["scalene_cramp"]
+      },
+      {
+        complaint: "Neck/shoulder pain (achy or sharp); pain radiating/shooting into arm or hand; 'pins & needles'; cold hands (anterior scalene involvement)",
+        condition: "Possible: Thoracic Outlet Syndrome (TOS) — anterior scalene",
+        tests: ["adson"]
+      },
+      {
+        complaint: "Neck/shoulder pain radiating into arm/hand; vascular symptoms; 'pins & needles' (middle scalene involvement)",
+        condition: "Possible: TOS — middle scalene",
+        tests: ["halstead"]
+      },
+      {
+        complaint: "Neck/shoulder pain radiating into arm/hand; vascular symptoms — clavicle and 1st rib involvement",
+        condition: "Possible: TOS — costoclavicular impingement",
+        tests: ["military_brace"]
+      },
+      {
+        complaint: "Neck/shoulder pain radiating into arm/hand; vascular symptoms — pectoralis minor involvement; pain worse with arm raised overhead",
+        condition: "Possible: TOS — pectoralis minor / coracoid process",
+        tests: ["wrights"]
+      },
+      {
+        complaint: "Sharp local neck pain (facet irritation) AND/OR nerve pain/numbness/tingling into shoulder, arm, or hand",
+        condition: "Possible: SOL, Facet Joint Irritation, Disk Herniation (cervical)",
+        tests: ["spurling","distraction"]
+      }
+    ],
+    tests: {
+      scalene_cramp: {
+        name: "Scalene Cramp Test",
+        testsFor: "Active trigger points in scalenes",
+        why: "Anterior/lateral neck pain; pain following scalene TrPt referral pattern (upper back, chest, arm, hand); cramping in neck",
+        client: "Seated position. Actively and fully rotate head to the affected side ('tuck chin behind collarbone'). Forcefully maintains this position for up to 1 minute.",
+        therapist: "Observes and monitors",
+        positive: "Reproduce signs and symptoms; cramping within common referral pattern of scalene trigger points",
+        yt: "scalene+cramp+test+trigger+point+massage+therapy"
+      },
+      adson: {
+        name: "Adson's Test",
+        testsFor: "TOS with ANTERIOR scalene involvement",
+        why: "Pain in neck/shoulder (achy soft-tissue and sharp nerve); radiating/shooting into arm/hand; hands falling asleep; 'pins & needles'; cold hands",
+        client: "Seated position. Client rotates head TOWARD affected side (ipsilateral rotation and extension to stretch anterior scalene). Hold breath for ~20 seconds.",
+        therapist: "Palpate client's radial pulse; abduct and extend client's arm. Instruct client to look at Th. Count down to zero (~20 seconds).",
+        positive: "Palpable diminished or absent pulse; recreation of symptoms; tingling in 4th–5th digits; loss of or diminished pulse",
+        yt: "adson+test+thoracic+outlet+syndrome+massage+therapy"
+      },
+      halstead: {
+        name: "Halstead Maneuver",
+        testsFor: "TOS with MIDDLE scalene involvement",
+        why: "Pain in neck/shoulder (achy and sharp); radiating/shooting into arm/hand; vascular symptoms (hands falling asleep, pins & needles, cold hands)",
+        client: "Seated position. Client rotates head AWAY from Th./AWAY from affected side (contralateral rotation and extension to stretch middle scalene). Hold breath for ~20 seconds.",
+        therapist: "Palpate client's radial pulse; abduct and extend client's arm. Count down to zero.",
+        positive: "Palpable diminished or absent pulse; recreation of symptoms; tingling in 4th–5th digits",
+        yt: "halstead+maneuver+thoracic+outlet+syndrome+massage+therapy"
+      },
+      military_brace: {
+        name: "Costoclavicular Test / Military Brace Test",
+        testsFor: "TOS with clavicle and 1st rib involvement",
+        why: "Pain in neck/shoulder radiating into arm/hand; vascular symptoms; hands falling asleep; pins & needles; cold hands",
+        client: "Seated position. Therapist instructs client to: slump, retract and depress shoulders ('military brace posture'). Maintain posture for approx. 60 seconds.",
+        therapist: "Palpate client's radial pulse bilaterally; extend both arms",
+        positive: "Palpable diminished or absent pulse; recreation of symptoms at any point during test; tingling in 4th–5th digits",
+        yt: "costoclavicular+test+military+brace+thoracic+outlet"
+      },
+      wrights: {
+        name: "Wright's Hyperabduction Test",
+        testsFor: "TOS with pectoralis minor / coracoid process involvement",
+        why: "Pain in neck/shoulder radiating into arm/hand; vascular symptoms; hands falling asleep; pins & needles; pain worse with arm raised",
+        client: "Seated position",
+        therapist: "Palpate client's radial pulse. Client slowly abducts and extends arm to 90°; check symptoms, abduct greater than 120° if needed.",
+        positive: "Palpable diminished or absent pulse; recreation of symptoms at any point during test",
+        yt: "wright+hyperabduction+test+thoracic+outlet+syndrome"
+      },
+      spurling: {
+        name: "Spurling's Test",
+        testsFor: "SOL, Facet Joint Irritation, Nerve Root Impingement (cervical)",
+        why: "Sharp local pain in neck (facet irritation) and/or nerve pain (SOL) with possible numbness/tingling in neck, radiating into arm or hand",
+        client: "Seated. Stage 1: head neutral. Stage 2: head in partial extension and rotation toward affected side. Stage 3: head in lateral flexion toward affected side.",
+        therapist: "Stage 1: Apply downward compression with head in neutral. Stage 2: Apply downward compression with head extended and rotated to affected side. Stage 3: Apply downward compression with head laterally flexed to affected side.",
+        positive: "Recreation of signs and symptoms. (+) tingling in shoulder/arm/hand = Disk Herniation. (+) sharp localized pain = Facet Joint Irritation.",
+        yt: "spurling+test+cervical+spine+massage+therapy"
+      },
+      distraction: {
+        name: "Cervical Distraction Test (Confirmation Test)",
+        testsFor: "SOL, Facet Joint Irritation, Nerve Root Impingement — used AFTER positive Spurling's",
+        why: "Use as follow-up/confirmation test after positive Spurling's Test",
+        client: "Seated position",
+        therapist: "Grasp client's head at occiput and temporal areas. Return head to neutral position (if in Spurling position). Apply slow traction superiorly.",
+        positive: "Reduction of client's pain (spine is decompressed — confirms nerve compression was the cause)",
+        yt: "cervical+distraction+test+massage+therapy+confirmation"
+      }
+    }
+  }
+};
+
+let currentRegionKey = '';
+
+function showClinical() {
+  showScreen('screen-clinical');
+  const grid = document.getElementById('region-grid');
+  grid.innerHTML = Object.entries(clinicalRegions).map(([key, r]) => `
+    <div class="region-card" onclick="showRegion('${key}')">
+      <div class="region-emoji">${r.emoji}</div>
+      <div class="region-label">${r.label}</div>
+      <div class="region-count">${r.sub}</div>
+    </div>`).join('');
+}
+
+function showRegion(key) {
+  currentRegionKey = key;
+  const r = clinicalRegions[key];
+  document.getElementById('region-emoji-header').textContent = r.emoji;
+  document.getElementById('region-title-header').textContent = r.label;
+  document.getElementById('region-sub-header').textContent = r.sub;
+
+  const list = document.getElementById('symptom-list');
+  list.innerHTML = r.symptoms.map(s => `
+    <div class="symptom-card" onclick="showFirstTest('${key}', ${JSON.stringify(s.tests)})">
+      <div class="symptom-label">If client complains of:</div>
+      <div class="symptom-text">${s.complaint}</div>
+      <div class="symptom-condition">${s.condition}</div>
+      <div class="symptom-tests-preview">
+        ${s.tests.map(t => `<span class="test-tag">${r.tests[t].name}</span>`).join('')}
+      </div>
+    </div>`).join('');
+
+  const nav = document.getElementById('test-nav-all');
+  nav.innerHTML = Object.entries(r.tests).map(([k, t]) =>
+    `<button class="test-nav-btn" onclick="showTest('${key}','${k}')">${t.name}</button>`
+  ).join('');
+
+  showScreen('screen-clinical-region');
+}
+
+function showFirstTest(regionKey, testKeys) {
+  showTest(regionKey, testKeys[0]);
+}
+
+function showTest(regionKey, testKey) {
+  currentRegionKey = regionKey;
+  const t = clinicalRegions[regionKey].tests[testKey];
+  document.getElementById('test-detail-name').textContent = t.name;
+  document.getElementById('test-detail-for').textContent = '🎯 Tests for: ' + t.testsFor;
+
+  const whySection = document.getElementById('test-detail-why');
+  if (t.why) {
+    whySection.style.display = 'block';
+    document.getElementById('test-why-text').textContent = t.why;
+  } else {
+    whySection.style.display = 'none';
+  }
+
+  document.getElementById('test-client-text').textContent = t.client;
+  document.getElementById('test-therapist-text').textContent = t.therapist;
+  document.getElementById('test-positive-text').textContent = t.positive;
+
+  const ytBtn = document.getElementById('test-youtube-btn');
+  ytBtn.href = 'https://www.youtube.com/results?search_query=' + t.yt;
+
+  showScreen('screen-clinical-test');
 }
 
 loadQuestions();
