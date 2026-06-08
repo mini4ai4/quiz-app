@@ -749,9 +749,12 @@
     <div class="test-section" id="test-massage-response-section" style="display:none; background:rgba(56,239,125,0.07); border:1px solid rgba(56,239,125,0.25); border-radius:12px; padding:14px; margin-top:6px;">
       <div class="test-section-label" style="color:#38ef7d;">💆 Massage Response (If Positive)</div>
       <div class="test-section-text" id="test-massage-response-text"></div>
+      <a id="test-youtube-treatment-btn" class="btn-youtube" target="_blank" style="display:none; margin-top:10px; font-size:13px; padding:8px 14px;">
+        ▶ Watch Treatment on YouTube
+      </a>
     </div>
     <a id="test-youtube-btn" class="btn-youtube" target="_blank">
-      ▶ Watch on YouTube
+      ▶ Watch Test on YouTube
     </a>
     <button class="btn btn-secondary" onclick="showRegion(currentRegionKey)">← Back to Region</button>
   </div>
@@ -1942,6 +1945,7 @@ const clinicalRegions = {
         therapist: "Observes",
         positive: "Nerve pain in lateral 3.5 digits",
         ifPositive: "Mild CTS: transverse friction to carpal retinaculum; massage forearm flexors to reduce tension; ice after. Avoid deep pressure over carpal tunnel. REFER OUT if symptoms are severe or neurological signs are present.",
+        ytTreatment: "carpal+tunnel+syndrome+massage+therapy+treatment",
         yt: "phalen+test+massage+therapy+carpal+tunnel"
       },
       reverse_phalens: {
@@ -1952,6 +1956,7 @@ const clinicalRegions = {
         therapist: "Observes",
         positive: "Nerve pain in lateral 3.5 digits",
         ifPositive: "Same as Phalen's: transverse friction to carpal retinaculum; massage forearm flexors; ice after. Avoid deep pressure over carpal tunnel. REFER OUT if severe.",
+        ytTreatment: "carpal+tunnel+syndrome+massage+therapy+treatment",
         yt: "reverse+phalen+test+massage+therapy"
       },
       tinels: {
@@ -1962,6 +1967,7 @@ const clinicalRegions = {
         therapist: "Firmly taps over median nerve at proximal row of carpal bones (through the flexor retinaculum) for 30 seconds",
         positive: "Nerve pain in lateral 3.5 digits",
         ifPositive: "Confirms CTS: transverse friction to flexor retinaculum; massage forearm flexors and pronator teres; ice after. Modify repetitive activities. REFER OUT if neurological signs persist.",
+        ytTreatment: "carpal+tunnel+massage+treatment+forearm+flexors",
         yt: "tinel+test+carpal+tunnel+massage+therapy"
       },
       finkelstein: {
@@ -1972,6 +1978,7 @@ const clinicalRegions = {
         therapist: "Moves client's wrist into further ulnar deviation",
         positive: "Sharp pain over radial styloid process as tendons are stretched; client will want to release position immediately",
         ifPositive: "Transverse friction to APL and EPB tendons at radial styloid; massage forearm extensors; apply ice after session. Avoid resisted thumb extension during treatment. REFER OUT if severe or unresponsive after 2–3 sessions.",
+        ytTreatment: "de+quervain+tenosynovitis+massage+therapy+treatment",
         yt: "finkelstein+test+de+quervain+massage+therapy"
       }
     }
@@ -2006,6 +2013,7 @@ const clinicalRegions = {
         therapist: "Palpate lateral epicondyle with thumb; pronate forearm; passively flex wrist (produces excessive flexion at the wrist)",
         positive: "Increase in pain at the lateral epicondyle (common extensor tendon)",
         ifPositive: "Transverse friction to common extensor tendon at lateral epicondyle; massage forearm extensors (ECRB, ECRL, EDC); positional release; apply ice after. Modify repetitive wrist extension activities.",
+        ytTreatment: "lateral+epicondylitis+tennis+elbow+massage+therapy+treatment",
         yt: "mill+test+lateral+epicondylitis+massage+therapy"
       },
       tennis_elbow: {
@@ -2016,6 +2024,7 @@ const clinicalRegions = {
         therapist: "Wrap one hand around client's elbow (thumb pressing on extensor tendons just distal to lateral epicondyle). Other hand grasps client's wrist. Apply resistance as client tries to extend their wrist.",
         positive: "Pain at the lateral epicondyle; loss of strength",
         ifPositive: "Transverse friction to common extensor tendon; massage forearm extensors; positional release; ice after. Avoid resisted wrist extension during session. Educate on activity modification.",
+        ytTreatment: "lateral+epicondylitis+tennis+elbow+massage+therapy+treatment",
         yt: "tennis+elbow+test+massage+therapy+cozen"
       },
       cozens: {
@@ -2026,6 +2035,7 @@ const clinicalRegions = {
         therapist: "Stabilize elbow with examiner's thumb on lateral epicondyle. Apply steady pressure against dorsum of hand to flex wrist against resistance.",
         positive: "Pain in lateral epicondyle area",
         ifPositive: "Transverse friction to common extensor tendon; deep tissue massage to forearm extensors; ice after. Consistent with Lateral Epicondylitis treatment: reduce muscle tension, improve tendon healing.",
+        ytTreatment: "lateral+epicondylitis+transverse+friction+massage+treatment",
         yt: "cozen+test+lateral+epicondylitis"
       },
       reverse_mills: {
@@ -2036,6 +2046,7 @@ const clinicalRegions = {
         therapist: "Produces excessive extension at the wrist",
         positive: "Increase in pain at the medial epicondyle (common flexor tendon)",
         ifPositive: "Transverse friction to common flexor tendon at medial epicondyle; massage forearm flexors (FCR, FCU, FDS); positional release; ice after. Modify repetitive wrist flexion activities.",
+        ytTreatment: "medial+epicondylitis+golfer+elbow+massage+therapy+treatment",
         yt: "reverse+mill+test+medial+epicondylitis+massage+therapy"
       },
       golfers_elbow: {
@@ -2046,6 +2057,7 @@ const clinicalRegions = {
         therapist: "Grasp client's hand with thumb pressing on flexor tendons just distal to medial epicondyle. Other hand resists as client tries to flex their wrist. Examiner palpates medial epicondyle.",
         positive: "Pain/tenderness over medial epicondyle; loss of strength",
         ifPositive: "Transverse friction to common flexor tendon; deep tissue to forearm flexors; ice after. Avoid resisted wrist flexion during session. Consistent treatment with Medial Epicondylitis protocol.",
+        ytTreatment: "medial+epicondylitis+golfer+elbow+massage+therapy+treatment",
         yt: "golfer+elbow+test+medial+epicondylitis+massage+therapy"
       },
       valgus_varus: {
@@ -2105,6 +2117,7 @@ const clinicalRegions = {
         therapist: "Notes limitations in ROM; compares both sides",
         positive: "Client is unable to reach down the back as far with the affected arm compared to the unaffected arm",
         ifPositive: "Identify the restricted direction and target the muscles limiting it. Limited ER → work subscapularis and pec minor. Limited IR → work posterior rotator cuff and posterior capsule. Limited abduction → work adductors (lats, pec major). Focus on myofascial release and gentle ROM.",
+        ytTreatment: "shoulder+ROM+restriction+massage+therapy+rotator+cuff",
         yt: "apley+scratch+test+shoulder+massage+therapy"
       },
       codmans: {
@@ -2115,6 +2128,7 @@ const clinicalRegions = {
         therapist: "Passively abduct client's shoulder to ~90° and release arm. If client is unable to adduct, may place slight resistance load on arm.",
         positive: "Cannot maintain shoulder abduction = rupture of tendon; holds abduction with weakness/pain = strain of tendon",
         ifPositive: "Complete rupture (cannot hold arm): REFER OUT immediately. Strain (weak but holds): massage rotator cuff, deltoid, and upper trapezius; gentle pain-free ROM; avoid aggressive work directly on supraspinatus tendon.",
+        ytTreatment: "supraspinatus+strain+rotator+cuff+massage+therapy+treatment",
         yt: "codman+drop+arm+test+supraspinatus+massage+therapy"
       },
       empty_can: {
@@ -2125,6 +2139,7 @@ const clinicalRegions = {
         therapist: "Instruct client from this position to internally rotate (empty can). Then resist a downward pressure applied to the distal arm.",
         positive: "Sharp/local pain and/or weakness",
         ifPositive: "Massage rotator cuff (supraspinatus, infraspinatus, teres minor), deltoid, and upper trapezius; transverse friction at supraspinatus tendon insertion; ice after session. Avoid aggravating shoulder positions (90° abduction with IR).",
+        ytTreatment: "supraspinatus+tendonitis+massage+therapy+treatment+rotator+cuff",
         yt: "empty+can+test+supraspinatus+massage+therapy"
       },
       painful_arc: {
@@ -2135,6 +2150,7 @@ const clinicalRegions = {
         therapist: "Instruct client to perform full abduction of humerus (without external rotation at 90° as in AROM). Th. may assist client to 130° if unable to perform actively.",
         positive: "Sharp/local pain that begins at approx. 60° and subsides after 130° (tissues compressed between humerus and acromion during 'painful arc')",
         ifPositive: "Massage upper trapezius, levator scapulae, and posterior rotator cuff to improve scapular mechanics; myofascial release to pectoralis minor; address forward head and rounded shoulder posture. Avoid direct pressure on subacromial bursa.",
+        ytTreatment: "shoulder+impingement+subacromial+massage+therapy+treatment",
         yt: "painful+arc+test+shoulder+impingement+massage+therapy"
       },
       speeds: {
@@ -2145,6 +2161,7 @@ const clinicalRegions = {
         therapist: "Perform resisted shoulder flexion by bracing at forearm; palpate long head of biceps tendon (BLH) with thumb to locate lesion site",
         positive: "Pain with resisted shoulder flexion",
         ifPositive: "Transverse friction to bicipital tendon in bicipital groove; massage biceps brachii and anterior shoulder muscles; ice after. Avoid resisted shoulder flexion and elbow flexion during session. Position arm carefully to unload tendon.",
+        ytTreatment: "biceps+tendinitis+long+head+massage+therapy+treatment",
         yt: "speed+test+biceps+tendinitis+massage+therapy"
       },
       crossover: {
@@ -2155,6 +2172,7 @@ const clinicalRegions = {
         therapist: "Brings client's arm across the chest in full horizontal adduction",
         positive: "Gapping of AC joint; sharp/local pain at AC joint/ligament",
         ifPositive: "Rupture or significant gapping: REFER OUT. Mild hypermobility/sprain: massage upper trapezius, deltoid, and surrounding shoulder muscles; avoid direct pressure or mobilization of AC joint; support arm position.",
+        ytTreatment: "AC+joint+sprain+shoulder+massage+therapy+treatment",
         yt: "cross+over+test+AC+joint+shoulder+massage+therapy"
       }
     }
@@ -2199,6 +2217,7 @@ const clinicalRegions = {
         therapist: "Observes (standing version). Seated: compress down on shoulders while client is in position.",
         positive: "Pain remaining local in low back = FJI. Pain radiating or other neurological signs in the affected leg = nerve root involvement, SOL.",
         ifPositive: "Local pain only (FJI): massage paraspinals, QL, glutes; heat; gentle muscle work. Radiating pain / neurological signs (SOL): REFER OUT immediately — massage is CONTRAINDICATED until medically cleared.",
+        ytTreatment: "facet+joint+irritation+lumbar+massage+therapy+treatment",
         yt: "kemp+test+lumbar+spine+massage+therapy"
       },
       slr: {
@@ -2209,6 +2228,7 @@ const clinicalRegions = {
         therapist: "Stand on side of leg to test (nerve pain in the leg). Grasp client's heel and bring leg into hip flexion with knee extended up to 70–75°. If painful, lower the leg FROM POINT OF PAIN about 10–20°, then dorsiflex the foot and flex the neck (Braggard's Sign).",
         positive: "Increased pain or numbness in either leg = nerve involvement and/or hamstring contracture. If numbness increases with Braggard's = disc involvement. If pain/numbness does NOT return with Braggard's = hamstring contracture.",
         ifPositive: "Disc involvement (Braggard's +): REFER OUT. Hamstring contracture: massage hamstrings, glutes, and piriformis; gentle stretching. Mild sciatica without disc signs: massage piriformis, glutes, and paraspinals; positional release; avoid compression on sciatic nerve path.",
+        ytTreatment: "sciatica+piriformis+massage+therapy+treatment",
         yt: "straight+leg+raise+braggard+sign+massage+therapy"
       },
       femoral: {
@@ -2219,6 +2239,7 @@ const clinicalRegions = {
         therapist: "Cradle top leg at knee, supporting lower leg. Extend hip while stabilizing greater trochanter. Then passively extend client's hip.",
         positive: "Nerve pain/weakness in the anterior and/or medial thigh or medial leg develops or increases",
         ifPositive: "REFER OUT if nerve pain is significant. Mild: massage hip flexors (iliopsoas, rectus femoris, quadriceps); gentle passive hip extension stretching; avoid aggressive traction or deep pressure into anterior hip near femoral nerve.",
+        ytTreatment: "femoral+nerve+hip+flexor+massage+therapy+treatment",
         yt: "femoral+stretch+test+side+lying+knee+bend+massage+therapy"
       },
       valsalva: {
@@ -2239,6 +2260,7 @@ const clinicalRegions = {
         therapist: "Stand with thumb or hypothenar eminence over the spinous process of lumbar vertebrae. Apply Superior and downward force for flexion; Inferior and downward force for extension — 'spring' through the spinous process of each vertebra to assess anterior-posterior motion.",
         positive: "Increase or decrease in motion at one vertebra compared to another (hypermobility or hypomobility)",
         ifPositive: "Hypomobility: massage paraspinals and thoracolumbar fascia; myofascial release to improve segmental mobility. Hypermobility: avoid joint mobilization; focus massage on reducing muscle guarding; address surrounding stability musculature.",
+        ytTreatment: "lumbar+hypomobility+paraspinal+massage+therapy+myofascial+release",
         yt: "spring+test+lumbar+PROM+massage+therapy"
       }
     }
@@ -2288,6 +2310,7 @@ const clinicalRegions = {
         therapist: "Observes and monitors",
         positive: "Reproduce signs and symptoms; cramping within common referral pattern of scalene trigger points",
         ifPositive: "Trigger point therapy to anterior, middle, and posterior scalenes; massage SCM, upper trapezius, and levator scapulae; gentle cervical stretching; address forward head posture and upper crossed syndrome.",
+        ytTreatment: "scalene+trigger+point+massage+therapy+treatment+cervical",
         yt: "scalene+cramp+test+trigger+point+massage+therapy"
       },
       adson: {
@@ -2298,6 +2321,7 @@ const clinicalRegions = {
         therapist: "Palpate client's radial pulse; abduct and extend client's arm. Instruct client to look at Th. Count down to zero (~20 seconds).",
         positive: "Palpable diminished or absent pulse; recreation of symptoms; tingling in 4th–5th digits; loss of or diminished pulse",
         ifPositive: "Massage anterior scalene, SCM, and cervical muscles; avoid pressure on brachial plexus; address forward head posture and upper crossed syndrome. Use caution with arm positioning — do not compress neurovascular bundle during treatment.",
+        ytTreatment: "thoracic+outlet+syndrome+scalene+massage+therapy+treatment",
         yt: "adson+test+thoracic+outlet+syndrome+massage+therapy"
       },
       halstead: {
@@ -2308,6 +2332,7 @@ const clinicalRegions = {
         therapist: "Palpate client's radial pulse; abduct and extend client's arm. Count down to zero.",
         positive: "Palpable diminished or absent pulse; recreation of symptoms; tingling in 4th–5th digits",
         ifPositive: "Massage middle and posterior scalenes, upper trapezius, and levator scapulae; trigger point work on scalenes; gentle cervical stretching; postural correction. Avoid pressure on brachial plexus.",
+        ytTreatment: "thoracic+outlet+syndrome+middle+scalene+massage+therapy+treatment",
         yt: "halstead+maneuver+thoracic+outlet+syndrome+massage+therapy"
       },
       military_brace: {
@@ -2318,6 +2343,7 @@ const clinicalRegions = {
         therapist: "Palpate client's radial pulse bilaterally; extend both arms",
         positive: "Palpable diminished or absent pulse; recreation of symptoms at any point during test; tingling in 4th–5th digits",
         ifPositive: "Massage subclavius, scalenes, and pectoralis minor; gentle first rib mobilization; postural work to reduce shoulder depression and protraction. Avoid any positioning that compresses the space between clavicle and first rib.",
+        ytTreatment: "thoracic+outlet+syndrome+costoclavicular+pectoralis+massage+treatment",
         yt: "costoclavicular+test+military+brace+thoracic+outlet"
       },
       wrights: {
@@ -2328,6 +2354,7 @@ const clinicalRegions = {
         therapist: "Palpate client's radial pulse. Client slowly abducts and extends arm to 90°; check symptoms, abduct greater than 120° if needed.",
         positive: "Palpable diminished or absent pulse; recreation of symptoms at any point during test",
         ifPositive: "Massage pectoralis minor, coracobrachialis, and anterior shoulder; trigger point work in pec minor; postural correction (chest opening, scapular retraction). Avoid positioning arm in hyperabduction during treatment.",
+        ytTreatment: "pectoralis+minor+thoracic+outlet+massage+therapy+treatment",
         yt: "wright+hyperabduction+test+thoracic+outlet+syndrome"
       },
       spurling: {
@@ -2338,6 +2365,7 @@ const clinicalRegions = {
         therapist: "Stage 1: Apply downward compression with head in neutral. Stage 2: Apply downward compression with head extended and rotated to affected side. Stage 3: Apply downward compression with head laterally flexed to affected side.",
         positive: "Recreation of signs and symptoms. (+) tingling in shoulder/arm/hand = Disk Herniation. (+) sharp localized pain = Facet Joint Irritation.",
         ifPositive: "Nerve tingling / disc herniation: REFER OUT before massage. FJI only: massage cervical paraspinals, upper trapezius, and suboccipitals; gentle soft tissue work; avoid any cervical compression or aggressive manipulation.",
+        ytTreatment: "cervical+facet+joint+irritation+massage+therapy+treatment",
         yt: "spurling+test+cervical+spine+massage+therapy"
       },
       distraction: {
@@ -2348,6 +2376,7 @@ const clinicalRegions = {
         therapist: "Grasp client's head at occiput and temporal areas. Return head to neutral position (if in Spurling position). Apply slow traction superiorly.",
         positive: "Reduction of client's pain (spine is decompressed — confirms nerve compression was the cause)",
         ifPositive: "Confirms nerve root compression: REFER OUT for medical evaluation. If cleared by physician: gentle cervical soft tissue work only; use traction-style positioning (pillow under head); avoid any cervical compression during session.",
+        ytTreatment: "cervical+nerve+root+compression+massage+therapy+treatment",
         yt: "cervical+distraction+test+massage+therapy+confirmation"
       }
     }
@@ -2430,11 +2459,19 @@ function showTest(regionKey, testKey) {
   document.getElementById('test-positive-text').textContent = t.positive;
 
   const massageSection = document.getElementById('test-massage-response-section');
+  const ytTreatBtn = document.getElementById('test-youtube-treatment-btn');
   if (t.ifPositive) {
     massageSection.style.display = 'block';
     document.getElementById('test-massage-response-text').textContent = t.ifPositive;
+    if (t.ytTreatment) {
+      ytTreatBtn.href = 'https://www.youtube.com/results?search_query=' + t.ytTreatment;
+      ytTreatBtn.style.display = 'inline-block';
+    } else {
+      ytTreatBtn.style.display = 'none';
+    }
   } else {
     massageSection.style.display = 'none';
+    ytTreatBtn.style.display = 'none';
   }
 
   const ytBtn = document.getElementById('test-youtube-btn');
