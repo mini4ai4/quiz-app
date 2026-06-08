@@ -597,7 +597,7 @@
   .region-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 20px;
   }
   .region-card {
@@ -605,8 +605,8 @@
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 18px;
-    padding: 22px 14px;
+    border-radius: 20px;
+    padding: 26px 14px 20px;
     cursor: pointer;
     text-align: center;
     transition: all 0.2s;
@@ -619,24 +619,66 @@
     box-shadow: 0 6px 24px rgba(56,239,125,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .region-emoji {
-    width: 56px; height: 56px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.07);
+    width: 100px; height: 100px;
+    border-radius: 20px;
+    background: rgba(10,20,40,0.6);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(64,224,208,0.2);
     display: flex; align-items: center; justify-content: center;
     font-size: 26px;
-    margin: 0 auto 10px;
+    margin: 0 auto 12px;
     overflow: hidden;
+    box-shadow: 0 0 20px rgba(64,224,208,0.1), inset 0 0 20px rgba(64,224,208,0.05);
   }
   .region-emoji img {
-    width: 100%; height: 100%;
-    object-fit: cover;
+    width: 92%; height: 92%;
+    object-fit: contain;
     border-radius: 14px;
   }
   .region-label { font-size: 14px; font-weight: 700; color: #fff; }
-  .region-count { font-size: 11px; color: #888; margin-top: 2px; }
+  .region-count { font-size: 11px; color: #888; margin-top: 3px; }
+
+  /* ── Anatomical CSS animations ── */
+  @keyframes anim-wrist {
+    0%, 100% { transform: rotate(0deg) scale(1); filter: brightness(1); }
+    20%  { transform: rotate(-12deg) scale(1.06); filter: brightness(1.25) drop-shadow(0 0 6px rgba(64,224,208,0.8)); }
+    40%  { transform: rotate(0deg) scale(0.96); }
+    60%  { transform: rotate(14deg) scale(1.06); filter: brightness(1.25) drop-shadow(0 0 6px rgba(64,224,208,0.8)); }
+    80%  { transform: rotate(0deg) scale(1); }
+  }
+  @keyframes anim-elbow {
+    0%, 100% { transform: rotate(0deg); transform-origin: 50% 80%; }
+    40%  { transform: rotate(-38deg); transform-origin: 50% 80%; filter: brightness(1.3) drop-shadow(0 0 6px rgba(64,224,208,0.8)); }
+    60%  { transform: rotate(-38deg); transform-origin: 50% 80%; }
+  }
+  @keyframes anim-shoulder {
+    0%, 100% { transform: translateY(0) scale(1); filter: brightness(1); }
+    35%  { transform: translateY(-10px) scale(1.07); filter: brightness(1.3) drop-shadow(0 0 8px rgba(64,224,208,0.9)); }
+    65%  { transform: translateY(-10px) scale(1.07); }
+  }
+  @keyframes anim-cervical {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25%  { transform: rotate(12deg) scale(1.04); filter: brightness(1.3) drop-shadow(0 0 6px rgba(64,224,208,0.8)); }
+    50%  { transform: rotate(0deg) scale(1); }
+    75%  { transform: rotate(-12deg) scale(1.04); filter: brightness(1.3) drop-shadow(0 0 6px rgba(64,224,208,0.8)); }
+  }
+  @keyframes spine-bend {
+    0%, 100% { d: path('M30,8 C30,8 30,38 30,68 C30,98 30,128 30,158'); }
+    40%  { d: path('M30,8 C32,8 38,38 36,68 C34,98 28,128 24,158'); }
+    60%  { d: path('M30,8 C32,8 38,38 36,68 C34,98 28,128 24,158'); }
+  }
+  @keyframes spine-glow {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 3px rgba(64,224,208,0.5)); }
+    40%  { filter: brightness(1.4) drop-shadow(0 0 10px rgba(64,224,208,1)); }
+    60%  { filter: brightness(1.4) drop-shadow(0 0 10px rgba(64,224,208,1)); }
+  }
+  .icon-anim-wrist    { animation: anim-wrist    2.8s ease-in-out infinite; }
+  .icon-anim-elbow    { animation: anim-elbow    2.4s ease-in-out infinite; }
+  .icon-anim-shoulder { animation: anim-shoulder 2.6s ease-in-out infinite; }
+  .icon-anim-cervical { animation: anim-cervical 3.0s ease-in-out infinite; }
+  .spine-svg { animation: spine-glow 2.5s ease-in-out infinite; width: 80%; height: 80%; }
+  .spine-path { animation: spine-bend 2.5s ease-in-out infinite; }
 
   .symptom-card {
     background: rgba(255,255,255,0.04);
@@ -2587,12 +2629,58 @@ const clinicalRegions = {
 
 let currentRegionKey = '';
 
+function getRegionIconHTML(key, r) {
+  if (key === 'lumbar')   return getSpineSVG('lumbar');
+  if (key === 'cervical') return getSpineSVG('cervical');
+  const animClass = {wrist:'icon-anim-wrist', elbow:'icon-anim-elbow', shoulder:'icon-anim-shoulder'}[key] || '';
+  if (r.icon) return `<img src="${r.icon}" alt="${r.label}" class="${animClass}">`;
+  return `<span class="${animClass}">${r.emoji}</span>`;
+}
+
+function getSpineSVG(type) {
+  const isLumbar = type === 'lumbar';
+  const verts = isLumbar ? 5 : 7;
+  const h = isLumbar ? 22 : 16;
+  const gap = isLumbar ? 28 : 21;
+  const totalH = verts * h + (verts - 1) * (gap - h);
+  const svgH = totalH + 16;
+  let rects = '';
+  for (let i = 0; i < verts; i++) {
+    const y = 8 + i * gap;
+    rects += `<rect x="8" y="${y}" width="44" height="${h}" rx="5" class="vert-${i}"/>`;
+    rects += `<rect x="49" y="${y + 4}" width="10" height="${h - 8}" rx="3" opacity="0.7"/>`;
+  }
+  return `<svg class="spine-svg" viewBox="0 0 60 ${svgH}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="sg"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <style>
+        rect { fill: rgba(64,224,208,0.75); stroke: rgba(100,240,230,0.5); stroke-width: 0.8; filter: url(#sg); }
+        @keyframes vb0 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(${isLumbar?8:5}px)} 60%{transform:translateX(${isLumbar?8:5}px)} }
+        @keyframes vb1 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(${isLumbar?6:4}px)} 60%{transform:translateX(${isLumbar?6:4}px)} }
+        @keyframes vb2 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(${isLumbar?3:2}px)} 60%{transform:translateX(${isLumbar?3:2}px)} }
+        @keyframes vb3 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(0px)} 60%{transform:translateX(0px)} }
+        @keyframes vb4 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(-${isLumbar?3:2}px)} 60%{transform:translateX(-${isLumbar?3:2}px)} }
+        @keyframes vb5 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(-4px)} 60%{transform:translateX(-4px)} }
+        @keyframes vb6 { 0%,100%{transform:translateX(0)} 40%{transform:translateX(-5px)} 60%{transform:translateX(-5px)} }
+        .vert-0{animation:vb0 2.5s ease-in-out infinite}
+        .vert-1{animation:vb1 2.5s ease-in-out infinite}
+        .vert-2{animation:vb2 2.5s ease-in-out infinite}
+        .vert-3{animation:vb3 2.5s ease-in-out infinite}
+        .vert-4{animation:vb4 2.5s ease-in-out infinite}
+        .vert-5{animation:vb5 2.5s ease-in-out infinite}
+        .vert-6{animation:vb6 2.5s ease-in-out infinite}
+      </style>
+    </defs>
+    ${rects}
+  </svg>`;
+}
+
 function showClinical() {
   showScreen('screen-clinical');
   const grid = document.getElementById('region-grid');
   grid.innerHTML = Object.entries(clinicalRegions).map(([key, r]) => `
     <div class="region-card" onclick="showRegion('${key}')">
-      <div class="region-emoji">${r.icon ? `<img src="${r.icon}" alt="${r.label}">` : r.emoji}</div>
+      <div class="region-emoji">${getRegionIconHTML(key, r)}</div>
       <div class="region-label">${r.label}</div>
       <div class="region-count">${r.sub}</div>
     </div>`).join('');
@@ -2602,7 +2690,7 @@ function showRegion(key) {
   currentRegionKey = key;
   const r = clinicalRegions[key];
   const emojiHeader = document.getElementById('region-emoji-header');
-  emojiHeader.innerHTML = r.icon ? `<img src="${r.icon}" alt="${r.label}">` : r.emoji;
+  emojiHeader.innerHTML = getRegionIconHTML(key, r);
   document.getElementById('region-title-header').textContent = r.label;
   document.getElementById('region-sub-header').textContent = r.sub;
 
