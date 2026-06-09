@@ -560,6 +560,55 @@
     justify-content: center;
     gap: 4px;
   }
+  .music-section {
+    margin-top: 20px;
+    text-align: center;
+  }
+  .music-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .music-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .music-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .music-btn-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .music-btn:active .music-btn-icon {
+    transform: scale(0.92);
+  }
+  .spotify-btn .music-btn-icon {
+    background: radial-gradient(circle at 35% 35%, #3be67a, #1db954 55%, #0a7a2e);
+    box-shadow: 0 4px 16px rgba(29,185,84,0.5), 0 1px 0 rgba(255,255,255,0.25) inset;
+  }
+  .ytmusic-btn .music-btn-icon {
+    background: radial-gradient(circle at 35% 35%, #ff6b6b, #ff0000 55%, #8b0000);
+    box-shadow: 0 4px 16px rgba(255,0,0,0.45), 0 1px 0 rgba(255,255,255,0.25) inset;
+  }
+  .music-btn span {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+  }
 
   /* Question source label */
   .q-source {
@@ -848,6 +897,30 @@
         </div>
         <a class="donate-custom" href="https://buy.stripe.com/28E00jcFxgr25YA9YP6J206" target="_blank">Custom amount 💛</a>
         <div class="donate-pay-note">🔒 Apple Pay &amp; all cards</div>
+      </div>
+
+      <div class="music-section">
+        <div class="music-label">🎵 Музыка для массажа</div>
+        <div class="music-btns">
+          <a class="music-btn spotify-btn" href="https://open.spotify.com/album/4LsaDXa0MDyoEOdhpiWRYZ?si=DMQHnIqrSqmjlJET7MLPyA" target="_blank">
+            <div class="music-btn-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24.3 14.1c-4.7-2.8-12.4-3-16.9-1.7-.7.2-1.5-.2-1.7-1-.2-.7.2-1.5 1-1.7 5.1-1.5 13.6-1.2 19 1.9.7.4.9 1.2.5 1.9-.4.6-1.2.9-1.9.6zm-.3 3.8c-.4.6-1.1.8-1.7.5-3.9-2.4-9.9-3.1-14.5-1.7-.6.2-1.3-.2-1.5-.8-.2-.6.2-1.3.8-1.5 5.3-1.6 11.8-.8 16.2 2 .6.3.8 1.1.5 1.7l.2-.2zm-1.9 3.6c-.3.5-.9.6-1.4.4-3.4-2.1-7.7-2.5-12.7-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 5.5-1.3 10.2-.7 14 1.6.5.3.6.9.4 1.4l.1-.2z" fill="white"/>
+              </svg>
+            </div>
+            <span>Spotify</span>
+          </a>
+          <a class="music-btn ytmusic-btn" href="https://music.youtube.com/playlist?list=OLAK5uy_kH1h2_gqXKFSyE9YnFywuTcaa2YABYspU&si=kztyiWKFcKQkJNRs" target="_blank">
+            <div class="music-btn-icon">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="6" fill="white"/>
+                <circle cx="16" cy="16" r="2.5" fill="#ff0000"/>
+                <path d="M13 10.5V21.5L22 16L13 10.5Z" fill="white"/>
+              </svg>
+            </div>
+            <span>YouTube Music</span>
+          </a>
+        </div>
       </div>
     </div>
 
