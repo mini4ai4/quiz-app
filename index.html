@@ -909,6 +909,108 @@
     color: #fff;
     box-shadow: 0 0 14px rgba(56,239,125,0.2);
   }
+
+  /* ===== STUDY NOTES ===== */
+  .notes-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 18px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-align: left;
+  }
+  .notes-card:hover, .notes-card:active {
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+  }
+  .notes-card-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  }
+  .notes-card-body { flex: 1; min-width: 0; }
+  .notes-card-title { font-size: 15px; font-weight: 700; color: #f0f0f0; }
+  .notes-card-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  #screen-notes-detail { display: none; padding-top: 12px; }
+  .notes-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .notes-detail-header {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .notes-detail-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  }
+  .notes-detail-title { font-size: 18px; font-weight: 800; color: #f0f0f0; }
+  .notes-detail-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; line-height: 1.4; }
+  .notes-section {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .notes-section-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #a78bfa;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    line-height: 1.4;
+  }
+  .note-item {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #ddd;
+    padding: 2px 0;
+  }
+  .note-item.l0 { padding-left: 0; }
+  .note-item.l1 { padding-left: 18px; }
+  .note-item.l2 { padding-left: 34px; }
+  .note-item.l3 { padding-left: 50px; }
+  .note-blank {
+    background: rgba(56,239,125,0.15);
+    color: #4fffaa;
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-weight: 700;
+    border-bottom: 2px solid rgba(56,239,125,0.35);
+    white-space: nowrap;
+  }
+  .notes-translate-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #ddd;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .notes-translate-btn:active { background: rgba(255,255,255,0.14); }
 </style>
 </head>
 <body>
@@ -963,6 +1065,8 @@
       </div>
     </div>
 
+    <div class="section-label">Study Notes</div>
+    <div class="quiz-list" id="notes-list" style="margin-bottom:8px"></div>
     <div class="section-label">Clinical Tools</div>
     <div class="quiz-list" style="margin-bottom:8px">
       <div class="quiz-card" onclick="showClinical()" style="background:rgba(17,153,142,0.08); border-color:rgba(17,153,142,0.3);">
@@ -1048,6 +1152,17 @@
       ▶ Watch Test on YouTube
     </a>
     <button class="btn btn-secondary" onclick="showRegion(currentRegionKey)">← Back to Region</button>
+  </div>
+
+  <!-- ===== STUDY NOTES DETAIL ===== -->
+  <div id="screen-notes-detail">
+    <div class="notes-topbar">
+      <button class="back-home-btn" onclick="goHome()">← Home</button>
+      <button class="notes-translate-btn" id="notes-translate-btn" onclick="toggleNotesTranslate()">🇷🇺 RU</button>
+    </div>
+    <div id="notes-detail-header"></div>
+    <div id="notes-content"></div>
+    <button class="btn btn-secondary" onclick="goHome()" style="margin-top:8px">← Back to Home</button>
   </div>
 
   <!-- ===== QUIZ SCREEN ===== -->
@@ -1137,6 +1252,350 @@ let currentIdx = 0;
 let score = 0;
 let mistakes = [];
 let answered = false;
+
+// ============================================================
+// STUDY NOTES DATABASE
+// ============================================================
+const allStudyNotes = [
+  {
+    id: 'phys1-lp12',
+    title: 'Physiology 1 — LP 1 & 2',
+    subtitle: 'Introduction · Cells · Metabolism · Skin · Bone',
+    icon: '🔬',
+    g1: '#6a11cb', g2: '#2575fc',
+    sections: [
+      { h: 'I. Levels of Organization',
+        items: [
+          [0,'A. [[Cells]]: basic unit of structure and function'],
+          [0,'B. Cells → tissues → [[organs]] → organ systems → organism'],
+        ]},
+      { h: 'II. Characteristics & Maintenance of Life',
+        items: [
+          [0,'A. Characteristics of Life:'],
+          [1,'a. [[Growth]]   b. Reproduction   c. Responsiveness'],
+          [1,'d. Movement   e. [[Metabolism]]   f. Respiration'],
+          [1,'g. Digestion   h. Circulation   i. Excretion'],
+          [1,'Metabolism = collection of [[chemical]] reactions in cells'],
+          [0,'B. Requirements: [[Water]], O₂/CO₂, Nutrients, Heat, Pressure'],
+          [0,'C. Homeostasis: maintenance of a [[stable]] internal environment'],
+          [1,'• Controlled through [[negative feedback]]'],
+          [1,'• Regulates body temperature, BP, blood glucose, etc.'],
+        ]},
+      { h: 'III. Cells — Structure',
+        items: [
+          [0,'A. [[3]] major parts: Nucleus, Cytoplasm, Cell membrane'],
+          [0,'B. Cell [[membrane]]:'],
+          [1,'• Composed mainly of [[lipids]] — phospholipid [[bilayer]]'],
+          [1,'• Selectively permeable (O₂, CO₂, lipids pass easily)'],
+          [1,'• Intercellular junctions: Tight, [[Desmosomes]], Gap'],
+          [0,'C. [[Cytoplasm]] — organelles:'],
+          [1,'• Ribosomes: [[protein]] synthesis'],
+          [1,'• Endoplasmic Reticulum: [[communication]] & transport'],
+          [1,'• Golgi apparatus: packages & delivers proteins'],
+          [1,'• Mitochondria: synthesizes [[ATP]] — "powerhouse of the cell"'],
+          [1,'• Lysosomes: garbage disposal; enzymes dismantle debris'],
+          [1,'• Cilia: short, [[hair-like]] (present in large numbers)'],
+          [0,'D. [[Chromatin]] / Nucleus — "control tower":'],
+          [1,'• Contains DNA; Nucleolus → ribosomes'],
+          [1,'• Chromatin winds around DNA proteins → [[chromosomes]]'],
+        ]},
+      { h: 'IV. Cell Movements',
+        items: [
+          [0,'A. Passive (no energy):'],
+          [1,'1. Diffusion: [[higher]] → [[lower]] concentration'],
+          [1,'2. Facilitated Diffusion: via membrane proteins, high → low'],
+          [1,'3. Osmosis: diffusion of water across [[membrane]]'],
+          [1,'4. Filtration: molecules [[forced]] through membrane'],
+          [0,'B. Active (requires energy):'],
+          [1,'1. Active Transport: [[low]] → [[high]] concentration + carrier protein'],
+          [1,'2. Endocytosis: large molecules enter via vesicle'],
+          [2,'i. Pinocytosis: cell "[[drinking]]"'],
+          [2,'ii. Phagocytosis: cell "[[eating]]" (WBCs)'],
+          [1,'3. Exocytosis: packaged substances released [[outside]] cell'],
+          [1,'4. Transcytosis: endo + exocytosis on opposite sides'],
+        ]},
+      { h: 'V. Cell Cycle',
+        items: [
+          [0,'A. Series of changes a cell undergoes from formation to division'],
+          [0,'Stages: [[IPMAT]] — Interphase, Prophase, Metaphase, Anaphase, Telophase'],
+          [0,'B. Interphase: active; grows, maintains function; DNA duplicates'],
+          [0,'C. Mitosis: cell [[division]]; each new cell has [[46]] chromosomes'],
+          [1,'a. Prophase: [[chromosomes]] appear; spindle fibers form'],
+          [1,'b. Metaphase: chromosomes align [[midway]] between centrioles'],
+          [1,'c. Anaphase: chromosomes move to [[opposite]] sides'],
+          [1,'d. Telophase: [[final]] stage; chromosomes unwind → chromatin'],
+        ]},
+      { h: 'VI. Cellular Metabolism',
+        items: [
+          [0,'A. Metabolism = all chemical reactions in the body'],
+          [0,'B. Anabolism: [[building]] (small → large; requires energy)'],
+          [1,'• A.K.A. dehydration synthesis (e.g., glucose → glycogen)'],
+          [0,'C. Catabolism: [[breaks down]] (large → small; releases energy)'],
+          [1,'• A.K.A. hydrolysis (e.g., glycogen → glucose)'],
+          [0,'D. Enzymes: [[proteins]] that control rate of metabolic reactions'],
+          [1,'• Enzyme + substrate shapes must match; enzyme is reusable'],
+        ]},
+      { h: 'VII. Integumentary System (Skin)',
+        items: [
+          [0,'A. Layers: Epidermis (outermost), Dermis (middle), Hypodermis (CT)'],
+          [0,'B. Functions: Protection, Sensation, Vitamin D, Temperature regulation'],
+          [0,'C. Temperature Regulation:'],
+          [1,'• Temp ↑: Vasodilation of skin blood vessels; sweating'],
+          [1,'• Temp ↓: Dermal vessels [[Constrict]]; [[Shivering]]; sweat inhibited'],
+          [0,'D. Wounds:'],
+          [1,'• Shallow: epithelial cells proliferate "fill the gap"'],
+          [1,'• Scabs: blood clot + dried fluid (when dermis damaged)'],
+          [1,'• Large wounds: granulations may form → may leave [[scar]]'],
+          [0,'E. Burns:'],
+          [1,'• [[1st]] degree: mild; epidermis only; redness, no scarring'],
+          [1,'• [[2nd]] degree: moderate; epidermis + dermis; blistering'],
+          [1,'• [[3rd]] degree: severe; all layers; leathery skin color changes'],
+        ]},
+      { h: 'VIII. Skeletal System',
+        items: [
+          [0,'A. Bone functions: Support, protection, [[movement]]'],
+          [1,'• Blood cell formation ([[hematopoiesis]]): red marrow'],
+          [1,'• Mineral storage: [[Calcium]] + phosphorus = 70% of bone matrix'],
+          [0,'B. Bone cells:'],
+          [1,'• Osteoclasts: [[reabsorb]] (break down) bone tissue'],
+          [1,'• Osteoblasts: [[build]] bone tissue'],
+          [0,'C. Growth at Epiphyseal Plate: site of [[lengthening]] in long bones'],
+          [1,'• Plate fuses in late adolescence / early adulthood'],
+          [0,'D. Factors affecting bone development:'],
+          [1,'• Vitamin D: absorption of [[calcium]]'],
+          [1,'• Vitamin C: required for [[collagen]] synthesis'],
+          [1,'• Vitamin [[D]]: scarce in food; produced in skin by UV light'],
+          [1,'• Hormones: Growth hormone (pituitary), Thyroxine (thyroid),'],
+          [2,'Parathyroid hormone, Sex hormones (testosterone / estrogen)'],
+          [1,'• Physical stress [[stimulates]] bone growth'],
+        ]},
+    ]
+  },
+  {
+    id: 'phys1-lp34',
+    title: 'Physiology 1 — LP 3 & 4',
+    subtitle: 'Muscular System · Contraction · Responses · Smooth & Cardiac',
+    icon: '💪',
+    g1: '#e94560', g2: '#c62a47',
+    sections: [
+      { h: 'I. Structure of Skeletal Muscle',
+        items: [
+          [0,'A. Muscles = cells called [[fibers]]'],
+          [0,'B. Connective tissue layers:'],
+          [1,'1. Endomysium: surrounds each muscle fiber'],
+          [1,'2. Perimysium: surrounds bundle of fibers ([[fascicles]])'],
+          [1,'3. Epimysium: surrounds entire muscle'],
+          [1,'4. Fascia (most superficial): Deep fascia = [[network]] around muscles'],
+          [1,'5. Tendons: fused CT → attach muscle to [[bone]]'],
+          [1,'6. Aponeurosis: broad fibrous [[sheet]] → attaches to bone/skin/CT'],
+          [0,'C. Skeletal Muscle Fiber characteristics:'],
+          [1,'• [[Multinucleated]], elongated; abundant [[mitochondria]]; striations'],
+          [1,'• Sarcolemma (cell membrane); Sarcoplasm (cytoplasm)'],
+          [1,'• Myofibrils: parallel → muscle [[contraction]]'],
+          [1,'• Sarcoplasmic reticulum: surrounds each [[myofibril]]'],
+          [1,'• Transverse tubules: extend deep; continuous with [[sarcolemma]]'],
+          [0,'D. 2 contractile proteins:'],
+          [1,'1. Myosin: [[thick]] filaments (heads project outward)'],
+          [1,'2. Actin: [[thin]] filaments (binding sites; troponin-tropomyosin = regulatory proteins)'],
+          [0,'E. Sarcomeres: functional unit of [[muscle]] contraction; one [[Z]] line to next'],
+        ]},
+      { h: 'II. Skeletal Muscle Contraction',
+        items: [
+          [0,'A. Stimulated by a [[motor]] neuron; axons conduct nerve [[impulses]]'],
+          [0,'B. Neuromuscular Junction (NMJ):'],
+          [1,'• Motor end plate: [[specialized]] area of sarcolemma for nerve communication'],
+          [1,'• Synaptic knob: end of axon; contains NT in vesicles'],
+          [1,'• Synaptic cleft: small [[gap]] b/t neuron and muscle fiber'],
+          [0,'C. Stimulus steps:'],
+          [1,'1. Impulse → axon end → vesicles release [[Acetylcholine]] (ACh) into cleft'],
+          [1,'2. ACh binds to [[receptors]] in sarcolemma → impulse along muscle fiber'],
+          [1,'3. Impulse spreads via transverse tubules'],
+          [1,'4. [[Calcium]] (Ca) released from sarcoplasmic reticulum'],
+          [2,'• High Ca concentration maintained at rest via [[active]] transport'],
+          [0,'D. Ca binds to [[troponin]] → tropomyosin shifts → exposes actin binding sites'],
+          [1,'• At rest: tropomyosin [[blocks]] binding sites'],
+          [0,'E. Sliding Filament Model:'],
+          [1,'• Contraction = [[sliding]] movements of actin & myosin filaments'],
+          [1,'• Myosin forms [[cross-bridges]] with actin when Ca present'],
+        ]},
+      { h: 'III. Cross-Bridge Cycling & Relaxation',
+        items: [
+          [0,'F. Cross-Bridge Cycling:'],
+          [1,'1. ATP breakdown readies myosin head'],
+          [1,'2. Myosin forms cross-bridge with actin'],
+          [1,'3. Actin pulled → sarcomere [[shortens]] → muscle shortens'],
+          [1,'4. Another ATP binds → myosin detaches → cycle repeats'],
+          [1,'5. Cycle continues as long as ATP present & impulse maintained'],
+          [0,'G. Muscle Relaxation:'],
+          [1,'1. Enzyme ([[Acetylcholinesterase]]) [[decomposes]] ACh'],
+          [1,'2. Calcium pump returns Ca to sarcoplasmic reticulum'],
+          [1,'3. Cross-bridge links [[break]] (requires ATP)'],
+          [1,'4. Tropomyosin returns to block actin binding sites'],
+          [0,'H. Energy Sources for Contraction:'],
+          [1,'1. [[ATP]]: initial power; ATP → ADP (must be regenerated)'],
+          [1,'2. Creatine Phosphate: converts ADP → [[ATP]]'],
+          [1,'3. Aerobic respiration: requires [[O₂]]; glucose → many [[ATP]]'],
+          [2,'• O₂ from: Blood (hemoglobin in RBC); Myoglobin (O₂ in muscle)'],
+          [1,'4. Anaerobic: not dependent on [[O₂]]; glucose → [[lactic]] acid'],
+          [2,'• Used during strenuous activity (not enough O₂ delivered)'],
+        ]},
+      { h: 'IV. Oxygen Debt, Fatigue & Muscular Responses',
+        items: [
+          [0,'I. Oxygen Debt: O₂ needed after exercise to convert lactic acid → glucose'],
+          [0,'J. Muscle Fatigue: muscle [[loses]] its ability to contract'],
+          [1,'• Lactic acid builds up → prevents stimulation'],
+          [1,'• Decreased blood flow; etc.'],
+          [0,'K. Heat Production: by-product of cell metabolism; rest of energy → [[heat]]'],
+          [0,'L. Threshold Stimulus: minimal stimulus to produce a contraction ([[twitch]])'],
+          [0,'M. Recruitment of Motor Units:'],
+          [1,'• Motor unit = motor neuron + muscle fibers it controls'],
+          [1,'• Fine vs. [[gross]] scale movement → different amounts recruited'],
+          [1,'• Greater work needed → more motor units must be recruited'],
+          [0,'N. Types of Contractions:'],
+          [1,'1. Isotonic (length changes):'],
+          [2,'a. Concentric: muscle [[shortens]]'],
+          [2,'b. Eccentric: muscle [[lengthens]]'],
+          [1,'2. Isometric: muscle stays same length (e.g., postural muscles)'],
+          [0,'O. Fast- and Slow-Twitch Muscles:'],
+          [1,'1. Slow-Twitch (Type I): AKA "[[red]]" fibers'],
+          [2,'• Resistant to fatigue; good blood/O₂ supply; aerobic'],
+          [2,'• Abundant myoglobin/mitochondria; e.g., erector spinae'],
+          [1,'2. Fast-Twitch (Type IIb): AKA "[[white]]" fibers'],
+          [2,'• Higher rate of fatigue; [[less]] blood supply / myoglobin'],
+          [2,'• Extensive sarcoplasmic reticulum → contracts very quickly'],
+          [2,'• e.g., eye muscles, certain hand muscles'],
+        ]},
+      { h: 'V. Smooth Muscle & Cardiac Muscle',
+        items: [
+          [0,'A. Smooth Muscle cells: shorter, tapered ends'],
+          [1,'• Single [[nucleus]]; lack [[striations]]; involuntary'],
+          [0,'B. [[2]] major types:'],
+          [1,'1. Multiunit smooth: act as independent [[units]]'],
+          [2,'• Less controlled; e.g., irises of eyes, large blood vessels'],
+          [1,'2. Visceral smooth: respond as a [[whole]] unit'],
+          [2,'• Rhythmicity: spontaneous repeated contractions'],
+          [2,'• Peristalsis: wave-like contractions (digestive/urinary)'],
+          [2,'• e.g., stomach, [[intestines]], bladder, uterus'],
+          [0,'C. Cardiac Muscle: only in the [[heart]]'],
+          [1,'• Single nucleus; [[branched]] cells'],
+          [1,'• Intercalated [[discs]]: join cells end-to-end'],
+          [1,'• Transmit [[wave]] of contraction cell to cell'],
+          [1,'• Syncytium: group of cells contracts as a unit'],
+        ]},
+    ]
+  },
+  {
+    id: 'phys1-lp56',
+    title: 'Physiology 1 — LP 5 & 6',
+    subtitle: 'Nervous System I · Neurons · Membrane Potential · Synapse',
+    icon: '⚡',
+    g1: '#f7971e', g2: '#ffd200',
+    sections: [
+      { h: 'I. Overview of the Nervous System',
+        items: [
+          [0,'A. [[3]] major functions of NS:'],
+          [1,'• Sensory input'],
+          [1,'• Integration and processing (decision making)'],
+          [1,'• Motor output (response)'],
+          [0,'B. Organs divided into [[2]] groups:'],
+          [1,'1. CNS: Brain and [[spinal]] cord'],
+          [1,'2. PNS: connects CNS to rest of body'],
+          [2,'• Cranial [[nerves]]; Spinal [[nerves]]'],
+          [2,'• Sensory (afferent) division: gathers sensory info → CNS'],
+          [2,'• Motor (efferent) division: CNS → effectors'],
+          [3,'a. Somatic NS: voluntary → [[skeletal muscle]]'],
+          [3,'b. Autonomic NS: involuntary → viscera, [[heart]], glands'],
+        ]},
+      { h: 'II. Neurons',
+        items: [
+          [0,'A. [[Neurons]]: specialized cells that react to surroundings'],
+          [0,'B. Neuron structure:'],
+          [1,'1. Dendrites: receive input; usually [[multiple]], highly branched'],
+          [1,'2. Axon: conduct impulses [[away]] from cell body; only [[1]] per neuron'],
+          [2,'• Synaptic knob at end → releases [[neurotransmitters]] (NT)'],
+          [2,'• Myelin sheaths:'],
+          [3,'— Schwann cells: myelinate in [[PNS]]; form neurolemma'],
+          [3,'— Oligodendrocytes: myelinate in [[CNS]]; no neurolemma'],
+          [1,'3. Cell body ([[soma]]): contains nucleus'],
+          [0,'C. Classification by structure ([[3]] groups):'],
+          [1,'• Multipolar: many processes; most in [[brain]] & spinal cord'],
+          [1,'• Bipolar: two processes; eyes, ears, nose'],
+          [1,'• Unipolar: single process; ganglia'],
+          [0,'D. Classification by [[function]]:'],
+          [1,'• Sensory (afferent): body → CNS; dendrites = receptors'],
+          [1,'• Interneurons (association): within CNS; process & interpret'],
+          [1,'• Motor (efferent): CNS → body; effectors = [[muscles]], glands, tissues'],
+        ]},
+      { h: 'III. Neuroglia',
+        items: [
+          [0,'B. Neuroglia: nourish & support neurons'],
+          [0,'1. CNS neuroglia:'],
+          [1,'a. Astrocytes: star-shaped; support; form [[blood-brain barrier]]'],
+          [1,'b. Oligodendrocytes: myelinate in CNS; [[many]] axons per cell; no neurolemma'],
+          [1,'c. Microglia: phagocytize bacteria & cellular [[debris]]'],
+          [1,'d. Ependyma: regulate composition of [[CSF]]'],
+          [0,'2. PNS neuroglia:'],
+          [1,'a. Schwann cells: myelinate in PNS; form [[neurolemma]]; Nodes of Ranvier'],
+          [0,'3. Axonal Regeneration:'],
+          [1,'• Cell body injury → neuron [[dies]]'],
+          [1,'• PNS axon: distal portion degenerates; proximal may [[regenerate]] (slowly)'],
+          [1,'• CNS axon: regeneration [[limited]] — no neurolemma; oligodendrocytes don\'t proliferate'],
+        ]},
+      { h: 'IV. Cell Membrane Potential',
+        items: [
+          [0,'A. Neurons are "[[excitable]]" — respond to stimuli'],
+          [1,'• Most cells: negative inside, positive outside'],
+          [1,'• Neurons can change [[electrical]] charge → communicate'],
+          [0,'B. Resting Potential (neuron at rest/inactive):'],
+          [1,'• Positive charge [[outside]]; negative charge [[inside]]'],
+          [1,'• K+ (potassium): high concentration [[inside]] cell'],
+          [1,'• Na+ (sodium): high concentration [[outside]] cell'],
+          [1,'• [[Na+/K+]] pump: 3 Na+ out, 2 K+ in → maintains gradient'],
+          [1,'• Na+ ions: [[slightly]] difficult to diffuse across membrane'],
+          [1,'• Result: more positive ions [[outside]] than inside'],
+          [0,'C. Local Potential Change:'],
+          [1,'• Stimuli cause changes in membrane potential'],
+          [1,'• Strong enough → threshold → [[action]] potential begins'],
+          [1,'• Summation: multiple sub-threshold stimuli added together'],
+          [0,'D. Action Potential:'],
+          [1,'• Rapid change → electrical current → basis of nerve impulse'],
+          [1,'• Na+ channels open → Na+ rushes [[into]] cell → positive inside'],
+          [1,'• K+ channels open → K+ rushes out → [[negative]] inside again'],
+          [1,'• Occurs along axon, moving [[away]] from cell body'],
+          [0,'E. Refractory Period:'],
+          [1,'• Axon temporarily unresponsive to another [[threshold]] stimulus'],
+          [1,'• Na+/K+ pump restores original concentration gradient'],
+          [0,'F. "All-or-None" Response:'],
+          [1,'• If neuron responds → responds [[maximally]] (full intensity)'],
+          [0,'G. Impulse Conduction:'],
+          [1,'• Myelinated axons: [[faster]] than unmyelinated'],
+          [1,'• Saltatory conduction: action potentials jump node of [[Ranvier]] to next'],
+          [1,'• Rate ~100 m/sec'],
+        ]},
+      { h: 'V. The Synapse & Synaptic Transmission',
+        items: [
+          [0,'A. Synapse: small [[gap]] between two neurons'],
+          [1,'• Presynaptic (sender) → synaptic cleft → postsynaptic (receiver)'],
+          [1,'• Synaptic knobs: ends of [[axons]]; contain NT in [[vesicles]]'],
+          [0,'B. Synaptic Transmission steps:'],
+          [1,'1. Impulse arrives at synaptic knob'],
+          [1,'2. Calcium (Ca+) channels open → Ca+ diffuses into knob'],
+          [1,'3. Vesicles release NT into synaptic [[cleft]]'],
+          [1,'4. NT binds to receptors on postsynaptic cell'],
+          [1,'5. NT may [[stimulate]] or [[inhibit]] postsynaptic cell'],
+          [1,'6. Excess NT eliminated: a. [[Reuptake]]   b. Decomposed by enzyme'],
+          [0,'C. Neurotransmitters (NT) — chemical communicators:'],
+          [1,'• ACh (Acetylcholine): stimulates [[skeletal muscle]] contraction'],
+          [1,'• Monoamines: epinephrine, norepinephrine, [[dopamine]], serotonin'],
+          [1,'• Amino acids: GABA, etc.'],
+          [1,'• Neuropeptides: made by neurons in the [[brain]]'],
+          [2,'— Enkephalins: relieve [[pain]]'],
+          [2,'— Beta endorphins: relieve pain (more [[potent]])'],
+          [2,'— Substance P: transmits [[pain]] impulses'],
+        ]},
+    ]
+  },
+];
 
 // ============================================================
 // QUESTIONS DATABASE (embedded for instant loading)
@@ -2098,6 +2557,7 @@ async function toggleClinicalTranslate() {
 
 function loadQuestions() {
   renderHome();
+  renderNotesHome();
 }
 
 function renderHome() {
@@ -2287,7 +2747,7 @@ function showReview() {
 }
 
 function showScreen(id) {
-  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test'].forEach(s => {
+  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail'].forEach(s => {
     document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
   window.scrollTo(0,0);
@@ -3039,6 +3499,95 @@ function showTest(regionKey, testKey) {
   ytBtn.href = 'https://www.youtube.com/results?search_query=' + t.yt;
 
   showScreen('screen-clinical-test');
+}
+
+// ===== STUDY NOTES FUNCTIONS =====
+let currentNoteId = null;
+let isNotesTranslated = false;
+let notesTranslateCache = {};
+
+function renderNoteItem(text) {
+  return text.replace(/\[\[(.+?)\]\]/g, '<span class="note-blank">$1</span>');
+}
+
+function renderNotesHome() {
+  const list = document.getElementById('notes-list');
+  if (!list) return;
+  list.innerHTML = allStudyNotes.map(n => `
+    <div class="notes-card" onclick="showNoteDetail('${n.id}')">
+      <div class="notes-card-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
+      <div class="notes-card-body">
+        <div class="notes-card-title">${n.title}</div>
+        <div class="notes-card-sub">${n.subtitle}</div>
+      </div>
+      <div class="quiz-card-arrow">›</div>
+    </div>
+  `).join('');
+}
+
+function buildNotesHTML(n, sectionTitles) {
+  return n.sections.map((s, i) => `
+    <div class="notes-section">
+      <div class="notes-section-title">${sectionTitles ? (sectionTitles[i] || s.h) : s.h}</div>
+      ${s.items.map(([lvl, txt]) => `<div class="note-item l${lvl}">${renderNoteItem(txt)}</div>`).join('')}
+    </div>
+  `).join('');
+}
+
+function showNoteDetail(noteId) {
+  currentNoteId = noteId;
+  isNotesTranslated = false;
+  const n = allStudyNotes.find(x => x.id === noteId);
+  if (!n) return;
+  const tBtn = document.getElementById('notes-translate-btn');
+  if (tBtn) { tBtn.textContent = '🇷🇺 RU'; tBtn.disabled = false; }
+  document.getElementById('notes-detail-header').innerHTML = `
+    <div class="notes-detail-header">
+      <div class="notes-detail-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
+      <div>
+        <div class="notes-detail-title">${n.title}</div>
+        <div class="notes-detail-sub">${n.subtitle}</div>
+      </div>
+    </div>`;
+  document.getElementById('notes-content').innerHTML = buildNotesHTML(n, null);
+  showScreen('screen-notes-detail');
+}
+
+async function toggleNotesTranslate() {
+  const tBtn = document.getElementById('notes-translate-btn');
+  const n = allStudyNotes.find(x => x.id === currentNoteId);
+  if (!n) return;
+  if (isNotesTranslated) {
+    document.getElementById('notes-content').innerHTML = buildNotesHTML(n, null);
+    tBtn.textContent = '🇷🇺 RU';
+    isNotesTranslated = false;
+    return;
+  }
+  if (notesTranslateCache[currentNoteId]) {
+    document.getElementById('notes-content').innerHTML = buildNotesHTML(n, notesTranslateCache[currentNoteId]);
+    tBtn.textContent = '🇺🇸 EN';
+    isNotesTranslated = true;
+    return;
+  }
+  tBtn.textContent = '⏳';
+  tBtn.disabled = true;
+  try {
+    const translations = await Promise.all(
+      n.sections.map(s =>
+        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(s.h) + '&langpair=en|ru')
+          .then(r => r.json())
+          .then(d => d.responseData.translatedText || s.h)
+          .catch(() => s.h)
+      )
+    );
+    notesTranslateCache[currentNoteId] = translations;
+    document.getElementById('notes-content').innerHTML = buildNotesHTML(n, translations);
+    tBtn.textContent = '🇺🇸 EN';
+    isNotesTranslated = true;
+  } catch(e) {
+    tBtn.textContent = '🇷🇺 RU';
+  }
+  tBtn.disabled = false;
 }
 
 loadQuestions();
