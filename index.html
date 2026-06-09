@@ -2593,11 +2593,11 @@ let currentRegionKey = '';
 
 function getRegionIconHTML(key, r) {
   const pngMap = {
-    wrist:    'icons/icon-wrist.png',
-    elbow:    'icons/icon-elbow.png',
-    shoulder: 'icons/icon-shoulder.png',
-    lumbar:   'icons/icon-lumbar.png',
-    cervical: 'icons/icon-cervical.png',
+    wrist:    'icons/icon-wrist.png?v=2',
+    elbow:    'icons/icon-elbow.png?v=2',
+    shoulder: 'icons/icon-shoulder.png?v=2',
+    lumbar:   'icons/icon-lumbar.png?v=2',
+    cervical: 'icons/icon-cervical.png?v=2',
   };
   if (pngMap[key]) return `<img src="${pngMap[key]}" alt="${r.label}" style="width:96%;height:96%;object-fit:contain;border-radius:16px">`;
   if (r.icon) return `<img src="${r.icon}" alt="${r.label}" style="width:92%;height:92%;object-fit:contain">`;
