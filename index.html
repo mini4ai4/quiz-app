@@ -1011,6 +1011,40 @@
     transition: background 0.15s;
   }
   .notes-translate-btn:active { background: rgba(255,255,255,0.14); }
+
+  /* Subject Groups on Home */
+  .subject-group { margin-bottom: 24px; }
+  .subject-group-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin: 22px 0 10px 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .subject-group-label::before {
+    content: '';
+    width: 3px; height: 14px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .subject-group-items { display: flex; flex-direction: column; gap: 10px; }
+  .note-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    background: rgba(56,239,125,0.12);
+    color: #4fffaa;
+    border: 1px solid rgba(56,239,125,0.25);
+    border-radius: 6px;
+    padding: 2px 7px;
+    margin-left: 4px;
+  }
 </style>
 </head>
 <body>
@@ -1065,8 +1099,6 @@
       </div>
     </div>
 
-    <div class="section-label">Study Notes</div>
-    <div class="quiz-list" id="notes-list" style="margin-bottom:8px"></div>
     <div class="section-label">Clinical Tools</div>
     <div class="quiz-list" style="margin-bottom:8px">
       <div class="quiz-card" onclick="showClinical()" style="background:rgba(17,153,142,0.08); border-color:rgba(17,153,142,0.3);">
@@ -1080,8 +1112,7 @@
         <div class="quiz-card-arrow">›</div>
       </div>
     </div>
-    <div class="section-label">Available Tests</div>
-    <div class="quiz-list" id="quiz-list"></div>
+    <div id="subject-groups"></div>
   </div>
 
   <!-- ===== CLINICAL REASONING — REGION SELECTOR ===== -->
@@ -1264,12 +1295,12 @@ const allStudyNotes = [
     icon: '🔬',
     g1: '#6a11cb', g2: '#2575fc',
     sections: [
-      { h: 'I. Levels of Organization',
+      { h: 'I. Levels of Organization', hRu: 'I. Уровни организации',
         items: [
           [0,'A. [[Cells]]: basic unit of structure and function'],
           [0,'B. Cells → tissues → [[organs]] → organ systems → organism'],
         ]},
-      { h: 'II. Characteristics & Maintenance of Life',
+      { h: 'II. Characteristics & Maintenance of Life', hRu: 'II. Характеристики и поддержание жизни',
         items: [
           [0,'A. Characteristics of Life:'],
           [1,'a. [[Growth]]   b. Reproduction   c. Responsiveness'],
@@ -1281,7 +1312,7 @@ const allStudyNotes = [
           [1,'• Controlled through [[negative feedback]]'],
           [1,'• Regulates body temperature, BP, blood glucose, etc.'],
         ]},
-      { h: 'III. Cells — Structure',
+      { h: 'III. Cells — Structure', hRu: 'III. Клетки — Строение',
         items: [
           [0,'A. [[3]] major parts: Nucleus, Cytoplasm, Cell membrane'],
           [0,'B. Cell [[membrane]]:'],
@@ -1299,7 +1330,7 @@ const allStudyNotes = [
           [1,'• Contains DNA; Nucleolus → ribosomes'],
           [1,'• Chromatin winds around DNA proteins → [[chromosomes]]'],
         ]},
-      { h: 'IV. Cell Movements',
+      { h: 'IV. Cell Movements', hRu: 'IV. Транспорт через мембрану',
         items: [
           [0,'A. Passive (no energy):'],
           [1,'1. Diffusion: [[higher]] → [[lower]] concentration'],
@@ -1314,7 +1345,7 @@ const allStudyNotes = [
           [1,'3. Exocytosis: packaged substances released [[outside]] cell'],
           [1,'4. Transcytosis: endo + exocytosis on opposite sides'],
         ]},
-      { h: 'V. Cell Cycle',
+      { h: 'V. Cell Cycle', hRu: 'V. Клеточный цикл',
         items: [
           [0,'A. Series of changes a cell undergoes from formation to division'],
           [0,'Stages: [[IPMAT]] — Interphase, Prophase, Metaphase, Anaphase, Telophase'],
@@ -1325,7 +1356,7 @@ const allStudyNotes = [
           [1,'c. Anaphase: chromosomes move to [[opposite]] sides'],
           [1,'d. Telophase: [[final]] stage; chromosomes unwind → chromatin'],
         ]},
-      { h: 'VI. Cellular Metabolism',
+      { h: 'VI. Cellular Metabolism', hRu: 'VI. Клеточный метаболизм',
         items: [
           [0,'A. Metabolism = all chemical reactions in the body'],
           [0,'B. Anabolism: [[building]] (small → large; requires energy)'],
@@ -1335,7 +1366,7 @@ const allStudyNotes = [
           [0,'D. Enzymes: [[proteins]] that control rate of metabolic reactions'],
           [1,'• Enzyme + substrate shapes must match; enzyme is reusable'],
         ]},
-      { h: 'VII. Integumentary System (Skin)',
+      { h: 'VII. Integumentary System (Skin)', hRu: 'VII. Покровная система (Кожа)',
         items: [
           [0,'A. Layers: Epidermis (outermost), Dermis (middle), Hypodermis (CT)'],
           [0,'B. Functions: Protection, Sensation, Vitamin D, Temperature regulation'],
@@ -1351,7 +1382,7 @@ const allStudyNotes = [
           [1,'• [[2nd]] degree: moderate; epidermis + dermis; blistering'],
           [1,'• [[3rd]] degree: severe; all layers; leathery skin color changes'],
         ]},
-      { h: 'VIII. Skeletal System',
+      { h: 'VIII. Skeletal System', hRu: 'VIII. Костная система',
         items: [
           [0,'A. Bone functions: Support, protection, [[movement]]'],
           [1,'• Blood cell formation ([[hematopoiesis]]): red marrow'],
@@ -1378,7 +1409,7 @@ const allStudyNotes = [
     icon: '💪',
     g1: '#e94560', g2: '#c62a47',
     sections: [
-      { h: 'I. Structure of Skeletal Muscle',
+      { h: 'I. Structure of Skeletal Muscle', hRu: 'I. Строение скелетной мышцы',
         items: [
           [0,'A. Muscles = cells called [[fibers]]'],
           [0,'B. Connective tissue layers:'],
@@ -1399,7 +1430,7 @@ const allStudyNotes = [
           [1,'2. Actin: [[thin]] filaments (binding sites; troponin-tropomyosin = regulatory proteins)'],
           [0,'E. Sarcomeres: functional unit of [[muscle]] contraction; one [[Z]] line to next'],
         ]},
-      { h: 'II. Skeletal Muscle Contraction',
+      { h: 'II. Skeletal Muscle Contraction', hRu: 'II. Сокращение скелетной мышцы',
         items: [
           [0,'A. Stimulated by a [[motor]] neuron; axons conduct nerve [[impulses]]'],
           [0,'B. Neuromuscular Junction (NMJ):'],
@@ -1418,7 +1449,7 @@ const allStudyNotes = [
           [1,'• Contraction = [[sliding]] movements of actin & myosin filaments'],
           [1,'• Myosin forms [[cross-bridges]] with actin when Ca present'],
         ]},
-      { h: 'III. Cross-Bridge Cycling & Relaxation',
+      { h: 'III. Cross-Bridge Cycling & Relaxation', hRu: 'III. Цикл поперечных мостиков и расслабление',
         items: [
           [0,'F. Cross-Bridge Cycling:'],
           [1,'1. ATP breakdown readies myosin head'],
@@ -1439,7 +1470,7 @@ const allStudyNotes = [
           [1,'4. Anaerobic: not dependent on [[O₂]]; glucose → [[lactic]] acid'],
           [2,'• Used during strenuous activity (not enough O₂ delivered)'],
         ]},
-      { h: 'IV. Oxygen Debt, Fatigue & Muscular Responses',
+      { h: 'IV. Oxygen Debt, Fatigue & Muscular Responses', hRu: 'IV. Кислородный долг, утомление и мышечные реакции',
         items: [
           [0,'I. Oxygen Debt: O₂ needed after exercise to convert lactic acid → glucose'],
           [0,'J. Muscle Fatigue: muscle [[loses]] its ability to contract'],
@@ -1465,7 +1496,7 @@ const allStudyNotes = [
           [2,'• Extensive sarcoplasmic reticulum → contracts very quickly'],
           [2,'• e.g., eye muscles, certain hand muscles'],
         ]},
-      { h: 'V. Smooth Muscle & Cardiac Muscle',
+      { h: 'V. Smooth Muscle & Cardiac Muscle', hRu: 'V. Гладкая и сердечная мышца',
         items: [
           [0,'A. Smooth Muscle cells: shorter, tapered ends'],
           [1,'• Single [[nucleus]]; lack [[striations]]; involuntary'],
@@ -1491,7 +1522,7 @@ const allStudyNotes = [
     icon: '⚡',
     g1: '#f7971e', g2: '#ffd200',
     sections: [
-      { h: 'I. Overview of the Nervous System',
+      { h: 'I. Overview of the Nervous System', hRu: 'I. Обзор нервной системы',
         items: [
           [0,'A. [[3]] major functions of NS:'],
           [1,'• Sensory input'],
@@ -1506,7 +1537,7 @@ const allStudyNotes = [
           [3,'a. Somatic NS: voluntary → [[skeletal muscle]]'],
           [3,'b. Autonomic NS: involuntary → viscera, [[heart]], glands'],
         ]},
-      { h: 'II. Neurons',
+      { h: 'II. Neurons', hRu: 'II. Нейроны',
         items: [
           [0,'A. [[Neurons]]: specialized cells that react to surroundings'],
           [0,'B. Neuron structure:'],
@@ -1526,7 +1557,7 @@ const allStudyNotes = [
           [1,'• Interneurons (association): within CNS; process & interpret'],
           [1,'• Motor (efferent): CNS → body; effectors = [[muscles]], glands, tissues'],
         ]},
-      { h: 'III. Neuroglia',
+      { h: 'III. Neuroglia', hRu: 'III. Нейроглия',
         items: [
           [0,'B. Neuroglia: nourish & support neurons'],
           [0,'1. CNS neuroglia:'],
@@ -1541,7 +1572,7 @@ const allStudyNotes = [
           [1,'• PNS axon: distal portion degenerates; proximal may [[regenerate]] (slowly)'],
           [1,'• CNS axon: regeneration [[limited]] — no neurolemma; oligodendrocytes don\'t proliferate'],
         ]},
-      { h: 'IV. Cell Membrane Potential',
+      { h: 'IV. Cell Membrane Potential', hRu: 'IV. Мембранный потенциал клетки',
         items: [
           [0,'A. Neurons are "[[excitable]]" — respond to stimuli'],
           [1,'• Most cells: negative inside, positive outside'],
@@ -1572,7 +1603,7 @@ const allStudyNotes = [
           [1,'• Saltatory conduction: action potentials jump node of [[Ranvier]] to next'],
           [1,'• Rate ~100 m/sec'],
         ]},
-      { h: 'V. The Synapse & Synaptic Transmission',
+      { h: 'V. The Synapse & Synaptic Transmission', hRu: 'V. Синапс и синаптическая передача',
         items: [
           [0,'A. Synapse: small [[gap]] between two neurons'],
           [1,'• Presynaptic (sender) → synaptic cleft → postsynaptic (receiver)'],
@@ -2555,41 +2586,130 @@ async function toggleClinicalTranslate() {
   tBtn.disabled = false;
 }
 
+const subjectGroups = [
+  { label: 'Physiology 1', icon: '🔬', g1: '#f97316', g2: '#c2410c',
+    noteIds: ['phys1-lp12','phys1-lp34','phys1-lp56'],
+    match: q => /Phys1/.test(q.title) || /Physiology 1 —/.test(q.title) },
+  { label: 'MSA — Anatomy & Kinesiology', icon: '🦴', g1: '#3b82f6', g2: '#1d4ed8',
+    noteIds: [],
+    match: q => /MSA[123]|Kinesiology/.test(q.title) },
+  { label: 'Clinical Anatomy', icon: '🧠', g1: '#ec4899', g2: '#be185d',
+    noteIds: [],
+    match: q => /CA[12]/.test(q.title) },
+  { label: 'Clinical Massage Therapy', icon: '💆', g1: '#22c55e', g2: '#15803d',
+    noteIds: [],
+    match: q => /CMT/.test(q.title) },
+  { label: 'Clinical Integration', icon: '🩺', g1: '#8b5cf6', g2: '#6d28d9',
+    noteIds: [],
+    match: q => /CI[123]/.test(q.title) },
+  { label: 'Pathology', icon: '🦠', g1: '#ef4444', g2: '#b91c1c',
+    noteIds: [],
+    match: q => /Path/.test(q.title) },
+  { label: 'Professional Development', icon: '📋', g1: '#a855f7', g2: '#7c3aed',
+    noteIds: [],
+    match: q => /PD|Professional Dev/.test(q.title) },
+];
+
 function loadQuestions() {
   renderHome();
-  renderNotesHome();
 }
 
 function renderHome() {
-  const list = document.getElementById('quiz-list');
-  if (allQuizzes.length === 0) {
-    list.innerHTML = `<div class="empty-state">
-      <div class="empty-icon">📸</div>
-      No tests yet<br><br>
-      Take a photo of your printed test and send it to me in Telegram — I'll add it here!
-    </div>`;
-    return;
-  }
+  const container = document.getElementById('subject-groups');
+  if (!container) return;
   const bankTotal = allQuizzes.filter(x => !x.isFinal).reduce((s, x) => s + x.questions.length, 0);
-  list.innerHTML = allQuizzes.map((q, i) => {
-    const meta = q.isFinal
-      ? `100 random questions · drawn from ${bankTotal}-question bank`
-      : `${q.questions.length} questions${q.description ? ' · ' + q.description : ''}`;
-    const style = getQuizStyle(q.title);
-    const displayTitle = q.title.replace(/^[^\w\s]+\s*/, '');
-    return `
-    <div class="quiz-card${q.isFinal ? ' final' : ''}" onclick="startQuiz(${i})">
-      <div class="quiz-card-icon" style="background:linear-gradient(135deg,${style.c1},${style.c2})">
-        <span>${style.abbr}</span>
-      </div>
-      <div class="quiz-card-body">
-        <div class="quiz-card-title">${displayTitle}</div>
-        <div class="quiz-card-meta">${meta}</div>
-      </div>
-      <div class="quiz-card-arrow">›</div>
+
+  // Final Exam card (special — always first)
+  const finalIdx = allQuizzes.findIndex(q => q.isFinal);
+  let html = '';
+  if (finalIdx >= 0) {
+    const q = allQuizzes[finalIdx];
+    html += `<div class="subject-group-label" style="margin-top:10px">
+      <span style="font-size:13px">🎓</span> Final Exam
     </div>
-  `;
-  }).join('');
+    <div class="subject-group-items" style="margin-bottom:20px">
+      <div class="quiz-card final" onclick="startQuiz(${finalIdx})">
+        <div class="quiz-card-icon" style="background:linear-gradient(135deg,#f0c040,#e8860a)">
+          <span>★</span>
+        </div>
+        <div class="quiz-card-body">
+          <div class="quiz-card-title">${q.title.replace(/^[^\w\s]+\s*/, '')}</div>
+          <div class="quiz-card-meta">100 random questions · drawn from ${bankTotal}-question bank</div>
+        </div>
+        <div class="quiz-card-arrow">›</div>
+      </div>
+    </div>`;
+  }
+
+  // Subject groups
+  subjectGroups.forEach(group => {
+    const groupQuizzes = allQuizzes.map((q, i) => ({q, i})).filter(({q}) => !q.isFinal && group.match(q));
+    const groupNotes = (group.noteIds || []).map(id => allStudyNotes.find(n => n.id === id)).filter(Boolean);
+    if (groupQuizzes.length === 0 && groupNotes.length === 0) return;
+
+    html += `<div class="subject-group">
+      <div class="subject-group-label" style="--g1:${group.g1}">
+        <span style="display:inline-block;width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,${group.g1},${group.g2});flex-shrink:0"></span>
+        <span style="font-size:13px">${group.icon}</span>
+        ${group.label}
+      </div>
+      <div class="subject-group-items">`;
+
+    // Notes cards first
+    groupNotes.forEach(n => {
+      html += `<div class="notes-card" onclick="showNoteDetail('${n.id}')">
+        <div class="notes-card-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
+        <div class="notes-card-body">
+          <div class="notes-card-title">${n.title}</div>
+          <div class="notes-card-sub">${n.subtitle}</div>
+        </div>
+        <div class="quiz-card-arrow" style="margin-right:2px">›</div>
+        <span class="note-chip">📖 Notes</span>
+      </div>`;
+    });
+
+    // Quiz cards
+    groupQuizzes.forEach(({q, i}) => {
+      const style = getQuizStyle(q.title);
+      const displayTitle = q.title.replace(/^[^\w\s]+\s*/, '');
+      const meta = `${q.questions.length} questions${q.description ? ' · ' + q.description.split('—')[1] || '' : ''}`;
+      html += `<div class="quiz-card" onclick="startQuiz(${i})">
+        <div class="quiz-card-icon" style="background:linear-gradient(135deg,${style.c1},${style.c2})">
+          <span>${style.abbr}</span>
+        </div>
+        <div class="quiz-card-body">
+          <div class="quiz-card-title">${displayTitle}</div>
+          <div class="quiz-card-meta">${q.questions.length} questions</div>
+        </div>
+        <div class="quiz-card-arrow">›</div>
+      </div>`;
+    });
+
+    html += `</div></div>`;
+  });
+
+  // Ungrouped quizzes (fallback)
+  const grouped = new Set();
+  subjectGroups.forEach(g => allQuizzes.forEach((q, i) => { if (!q.isFinal && g.match(q)) grouped.add(i); }));
+  if (finalIdx >= 0) grouped.add(finalIdx);
+  const ungrouped = allQuizzes.map((q, i) => ({q, i})).filter(({i}) => !grouped.has(i));
+  if (ungrouped.length > 0) {
+    html += `<div class="subject-group-label">Other</div><div class="subject-group-items" style="margin-bottom:20px">`;
+    ungrouped.forEach(({q, i}) => {
+      const style = getQuizStyle(q.title);
+      html += `<div class="quiz-card" onclick="startQuiz(${i})">
+        <div class="quiz-card-icon" style="background:linear-gradient(135deg,${style.c1},${style.c2})"><span>${style.abbr}</span></div>
+        <div class="quiz-card-body">
+          <div class="quiz-card-title">${q.title.replace(/^[^\w\s]+\s*/, '')}</div>
+          <div class="quiz-card-meta">${q.questions.length} questions</div>
+        </div>
+        <div class="quiz-card-arrow">›</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
 }
 
 function getQuizStyle(title) {
@@ -3525,10 +3645,10 @@ function renderNotesHome() {
   `).join('');
 }
 
-function buildNotesHTML(n, sectionTitles) {
-  return n.sections.map((s, i) => `
+function buildNotesHTML(n, useRu) {
+  return n.sections.map(s => `
     <div class="notes-section">
-      <div class="notes-section-title">${sectionTitles ? (sectionTitles[i] || s.h) : s.h}</div>
+      <div class="notes-section-title">${useRu && s.hRu ? s.hRu : s.h}</div>
       ${s.items.map(([lvl, txt]) => `<div class="note-item l${lvl}">${renderNoteItem(txt)}</div>`).join('')}
     </div>
   `).join('');
@@ -3549,45 +3669,17 @@ function showNoteDetail(noteId) {
         <div class="notes-detail-sub">${n.subtitle}</div>
       </div>
     </div>`;
-  document.getElementById('notes-content').innerHTML = buildNotesHTML(n, null);
+  document.getElementById('notes-content').innerHTML = buildNotesHTML(n, false);
   showScreen('screen-notes-detail');
 }
 
-async function toggleNotesTranslate() {
+function toggleNotesTranslate() {
   const tBtn = document.getElementById('notes-translate-btn');
   const n = allStudyNotes.find(x => x.id === currentNoteId);
   if (!n) return;
-  if (isNotesTranslated) {
-    document.getElementById('notes-content').innerHTML = buildNotesHTML(n, null);
-    tBtn.textContent = '🇷🇺 RU';
-    isNotesTranslated = false;
-    return;
-  }
-  if (notesTranslateCache[currentNoteId]) {
-    document.getElementById('notes-content').innerHTML = buildNotesHTML(n, notesTranslateCache[currentNoteId]);
-    tBtn.textContent = '🇺🇸 EN';
-    isNotesTranslated = true;
-    return;
-  }
-  tBtn.textContent = '⏳';
-  tBtn.disabled = true;
-  try {
-    const translations = await Promise.all(
-      n.sections.map(s =>
-        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(s.h) + '&langpair=en|ru')
-          .then(r => r.json())
-          .then(d => d.responseData.translatedText || s.h)
-          .catch(() => s.h)
-      )
-    );
-    notesTranslateCache[currentNoteId] = translations;
-    document.getElementById('notes-content').innerHTML = buildNotesHTML(n, translations);
-    tBtn.textContent = '🇺🇸 EN';
-    isNotesTranslated = true;
-  } catch(e) {
-    tBtn.textContent = '🇷🇺 RU';
-  }
-  tBtn.disabled = false;
+  isNotesTranslated = !isNotesTranslated;
+  document.getElementById('notes-content').innerHTML = buildNotesHTML(n, isNotesTranslated);
+  tBtn.textContent = isNotesTranslated ? '🇺🇸 EN' : '🇷🇺 RU';
 }
 
 loadQuestions();
