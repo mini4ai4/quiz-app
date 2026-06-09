@@ -2592,14 +2592,14 @@ const clinicalRegions = {
 let currentRegionKey = '';
 
 function getRegionIconHTML(key, r) {
-  const gifMap = {
-    wrist:    'icons/icon-wrist.gif',
-    elbow:    'icons/icon-elbow.gif',
-    shoulder: 'icons/icon-shoulder.gif',
-    lumbar:   'icons/icon-lumbar.gif',
-    cervical: 'icons/icon-cervical.gif',
+  const pngMap = {
+    wrist:    'icons/icon-wrist.png',
+    elbow:    'icons/icon-elbow.png',
+    shoulder: 'icons/icon-shoulder.png',
+    lumbar:   'icons/icon-lumbar.png',
+    cervical: 'icons/icon-cervical.png',
   };
-  if (gifMap[key]) return `<img src="${gifMap[key]}" alt="${r.label}" style="width:96%;height:96%;object-fit:contain;border-radius:16px">`;
+  if (pngMap[key]) return `<img src="${pngMap[key]}" alt="${r.label}" style="width:96%;height:96%;object-fit:contain;border-radius:16px">`;
   if (r.icon) return `<img src="${r.icon}" alt="${r.label}" style="width:92%;height:92%;object-fit:contain">`;
   return `<span>${r.emoji}</span>`;
 }
