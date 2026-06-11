@@ -1337,6 +1337,205 @@ let answered = false;
 // ============================================================
 const allStudyNotes = [
   {
+    id: 'msa3-lp1',
+    title: 'MSA 3 — LP 1',
+    subtitle: 'Bones & Joints of the Lower Limb · Pelvis · Femur · Knee · Hip',
+    icon: '🦴',
+    g1: '#3b82f6', g2: '#1d4ed8',
+    sections: [
+      { h: 'I. Pelvic Girdle & Coxa', hRu: 'I. Тазовый пояс и тазовая кость',
+        items: [
+          [0,'Pelvic girdle: two coxae ([[hip bones]]); articulate with each other [[anteriorly]] and with the sacrum [[posteriorly]] (pelvis); function: support trunk, provide attachments for lower limbs, protection','Тазовый пояс: две [[тазовые кости]]; соединяются [[спереди]] и с крестцом [[сзади]]'],
+          [0,'Coxa = Ilium + Ischium + Pubis. Ilium: largest part/flares outward; iliac crest (margin); iliac fossa (anterior concave); SI joint (ilium joins sacrum); ASIS (lateral to groin); AIIS (inferior to ASIS); PSIS; PIIS; gluteal lines (attachment for gluteal muscles)','Тазовая кость = подвздошная + седалищная + лобковая. Подвздошная: гребень, ямка, КПС, ASIS/AIIS/PSIS/PIIS'],
+          [0,'Ischium: lower part; ischial tuberosity (butt bone). Pubis: anterior portion; symphysis pubis (joint where 2 pubic bones articulate); pubic arch; pubic tubercle. Acetabulum: cup-shaped cavity on lateral surface, articulates with head of femur','Седалищная: бугор. Лобковая: симфиз, бугорок. Вертлужная впадина: для головки бедра'],
+        ]},
+      { h: 'II. Femur', hRu: 'II. Бедренная кость',
+        items: [
+          [0,'Femur (thigh bone): head with [[fovea]] capitis; greater trochanter; lesser trochanter; gluteal [[tuberosity]]; linea aspera; lateral condyle; [[medial]] condyle; medial/lateral epicondyle; adductor tubercle','Бедро: головка с [[ямкой (fovea)]]; вертелы; [[ягодичная]] бугристость; шероховатая линия; мыщелки'],
+          [0,'Patella ([[kneecap]]): [[sesamoid]] bone located in a [[tendon]]','Надколенник ([[коленная чашечка]]): [[сесамовидная]] кость в [[сухожилии]]'],
+        ]},
+      { h: 'III. Tibia, Fibula & Foot', hRu: 'III. Большеберцовая, малоберцовая, стопа',
+        items: [
+          [0,'Tibia ([[Shin]] bone): larger of leg bones; lateral condyles; [[Medial]] condyles; tibial tuberosity; tibial tubercle; pes anserine; anterior crest; medial [[malleolus]]','Большеберцовая ([[голень]]): крупнее; бугристость; медиальная [[лодыжка]]'],
+          [0,'Fibula: head; lateral [[malleolus]]','Малоберцовая: головка; латеральная [[лодыжка]]'],
+          [0,'Foot: ankle, instep and [[toes]]. Ankle (tarsus) = 7 tarsal bones: [[Calcaneus]] (heel bone); talus (joins the [[tibia]] and [[fibula]], moves freely); navicular; cuboid; lateral/intermediate/medial cuneiform','Стопа: лодыжка, свод, [[пальцы]]. 7 костей предплюсны: [[пяточная]]; таранная ([[большеберцовая]] и [[малоберцовая]])'],
+          [0,'Instep ([[metatarsus]]): [[five]] metatarsal bones, numbered 1-5 starting [[medially]]; heads form [[ball]] of foot; arches. Phalanges: similar to fingers — proximal/middle/distal phalanx (big toe missing middle)','Свод ([[плюсна]]): [[пять]] плюсневых костей с [[медиальной]] стороны; [[подушечка]] стопы. Фаланги'],
+        ]},
+      { h: 'IV. Synovial Joints & Joint Movements', hRu: 'IV. Синовиальные суставы и движения',
+        items: [
+          [0,'Synovial joints: most joints; diarthrotic (free movement); involve articular cartilage, joint capsule, synovial membrane, synovial fluid. Ligaments = dense CT (collagen, tensile strength) reinforce capsule, connect bone to bone, prevent excessive movement','Синовиальные: большинство; свободное движение; связки = плотная СТ'],
+          [0,'Menisci: discs of [[fibrocartilage]], separate articulating bones (e.g. [[Knee]] joint). Bursae: fluid-filled sacs, cushion/aid movement of tendons over bony areas','Мениски: [[фиброхрящ]] ([[коленный]] сустав). Сумки: амортизация'],
+          [0,'Types: Ball and Socket ("egg" head + cup cavity, greatest ROM — [[hip]] joint); Gliding/Plane (flat bones, sliding — between tarsals, [[patella]] and [[femur]]); Hinge (convex+concave, flexion/extension only — interphalangeal, ankle [[talocrural]] joint; [[Knee]] is a modified hinge)','Типы: шаровидный ([[бедро]]); плоский ([[надколенник]]/[[бедро]]); блоковидный ([[голеностоп]], [[колено]] модифицированный)'],
+          [0,'Movements: Flexion (reduces angle, [[sagittal]] plane); Extension ([[sagittal]]); Abduction (away from midline, [[coronal]] plane); Adduction ([[coronal]]); Internal/External rotation (transverse plane); Dorsiflexion ([[sagittal]]); Plantarflexion ([[sagittal]]); Inversion ([[coronal]]); Eversion ([[coronal]]); Circumduction (circular path)','Движения: сгибание/разгибание ([[сагиттальная]]); отведение/приведение ([[корональная]]); дорси/подошвенное; инверсия/эверсия'],
+        ]},
+      { h: 'V. Knee Joint', hRu: 'V. Коленный сустав',
+        items: [
+          [0,'Knee Joint: [[largest]] and most complex; articulation between [[femur]], tibia and patella; Modified [[hinge]] joint (tibia and femur) + Gliding joint ([[patella]] and femur)','Колено: [[крупнейший]]; [[бедро]], большеберцовая, надколенник; модифицированный [[блоковидный]]'],
+          [0,'Joint capsule strengthened by ligaments/tendons: Patellar Ligament (most [[superficial]]; patella to tibial tuberosity; continuation of [[quadriceps]] femoris tendon); Tibial collateral ([[medial]]/MCL); Fibular collateral ([[lateral]]/LCL); Cruciate ligaments (anterior + posterior, within joint)','Капсула: связка надколенника ([[поверхностная]]; [[квадрицепс]]); [[медиальная]]/[[латеральная]] коллатеральные; крестообразные'],
+          [0,'Menisci: attach to [[tibia]] ([[fibrocartilage]]), medial and lateral. Bursae: suprapatellar, prepatellar, infrapatellar. Movements: [[flexion]]/extension; when knee is [[flexed]] — lateral and medial rotation of tibia','Мениски: к [[большеберцовой]] ([[фиброхрящ]]). Сумки. Движения: [[сгибание]]; при [[согнутом]] колене — ротация'],
+        ]},
+      { h: 'VI. Hip Joint', hRu: 'VI. Тазобедренный сустав',
+        items: [
+          [0,'Hip Joint: Ball and Socket; head of femur + [[acetabulum]] of coxa; Fovea Capitis (ligament femoral head to acetabulum + blood vessels); Acetabular Labrum ([[fibrocartilage]], [[Deepens]] acetabulum cavity)','ТБС: шаровидный; головка бедра + [[вертлужная впадина]]; губа ([[фиброхрящ]], [[углубляет]] впадину)'],
+          [0,'Reinforcing Ligaments: Iliofemoral Ligament (AIIS to [[intertrochanteric]] line; "Y" shaped; [[strongest]] ligament in the body)','Связки: подвздошно-бедренная (AIIS → [[межвертельная]] линия; «Y»; [[сильнейшая]] связка тела)'],
+          [0,'Movements: extension, flexion, [[abduction]], adduction, rotation, circumduction; hip is the joint most frequently replaced. Less freedom than shoulder (deeper socket = more stability)','Движения: разгибание, сгибание, [[отведение]]; ТБС чаще всего заменяют'],
+        ]},
+    ]
+  },
+  {
+    id: 'msa3-lp2',
+    title: 'MSA 3 — LP 2',
+    subtitle: 'Muscles that Move the Hip · Glutes · Piriformis · Quadratus Femoris',
+    icon: '🍑',
+    g1: '#f97316', g2: '#c2410c',
+    sections: [
+      { h: 'I. Gluteus Maximus', hRu: 'I. Большая ягодичная',
+        items: [
+          [0,'O: Coccyx, Posterior sacrum, Posterior iliac crest, Sacrotuberous ligament, Sacroiliac ligament','O: копчик, задний крестец, задний гребень подвздошной, крестцово-бугорная/КП связки'],
+          [0,'I: Upper fibers — [[iliotibial tract]]; Lower fibers — [[gluteal tuberosity]]','I: верхние волокна — [[ИТ-тракт]]; нижние — [[ягодичная бугристость]]'],
+          [0,'A: extends hip, [[lateral rotation]] of hip; upper fibers abduct the hip, lower fibers adduct the hip. Superficial, Non-ropy tendon','A: разгибание, [[наружная ротация]]; верхние отводят, нижние приводят. Поверхностная'],
+        ]},
+      { h: 'II. Gluteus Medius', hRu: 'II. Средняя ягодичная',
+        items: [
+          [0,'O: external surface of ilium, between posterior and anterior gluteal lines, just below the iliac crest','O: наружная поверхность подвздошной, между задней и передней ягодичными линиями'],
+          [0,'I: lateral aspect of the [[greater trochanter]] of femur','I: латеральная сторона [[большого вертела]]'],
+          [0,'A: [[abducts]] the hip (all fibers); Posterior fibers: extends + lateral rotation; Anterior fibers: flexes + medial rotation. Superficial & deep to glut max, Non-ropy tendon','A: [[отводит]] бедро (все волокна); задние разгибают/наружная ротация; передние сгибают/внутренняя'],
+        ]},
+      { h: 'III. Gluteus Minimus', hRu: 'III. Малая ягодичная',
+        items: [
+          [0,'O: external ilium between anterior and inferior gluteal lines','O: наружная подвздошная между передней и нижней ягодичными линиями'],
+          [0,'I: anterior border of [[greater trochanter]]','I: передний край [[большого вертела]]'],
+          [0,'A: [[flexion]], [[medial rotation]], abduction of hip. Deep to gluteus medius, Non-ropy tendon','A: [[сгибание]], [[внутренняя ротация]], отведение. Глубже средней ягодичной'],
+        ]},
+      { h: 'IV. Piriformis', hRu: 'IV. Грушевидная',
+        items: [
+          [0,'O: Anterior surface of lateral sacrum. I: Superior aspect of greater trochanter','O: передняя поверхность латерального крестца. I: верх большого вертела'],
+          [0,'A: [[laterally rotates]] femur; abducts femur when hip is flexed. Deep to Gluteus Maximus; ropy tendon at greater trochanter (hard to palpate). Note: Most [[superior]] of 6 deep lateral rotators','A: [[наружная ротация]] бедра; отводит при согнутом бедре. Самая [[верхняя]] из 6 глубоких ротаторов'],
+        ]},
+      { h: 'V. Quadratus Femoris', hRu: 'V. Квадратная мышца бедра',
+        items: [
+          [0,'O: lateral border of ischial tuberosity. I: Intertrochanteric crest, between greater and lesser trochanters','O: латеральный край седалищного бугра. I: межвертельный гребень'],
+          [0,'A: [[Lateral Rotation]] of femur. Deep to Gluteus Maximus, Non-ropy tendon. Note: Most [[inferior]] of 6 deep lateral rotators','A: [[наружная ротация]] бедра. Самая [[нижняя]] из 6 глубоких ротаторов'],
+          [0,'The 6 deep lateral rotators: Piriformis (most superior), Superior & Inferior Gemellus, Obturator Externus & Internus, Quadratus Femoris (most inferior)','6 глубоких ротаторов: грушевидная, верхняя/нижняя близнецовые, наружная/внутренняя запирательные, квадратная'],
+        ]},
+    ]
+  },
+  {
+    id: 'msa3-lp34',
+    title: 'MSA 3 — LP 3 & 4',
+    subtitle: 'Muscles that Flex/Adduct the Hip · TFL · Iliopsoas · Adductors · Gracilis',
+    icon: '🦵',
+    g1: '#22c55e', g2: '#15803d',
+    sections: [
+      { h: 'I. Tensor Fascia Latae (TFL)', hRu: 'I. Напрягатель широкой фасции',
+        items: [
+          [0,'O: external iliac crest, posterior to ASIS. I: [[iliotibial tract]]','O: наружный гребень подвздошной, сзади от ASIS. I: [[ИТ-тракт]]'],
+          [0,'A: Flexes the hip, [[Medially rotates]] the hip, Abducts hip. Superficial, Non-ropy tendon','A: сгибает, [[внутренне ротирует]], отводит бедро. Поверхностная'],
+        ]},
+      { h: 'II. Iliopsoas (Psoas Major + Iliacus)', hRu: 'II. Подвздошно-поясничная',
+        items: [
+          [0,'Psoas Major — O: bodies and TVPs of lumbar vertebra; I: [[lesser trochanter]] of femur','Большая поясничная — O: тела и ПОО поясничных позвонков; I: [[малый вертел]]'],
+          [0,'Iliacus — O: Iliac fossa; I: Lesser trochanter','Подвздошная — O: подвздошная ямка; I: малый вертел'],
+          [0,'A (both): With origin fixed — flexes the hip, may laterally rotate the hip; With insertion fixed — flexes the trunk, tilts pelvis anteriorly; Unilaterally — assists to laterally flex the lumbar spine. Deep, Non-ropy tendon','A: при фикс. начале — сгибает бедро; при фикс. прикреплении — сгибает туловище, наклон таза вперёд'],
+          [0,'TOGETHER, Psoas Major and Iliacus form the [[ILIOPSOAS]] because they join together distal to the inguinal ligament','ВМЕСТЕ образуют [[ПОДВЗДОШНО-ПОЯСНИЧНУЮ]] мышцу (соединяются дистальнее паховой связки)'],
+        ]},
+      { h: 'III. Sartorius', hRu: 'III. Портняжная',
+        items: [
+          [0,'O: ASIS. I: Pes anserine (proximal medial shaft of tibia). The [[longest]] muscle in the body','O: ASIS. I: «гусиная лапка». [[Длиннейшая]] мышца тела'],
+          [0,'A: Flexes the hip, [[Laterally rotates]] hip, Abducts hip. Superficial, Non-ropy tendon','A: сгибает, [[наружно ротирует]], отводит бедро. Поверхностная'],
+        ]},
+      { h: 'IV. Adductor Magnus ("4th hamstring")', hRu: 'IV. Большая приводящая («4-й хамстринг»)',
+        items: [
+          [0,'O: Inferior ramus of the pubis, Ramus of the ischium, Ischial tuberosity. I: Medial lip of Linea aspera of posterior femur, Adductor tubercle','O: нижняя ветвь лобковой, ветвь седалищной, седалищный бугор. I: медиальная губа шероховатой линии'],
+          [0,'A: [[adduction]] of hip, assists flexion of the hip, extension of hip. Superficial and Deep to gracilis, Ropy tendon at the adductor tubercle','A: [[приведение]] бедра, помогает сгибанию, разгибание. Канатное сухожилие у приводящего бугорка'],
+        ]},
+      { h: 'V. Adductor Longus & Brevis', hRu: 'V. Длинная и короткая приводящие',
+        items: [
+          [0,'Adductor Longus — O: Pubic tubercle; I: Medial lip of linea aspera mid-femur; A: adduction of hip, [[medially rotates]] the hip, assists flexion of hip. Superficial and Deep to vastus medialis, No-ropy tendon','Длинная приводящая — O: лобковый бугорок; I: медиальная губа шероховатой линии; A: приведение, [[внутренняя ротация]]'],
+          [0,'Adductor Brevis — O: inferior ramus of pubis; I: Pectineal line of femur, Linea aspera; A: adduction of hip, medially rotates the hip, assists flexion of hip. Deep, No-ropy tendon','Короткая приводящая — O: нижняя ветвь лобковой; I: гребенчатая линия; A: приведение, внутренняя ротация'],
+        ]},
+      { h: 'VI. Pectineus & Gracilis', hRu: 'VI. Гребенчатая и тонкая',
+        items: [
+          [0,'Pectineus — O: superior ramus of pubis; I: pectineal line of femur; A: adduction of hip, medially rotates the hip, assists flexion of hip. Both superficial and deep to sartorius, No-ropy tendon','Гребенчатая — O: верхняя ветвь лобковой; I: гребенчатая линия; A: приведение, внутренняя ротация'],
+          [0,'Gracilis — O: Inferior ramus of pubis; I: pes anserine (proximal, medial, anterior tibia); A: [[adduction]] of hip, medially rotates and assists [[flexion of knee]] (tibia). Superficial, Ropy tendon at inferior ramus of pubis','Тонкая — O: нижняя ветвь лобковой; I: «гусиная лапка»; A: [[приведение]] бедра, [[сгибание колена]]'],
+        ]},
+    ]
+  },
+  {
+    id: 'msa3-lp56',
+    title: 'MSA 3 — LP 5 & 6',
+    subtitle: 'Hamstrings & Quads · Biceps Femoris · Semi- · Rectus · Vastus · Popliteus',
+    icon: '🏃',
+    g1: '#a855f7', g2: '#7c3aed',
+    sections: [
+      { h: 'I. Biceps Femoris (most lateral)', hRu: 'I. Двуглавая бедра (самая латеральная)',
+        items: [
+          [0,'O: Long head — ischial tuberosity; Short head — Lateral lip of linea aspera of femur. I: head of the fibula','O: длинная головка — седалищный бугор; короткая — латеральная губа шероховатой линии. I: головка малоберцовой'],
+          [0,'A: [[flexion of the knee]], extension of the hip (long head), posterior tilting of the pelvis, assists lat. rotation of hip (long head), [[lateral rotation of tibia]] with flexed knee. Both superficial and deep (short head deep to long head), Ropy distal tendon','A: [[сгибание колена]], разгибание бедра, [[наружная ротация голени]] при согнутом колене'],
+        ]},
+      { h: 'II. Semitendinosus & Semimembranosus', hRu: 'II. Полусухожильная и полуперепончатая',
+        items: [
+          [0,'Semitendinosus — O: Ischial tuberosity; I: [[pes anserine]] (proximal medial shaft of tibia); A: Flexion of knee, Extension of hip, Posterior tilting of pelvis, assists medial rotation of hip, [[medial rotation of tibia]] with flexed knee. Superficial, Ropy tendon','Полусухожильная — O: седалищный бугор; I: [[гусиная лапка]]; A: сгибание колена, разгибание бедра, [[внутренняя ротация голени]]'],
+          [0,'Semimembranosus — O: Ischial tuberosity; I: Posterior aspect of medial condyle of tibia; A: same as semitendinosus (Flexion knee, Extension hip, Posterior pelvic tilt, medial rotation). Both deep to semitendinosus and superficial, Ropy tendon','Полуперепончатая — O: седалищный бугор; I: задняя сторона медиального мыщелка большеберцовой; A: как полусухожильная'],
+        ]},
+      { h: 'III. Rectus Femoris & Vastus Lateralis', hRu: 'III. Прямая бедра и латеральная широкая',
+        items: [
+          [0,'Rectus Femoris — O: Anterior inferior iliac spine (AIIS); I: tibial tuberosity via the patella and patellar ligament; A: [[Knee extension]], Hip flexion, Anterior tilting of the pelvis. Superficial, Thick ropy tendon','Прямая бедра — O: AIIS; I: бугристость большеберцовой через надколенник; A: [[разгибание колена]], сгибание бедра'],
+          [0,'Vastus Lateralis — O: Lateral lip of linea aspera, Gluteal tuberosity, Greater trochanter; I: Tibial Tuberosity via patella/patellar ligament; A: [[knee extension]]. Superficial and Deep to gracilis, Ropy tendon at adductor tubercle','Латеральная широкая — O: латеральная губа шероховатой линии; A: [[разгибание колена]]'],
+        ]},
+      { h: 'IV. Vastus Medialis & Intermedius', hRu: 'IV. Медиальная и промежуточная широкие',
+        items: [
+          [0,'Vastus Medialis — O: medial lip of linea aspera; I: tibial tuberosity via patella/patellar ligament; A: [[Knee extension]]. Both superficial and deep to rectus femoris and sartorius, Thick ropy distal tendon','Медиальная широкая — O: медиальная губа шероховатой линии; A: [[разгибание колена]]'],
+          [0,'Vastus Intermedius — O: anterior and lateral shaft of femur; I: tibial tuberosity via patella/patellar ligament; A: [[Knee extension]]. Deep to rectus femoris, Ropy tendon','Промежуточная широкая — O: передняя/латеральная поверхность бедра; A: [[разгибание колена]]'],
+          [0,'The 4 quadriceps: Rectus Femoris + Vastus Lateralis/Medialis/Intermedius — all extend the knee via the patellar ligament','4 квадрицепса: прямая + 3 широкие — все разгибают колено'],
+        ]},
+      { h: 'V. Popliteus (FYI)', hRu: 'V. Подколенная (для ознакомления)',
+        items: [
+          [0,'O: Lateral condyle of femur. I: Proximal, posterior aspect of tibia','O: латеральный мыщелок бедра. I: проксимальная задняя сторона большеберцовой'],
+          [0,'A: [[Medially rotates]] the flexed knee, Flexes knee ("unlocks" the knee). Deep to gastroc. and plantaris, Ropy tendon','A: [[внутренне ротирует]] согнутое колено, сгибает («разблокирует» колено)'],
+        ]},
+    ]
+  },
+  {
+    id: 'msa3-lp78',
+    title: 'MSA 3 — LP 7 & 8',
+    subtitle: 'Muscles of the Lower Leg · Tibialis · Gastroc · Soleus · Fibularis · Flexors',
+    icon: '🦶',
+    g1: '#0ea5e9', g2: '#0369a1',
+    sections: [
+      { h: 'I. Tibialis Anterior', hRu: 'I. Передняя большеберцовая',
+        items: [
+          [0,'O: lateral tibial condyle, proximal lateral shaft of tibia, interosseous membrane. I: medial cuneiform, plantar base of 1st metatarsal','O: латеральный мыщелок большеберцовой, межкостная мембрана. I: медиальная клиновидная, 1-я плюсневая'],
+          [0,'A: [[dorsiflexion]] of foot (поднятие стопы вверх), [[inverts]] the foot. Superficial, Ropy distal tendon','A: [[дорсифлексия]] стопы, [[инверсия]] стопы. Поверхностная'],
+        ]},
+      { h: 'II. Extensor Digitorum Longus & Fibularis Tertius', hRu: 'II. Длинный разгибатель пальцев и третья малоберцовая',
+        items: [
+          [0,'Extensor Digitorum Longus — O: Lateral tibial condyle, Proximal anterior shaft of fibula, Interosseous membrane; I: middle and distal phalanges of digits 2-5; A: [[extends toes 2-5]], dorsiflexion of foot, eversion of foot. Both superficial and deep to tibialis anterior, Ropy tendons on dorsum to lateral 4 digits','Длинный разгибатель пальцев — I: средние/дистальные фаланги 2-5; A: [[разгибает пальцы 2-5]], дорсифлексия, эверсия'],
+          [0,'Fibularis (Peroneus) Tertius — O: Anterior surface of distal 1/3 of fibula; I: Dorsal base of 5th metatarsal; A: Dorsiflexion + Eversion of foot. Like palmaris longus, not everyone has it (not on palpation test). Superficial and deep to peroneus brevis, Ropy distal tendon','Третья малоберцовая — I: тыльное основание 5-й плюсневой; A: дорсифлексия + эверсия. Есть не у всех'],
+        ]},
+      { h: 'III. Gastrocnemius & Soleus', hRu: 'III. Икроножная и камбаловидная',
+        items: [
+          [0,'Gastrocnemius — O: Posterior medial and lateral condyles of the femur; I: Calcaneus via calcaneal tendon; A: [[Plantar flexes]] the foot, [[Flexes the knee]]. Superficial, Ropy distal tendon','Икроножная — O: задние мыщелки бедра; I: пяточная через ахиллово сухожилие; A: [[подошвенное сгибание]], [[сгибание колена]]'],
+          [0,'Soleus — O: Soleal line of tibia, Proximal posterior surface of tibia, Posterior surface of head of fibula; I: Calcaneus via calcaneal tendon; A: [[Plantar flexes]] the foot (only, does NOT cross knee). Both superficial and deep to gastrocnemius, Ropy distal tendon','Камбаловидная — I: пяточная через ахиллово сухожилие; A: только [[подошвенное сгибание]] (не пересекает колено)'],
+        ]},
+      { h: 'IV. Plantaris & Tibialis Posterior', hRu: 'IV. Подошвенная и задняя большеберцовая',
+        items: [
+          [0,'Plantaris — O: lateral supracondylar line of the femur; I: Calcaneus via calcaneal tendon; A: Assists in plantar flexes the foot. Both superficial and deep to medial upper gastrocnemius, Ropy distal tendon','Подошвенная — A: помогает подошвенному сгибанию. Тонкая, у верхней медиальной части икроножной'],
+          [0,'Tibialis Posterior — O: Proximal posterior shafts of tibia and fibula, Interosseous membrane; I: tarsal bones of midfoot and bases of 2nd-4th metatarsals; A: [[plantar flexion]], [[inverts the foot]]. Deep to gastrocnemius and soleus, Ropy distal tendon','Задняя большеберцовая — A: [[подошвенное сгибание]], [[инверсия стопы]]. Глубже икроножной и камбаловидной'],
+        ]},
+      { h: 'V. Flexor Digitorum & Hallucis Longus', hRu: 'V. Длинные сгибатели пальцев и большого пальца',
+        items: [
+          [0,'Flexor Digitorum Longus — O: Distal 2/3 of posterior tibia; I: Distal phalanges of digits 2-5; A: [[flexes digits 2-5]], assists plantar flexion, inverts the foot. Deep to gastrocnemius and soleus, Ropy distal tendon','Длинный сгибатель пальцев — I: дистальные фаланги 2-5; A: [[сгибает пальцы 2-5]], помогает подошвенному сгибанию, инверсия'],
+          [0,'Flexor Hallucis Longus — O: middle half of posterior fibula; I: Distal phalanx of great toe; A: [[Flexes great toe]], Assists plantar flexion, Inverts foot. Deep to gastrocnemius and soleus, Ropy distal tendon','Длинный сгибатель большого пальца — I: дистальная фаланга большого пальца; A: [[сгибает большой палец]]'],
+        ]},
+      { h: 'VI. Fibularis (Peroneus) Longus & Brevis', hRu: 'VI. Длинная и короткая малоберцовые',
+        items: [
+          [0,'Fibularis (Peroneus) Longus — O: head of fibula and proximal two-thirds of lateral fibula; I: Plantar base of first metatarsal, Plantar surface of medial cuneiform; A: [[everts the foot]], assists plantar flexion. Superficial, Ropy distal tendon','Длинная малоберцовая — I: подошвенное основание 1-й плюсневой, медиальная клиновидная; A: [[эверсия стопы]], помогает подошвенному сгибанию'],
+          [0,'Fibularis (Peroneus) Brevis — O: distal 2/3 of lateral fibula; I: tuberosity of 5th metatarsal; A: [[everts the foot]], assists plantar flexion. Both superficial and deep to fibularis longus, Ropy distal tendon','Короткая малоберцовая — I: бугристость 5-й плюсневой; A: [[эверсия стопы]], помогает подошвенному сгибанию'],
+        ]},
+    ]
+  },
+  {
     id: 'ca1-lp12',
     title: 'Clinical Anatomy 1 — LP 1 & 2',
     subtitle: 'Tissues · Epithelial · Connective · Muscle · Membranes · Integumentary',
@@ -4627,7 +4826,7 @@ const subjectGroups = [
     noteIds: ['phys2-lp12'],
     match: q => /Phys2/.test(q.title) || /Physiology 2 —/.test(q.title) },
   { label: 'MSA — Anatomy', icon: '🦴', g1: '#3b82f6', g2: '#1d4ed8',
-    noteIds: [],
+    noteIds: ['msa3-lp1','msa3-lp2','msa3-lp34','msa3-lp56','msa3-lp78'],
     match: q => /MSA\s?[123]/.test(q.title) },
   { label: 'Kinesiology', icon: '🏃', g1: '#06b6d4', g2: '#0e7490',
     noteIds: ['kin1-lp14','kin1-lp58'],
