@@ -3920,7 +3920,7 @@ const subjectGroups = [
     match: q => /Phys2/.test(q.title) || /Physiology 2 —/.test(q.title) },
   { label: 'MSA — Anatomy', icon: '🦴', g1: '#3b82f6', g2: '#1d4ed8',
     noteIds: [],
-    match: q => /MSA[123]/.test(q.title) },
+    match: q => /MSA\s?[123]/.test(q.title) },
   { label: 'Kinesiology', icon: '🏃', g1: '#06b6d4', g2: '#0e7490',
     noteIds: ['kin1-lp14','kin1-lp58'],
     match: q => /Kinesiology|Kines\d/.test(q.title) },
