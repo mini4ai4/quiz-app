@@ -4829,9 +4829,15 @@ const subjectGroups = [
   { label: 'Physiology 2', icon: '⚡', g1: '#0ea5e9', g2: '#0369a1',
     noteIds: ['phys2-lp12'],
     match: q => /Phys2/.test(q.title) || /Physiology 2 —/.test(q.title) },
-  { label: 'MSA — Anatomy', icon: '🦴', g1: '#3b82f6', g2: '#1d4ed8',
+  { label: 'MSA 1 — Anatomy', icon: '🦴', g1: '#3b82f6', g2: '#1d4ed8',
+    noteIds: [],
+    match: q => /MSA\s?1/.test(q.title) },
+  { label: 'MSA 2 — Anatomy', icon: '🦴', g1: '#2563eb', g2: '#1e40af',
+    noteIds: [],
+    match: q => /MSA\s?2/.test(q.title) },
+  { label: 'MSA 3 — Anatomy', icon: '🦴', g1: '#1d4ed8', g2: '#1e3a8a',
     noteIds: ['msa3-lp1','msa3-lp2','msa3-lp34','msa3-lp56','msa3-lp78'],
-    match: q => /MSA\s?[123]/.test(q.title) },
+    match: q => /MSA\s?3/.test(q.title) },
   { label: 'Kinesiology', icon: '🏃', g1: '#06b6d4', g2: '#0e7490',
     noteIds: ['kin1-lp14','kin1-lp58'],
     match: q => /Kinesiology|Kines\d/.test(q.title) },
@@ -4909,16 +4915,14 @@ function renderHome() {
     if (groupQuizzes.length === 0 && groupNotes.length === 0) return;
     const id = accIdx++;
     const totalItems = groupNotes.length + groupQuizzes.length;
-    const isFirst = id === 0; // Physiology 1 open by default
-
     html += `<div class="subject-accordion">
-      <div class="subject-acc-header${isFirst ? ' open' : ''}" id="acc-h-${id}" onclick="toggleAccordion(${id})">
+      <div class="subject-acc-header" id="acc-h-${id}" onclick="toggleAccordion(${id})">
         <div class="subject-acc-icon" style="background:linear-gradient(135deg,${group.g1},${group.g2})">${group.icon}</div>
         <div class="subject-acc-name">${group.label}</div>
         <div class="subject-acc-count">${totalItems} items</div>
         <div class="subject-acc-chevron">›</div>
       </div>
-      <div class="subject-acc-body${isFirst ? ' open' : ''}" id="acc-b-${id}">`;
+      <div class="subject-acc-body" id="acc-b-${id}">`;
 
     // Notes first
     groupNotes.forEach(n => {
