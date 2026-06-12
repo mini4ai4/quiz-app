@@ -666,6 +666,7 @@
 
   /* ===== CLINICAL REASONING ===== */
   #screen-clinical, #screen-clinical-region, #screen-clinical-test { display: none; padding-top: 12px; }
+  #screen-cmt { display: none; padding-top: 12px; }
 
   .clinical-hero {
     margin: 0 -16px 24px;
@@ -1179,8 +1180,30 @@
         </div>
         <div class="quiz-card-arrow">›</div>
       </div>
+      <div class="quiz-card" onclick="showCMT()" style="background:rgba(34,197,94,0.08); border-color:rgba(34,197,94,0.3);">
+        <div class="quiz-card-icon" style="background:linear-gradient(135deg,#22c55e,#15803d)">
+          <span style="font-size:18px">💆</span>
+        </div>
+        <div class="quiz-card-body">
+          <div class="quiz-card-title" style="color:#4ade80">Clinical Massage Therapy Program</div>
+          <div class="quiz-card-meta">Techniques · Ethics · Body Mechanics · Draping</div>
+        </div>
+        <div class="quiz-card-arrow">›</div>
+      </div>
     </div>
     <div id="subject-groups"></div>
+  </div>
+
+  <!-- ===== CLINICAL MASSAGE THERAPY PROGRAM ===== -->
+  <div id="screen-cmt">
+    <button class="clinical-back" onclick="goHome()">← Back to Home</button>
+    <div class="clinical-hero">
+      <div class="clinical-hero-emoji">💆</div>
+      <div class="clinical-hero-title">Clinical Massage Therapy Program</div>
+      <div class="clinical-hero-sub">Select a topic to study</div>
+    </div>
+    <div class="clinical-section-label">Study Topics</div>
+    <div id="cmt-notes-list"></div>
   </div>
 
   <!-- ===== CLINICAL REASONING — REGION SELECTOR ===== -->
@@ -6149,7 +6172,7 @@ function showReview() {
 }
 
 function showScreen(id) {
-  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail'].forEach(s => {
+  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail','screen-cmt'].forEach(s => {
     document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
   window.scrollTo(0,0);
@@ -6963,7 +6986,26 @@ async function loadMuscleImages() {
   }
 }
 
-function showNoteDetail(noteId) {
+let notesBackScreen = 'screen-home';
+
+function showCMT() {
+  showScreen('screen-cmt');
+  const list = document.getElementById('cmt-notes-list');
+  const cmtNotes = allStudyNotes.filter(n => n.id.startsWith('cmt'));
+  list.innerHTML = cmtNotes.map(n => `
+    <div class="notes-card" onclick="showNoteDetail('${n.id}','screen-cmt')">
+      <div class="notes-card-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
+      <div class="notes-card-body">
+        <div class="notes-card-title">${n.title}</div>
+        <div class="notes-card-sub">${n.subtitle}</div>
+      </div>
+      <div class="quiz-card-arrow">›</div>
+    </div>
+  `).join('');
+}
+
+function showNoteDetail(noteId, backScreen) {
+  notesBackScreen = backScreen || 'screen-home';
   currentNoteId = noteId;
   isNotesTranslated = false;
   sectionRuStates = {};
@@ -6971,6 +7013,12 @@ function showNoteDetail(noteId) {
   if (!n) return;
   const tBtn = document.getElementById('notes-translate-btn');
   if (tBtn) { tBtn.textContent = '🇷🇺 RU'; tBtn.disabled = false; }
+  const backLabel = notesBackScreen === 'screen-cmt' ? '← CMT Program' : '← Home';
+  const backFn = notesBackScreen === 'screen-cmt' ? 'showCMT()' : 'goHome()';
+  const topbar = document.querySelector('#screen-notes-detail .notes-topbar');
+  if (topbar) topbar.querySelector('.back-home-btn').setAttribute('onclick', backFn);
+  const bottomBtn = document.querySelector('#screen-notes-detail > .btn');
+  if (bottomBtn) { bottomBtn.setAttribute('onclick', backFn); bottomBtn.textContent = backLabel; }
   document.getElementById('notes-detail-header').innerHTML = `
     <div class="notes-detail-header">
       <div class="notes-detail-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
