@@ -666,7 +666,6 @@
 
   /* ===== CLINICAL REASONING ===== */
   #screen-clinical, #screen-clinical-region, #screen-clinical-test { display: none; padding-top: 12px; }
-  #screen-cmtr { display: none; padding-top: 12px; }
 
   .clinical-hero {
     margin: 0 -16px 24px;
@@ -1180,31 +1179,10 @@
         </div>
         <div class="quiz-card-arrow">›</div>
       </div>
-      <div class="quiz-card" onclick="showCMTR()" style="background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.3);">
-        <div class="quiz-card-icon" style="background:linear-gradient(135deg,#10b981,#047857)">
-          <span style="font-size:18px">📋</span>
-        </div>
-        <div class="quiz-card-body">
-          <div class="quiz-card-title" style="color:#34d399">Clinical Massage Therapy Program</div>
-          <div class="quiz-card-meta">CMTR · Therapies · Techniques</div>
-        </div>
-        <div class="quiz-card-arrow">›</div>
-      </div>
     </div>
     <div id="subject-groups"></div>
   </div>
 
-  <!-- ===== CLINICAL MASSAGE THERAPY PROGRAM (CMTR) ===== -->
-  <div id="screen-cmtr">
-    <button class="clinical-back" onclick="goHome()">← Back to Home</button>
-    <div class="clinical-hero">
-      <div class="clinical-hero-emoji">📋</div>
-      <div class="clinical-hero-title">Clinical Massage Therapy Program</div>
-      <div class="clinical-hero-sub">Select a section</div>
-    </div>
-    <div class="clinical-section-label">Sections</div>
-    <div id="cmtr-sections-list"><div style="text-align:center;color:rgba(255,255,255,0.4);padding:32px;font-size:14px">Coming soon</div></div>
-  </div>
 
   <!-- ===== CLINICAL REASONING — REGION SELECTOR ===== -->
   <div id="screen-clinical">
@@ -5880,11 +5858,14 @@ const subjectGroups = [
     noteIds: ['cmt1-n1','cmt1-n2','cmt1-n3','cmt1-n4','cmt1-n5'],
     match: q => /CMT1/.test(q.title) },
   { label: 'Clinical Massage Therapy 2', icon: '💆', g1: '#10b981', g2: '#047857',
-    noteIds: ['cmt2-lp12','cmt2-lp34','cmt2-lp56','cmtp-hydro','cmtp-trigger-points','cmtp-fascia','cmtp-palpation'],
-    match: q => /CMT2|CMTP/.test(q.title) },
+    noteIds: ['cmt2-lp12','cmt2-lp34','cmt2-lp56'],
+    match: q => /CMT2/.test(q.title) },
   { label: 'Clinical Massage Therapy 3', icon: '💆', g1: '#34d399', g2: '#059669',
     noteIds: ['cmt3-lp12','cmt3-lp34','cmt3-lp5678'],
     match: q => /CMT3|CMT 3/.test(q.title) },
+  { label: 'Clinical Massage Therapy Program', icon: '📋', g1: '#0d9488', g2: '#0f766e',
+    noteIds: ['cmtp-hydro','cmtp-trigger-points','cmtp-fascia','cmtp-palpation'],
+    match: q => /CMTP/.test(q.title) },
   { label: 'Clinical Integration 1', icon: '🩺', g1: '#6d28d9', g2: '#4c1d95',
     noteIds: [],
     match: q => /CI1/.test(q.title) },
@@ -6172,7 +6153,7 @@ function showReview() {
 }
 
 function showScreen(id) {
-  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail','screen-cmtr'].forEach(s => {
+  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail'].forEach(s => {
     document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
   window.scrollTo(0,0);
@@ -6986,30 +6967,7 @@ async function loadMuscleImages() {
   }
 }
 
-let notesBackScreen = 'screen-home';
-
-function showCMTR() {
-  showScreen('screen-cmtr');
-  const list = document.getElementById('cmtr-sections-list');
-  const cmtrNotes = allStudyNotes.filter(n => n.id.startsWith('cmtr'));
-  if (cmtrNotes.length === 0) {
-    list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);padding:32px;font-size:14px">Coming soon</div>';
-    return;
-  }
-  list.innerHTML = cmtrNotes.map(n => `
-    <div class="notes-card" onclick="showNoteDetail('${n.id}','screen-cmtr')">
-      <div class="notes-card-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
-      <div class="notes-card-body">
-        <div class="notes-card-title">${n.title}</div>
-        <div class="notes-card-sub">${n.subtitle}</div>
-      </div>
-      <div class="quiz-card-arrow">›</div>
-    </div>
-  `).join('');
-}
-
-function showNoteDetail(noteId, backScreen) {
-  notesBackScreen = backScreen || 'screen-home';
+function showNoteDetail(noteId) {
   currentNoteId = noteId;
   isNotesTranslated = false;
   sectionRuStates = {};
@@ -7017,9 +6975,7 @@ function showNoteDetail(noteId, backScreen) {
   if (!n) return;
   const tBtn = document.getElementById('notes-translate-btn');
   if (tBtn) { tBtn.textContent = '🇷🇺 RU'; tBtn.disabled = false; }
-  let backLabel, backFn;
-  if (notesBackScreen === 'screen-cmtr') { backLabel = '← CMT Program'; backFn = 'showCMTR()'; }
-  else { backLabel = '← Home'; backFn = 'goHome()'; }
+  let backLabel = '← Home', backFn = 'goHome()';
   const topbar = document.querySelector('#screen-notes-detail .notes-topbar');
   if (topbar) topbar.querySelector('.back-home-btn').setAttribute('onclick', backFn);
   const bottomBtn = document.querySelector('#screen-notes-detail > .btn');
