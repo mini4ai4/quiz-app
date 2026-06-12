@@ -666,7 +666,7 @@
 
   /* ===== CLINICAL REASONING ===== */
   #screen-clinical, #screen-clinical-region, #screen-clinical-test { display: none; padding-top: 12px; }
-  #screen-cmt, #screen-cmt-level, #screen-cmtr { display: none; padding-top: 12px; }
+  #screen-cmtr { display: none; padding-top: 12px; }
 
   .clinical-hero {
     margin: 0 -16px 24px;
@@ -1180,16 +1180,6 @@
         </div>
         <div class="quiz-card-arrow">›</div>
       </div>
-      <div class="quiz-card" onclick="showCMT()" style="background:rgba(34,197,94,0.08); border-color:rgba(34,197,94,0.3);">
-        <div class="quiz-card-icon" style="background:linear-gradient(135deg,#22c55e,#15803d)">
-          <span style="font-size:18px">💆</span>
-        </div>
-        <div class="quiz-card-body">
-          <div class="quiz-card-title" style="color:#4ade80">Clinical Massage Therapy</div>
-          <div class="quiz-card-meta">CMT 1 · CMT 2 · CMT 3</div>
-        </div>
-        <div class="quiz-card-arrow">›</div>
-      </div>
       <div class="quiz-card" onclick="showCMTR()" style="background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.3);">
         <div class="quiz-card-icon" style="background:linear-gradient(135deg,#10b981,#047857)">
           <span style="font-size:18px">📋</span>
@@ -1204,18 +1194,6 @@
     <div id="subject-groups"></div>
   </div>
 
-  <!-- ===== CLINICAL MASSAGE THERAPY (CMT 1/2/3) ===== -->
-  <div id="screen-cmt">
-    <button class="clinical-back" onclick="goHome()">← Back to Home</button>
-    <div class="clinical-hero">
-      <div class="clinical-hero-emoji">💆</div>
-      <div class="clinical-hero-title">Clinical Massage Therapy</div>
-      <div class="clinical-hero-sub">Select a course level</div>
-    </div>
-    <div class="clinical-section-label">Courses</div>
-    <div id="cmt-levels-list"></div>
-  </div>
-
   <!-- ===== CLINICAL MASSAGE THERAPY PROGRAM (CMTR) ===== -->
   <div id="screen-cmtr">
     <button class="clinical-back" onclick="goHome()">← Back to Home</button>
@@ -1226,18 +1204,6 @@
     </div>
     <div class="clinical-section-label">Sections</div>
     <div id="cmtr-sections-list"><div style="text-align:center;color:rgba(255,255,255,0.4);padding:32px;font-size:14px">Coming soon</div></div>
-  </div>
-
-  <!-- ===== CMT LEVEL (e.g. CMT 1) ===== -->
-  <div id="screen-cmt-level">
-    <button class="clinical-back" onclick="showCMT()">← CMT Program</button>
-    <div class="clinical-hero">
-      <div class="clinical-hero-emoji">💆</div>
-      <div class="clinical-hero-title" id="cmt-level-title"></div>
-      <div class="clinical-hero-sub">Select a topic to study</div>
-    </div>
-    <div class="clinical-section-label">Topics</div>
-    <div id="cmt-level-notes-list"></div>
   </div>
 
   <!-- ===== CLINICAL REASONING — REGION SELECTOR ===== -->
@@ -6206,7 +6172,7 @@ function showReview() {
 }
 
 function showScreen(id) {
-  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail','screen-cmt','screen-cmt-level','screen-cmtr'].forEach(s => {
+  ['screen-home','screen-quiz','screen-result','screen-review','screen-clinical','screen-clinical-region','screen-clinical-test','screen-notes-detail','screen-cmtr'].forEach(s => {
     document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
   window.scrollTo(0,0);
@@ -7021,13 +6987,6 @@ async function loadMuscleImages() {
 }
 
 let notesBackScreen = 'screen-home';
-let currentCMTLevel = 'cmt1';
-
-const cmtLevels = [
-  { id: 'cmt1', label: 'Clinical Massage Therapy 1', icon: '💆', g1: '#22c55e', g2: '#15803d', sub: 'Professionalism · Ethics · Techniques · Body Mechanics · Draping' },
-  { id: 'cmt2', label: 'Clinical Massage Therapy 2', icon: '💆', g1: '#16a34a', g2: '#166534', sub: 'Coming soon' },
-  { id: 'cmt3', label: 'Clinical Massage Therapy 3', icon: '💆', g1: '#15803d', g2: '#14532d', sub: 'Coming soon' },
-];
 
 function showCMTR() {
   showScreen('screen-cmtr');
@@ -7049,44 +7008,6 @@ function showCMTR() {
   `).join('');
 }
 
-function showCMT() {
-  showScreen('screen-cmt');
-  const list = document.getElementById('cmt-levels-list');
-  list.innerHTML = cmtLevels.map(l => `
-    <div class="notes-card" onclick="showCMTLevel('${l.id}')">
-      <div class="notes-card-icon" style="background:linear-gradient(135deg,${l.g1},${l.g2})">${l.icon}</div>
-      <div class="notes-card-body">
-        <div class="notes-card-title">${l.label}</div>
-        <div class="notes-card-sub">${l.sub}</div>
-      </div>
-      <div class="quiz-card-arrow">›</div>
-    </div>
-  `).join('');
-}
-
-function showCMTLevel(levelId) {
-  currentCMTLevel = levelId;
-  const level = cmtLevels.find(l => l.id === levelId);
-  document.getElementById('cmt-level-title').textContent = level ? level.label : levelId.toUpperCase();
-  const notes = allStudyNotes.filter(n => n.id.startsWith(levelId + '-'));
-  const list = document.getElementById('cmt-level-notes-list');
-  if (notes.length === 0) {
-    list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);padding:32px;font-size:14px">Coming soon</div>';
-  } else {
-    list.innerHTML = notes.map(n => `
-      <div class="notes-card" onclick="showNoteDetail('${n.id}','screen-cmt-level')">
-        <div class="notes-card-icon" style="background:linear-gradient(135deg,${n.g1},${n.g2})">${n.icon}</div>
-        <div class="notes-card-body">
-          <div class="notes-card-title">${n.title}</div>
-          <div class="notes-card-sub">${n.subtitle}</div>
-        </div>
-        <div class="quiz-card-arrow">›</div>
-      </div>
-    `).join('');
-  }
-  showScreen('screen-cmt-level');
-}
-
 function showNoteDetail(noteId, backScreen) {
   notesBackScreen = backScreen || 'screen-home';
   currentNoteId = noteId;
@@ -7097,9 +7018,7 @@ function showNoteDetail(noteId, backScreen) {
   const tBtn = document.getElementById('notes-translate-btn');
   if (tBtn) { tBtn.textContent = '🇷🇺 RU'; tBtn.disabled = false; }
   let backLabel, backFn;
-  if (notesBackScreen === 'screen-cmt-level') { backLabel = '← ' + (cmtLevels.find(l=>l.id===currentCMTLevel)||{label:'CMT'}).label; backFn = `showCMTLevel('${currentCMTLevel}')`; }
-  else if (notesBackScreen === 'screen-cmtr') { backLabel = '← CMT Program'; backFn = 'showCMTR()'; }
-  else if (notesBackScreen === 'screen-cmt') { backLabel = '← CMT'; backFn = 'showCMT()'; }
+  if (notesBackScreen === 'screen-cmtr') { backLabel = '← CMT Program'; backFn = 'showCMTR()'; }
   else { backLabel = '← Home'; backFn = 'goHome()'; }
   const topbar = document.querySelector('#screen-notes-detail .notes-topbar');
   if (topbar) topbar.querySelector('.back-home-btn').setAttribute('onclick', backFn);
