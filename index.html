@@ -4250,7 +4250,7 @@ const allStudyNotes = [
           [0,'Step 2 — [[Activate]]: change latent to active; use cross-fiber + longitudinal frictions in [[plus sign pattern]]; activate for several seconds','Шаг 2 — [[Активировать]]: перевести в активную; фрикции в [[паттерне плюс]]'],
           [0,'Step 3 — [[Pin]]: ischemic compression against underlying structures or pincer grip; discomfort [[4-5/10]] ("Good Hurt"); pain 6+ = nervous system guards → no relaxation','Шаг 3 — [[Прижать]]: к подлежащим структурам или щипковый захват; дискомфорт [[4-5/10]] ("хорошая боль"); 6+ = защита НС'],
           [0,'Step 4 — [[Hold 10-12 seconds]]: allows referral pain to develop; client differentiates pressure from discomfort','Шаг 4 — [[Держать 10-12 сек]]: иррадиация развивается'],
-          [0,'Step 5 — Ask client if they feel [[referral pain]]: YES = trigger point; NO = tender point','Шаг 5 — Спросить об [[иррадиации]]: ДА = ТрТ; НЕТ = тендерная точка'],
+          [0,'Step 5 — Ask client if they feel [[referral pain]]: YES = trigger point; NO = tender point','Шаг 5 — Спросить об [[иррадиации]]: ДА = ТрТ; НЕТ = болезненная (tender) точка'],
           [0,'Step 6 — [[Periodically ask]] about discomfort: better, worse, or same?','Шаг 6 — [[Периодически спрашивать]]: лучше, хуже или то же?'],
           [0,'Step 7 — Act on response: SAME/WORSE = technique NOT working → release; LESS pain = [[DO NOT LET GO]]; hold until NO pain at TP AND no referral pain (max [[60-90 sec]])','Шаг 7 — То же/хуже = не работает → отпустить; МЕНЬШЕ = [[НЕ ОТПУСКАТЬ]]; держать до нуля боли/иррадиации (макс [[60-90 сек]])'],
           [0,'Step 8 — Once release occurs: slowly release → smooth out → [[stretch treated muscle]] → address [[referral zone]] ~10 sec to prevent satellite TPs','Шаг 8 — После релиза: медленно отпустить → разгладить → [[растянуть мышцу]] → [[зона иррадиации]] ~10 сек'],
@@ -6307,6 +6307,43 @@ function buildFinalExam() {
   return pool;
 }
 
+// Medical RU glossary fix — corrects systematic MT errors (abduct→kidnap, scalene→scale, etc.)
+function fixMedicalRu(s) {
+  if (!s) return s;
+  const reps = [
+    // abduction family (MT renders "abduct" as "kidnap")
+    [/похищени([ея])/g, 'отведени$1'],
+    [/похищать/g, 'отводить'], [/похищают/g, 'отводят'], [/похищает/g, 'отводит'],
+    [/похитить/g, 'отвести'], [/похитьте/g, 'отведите'], [/похищена/g, 'отведена'],
+    [/похищенную/g, 'отведённую'], [/похищенный/g, 'отведённый'], [/похищено/g, 'отведено'],
+    [/похи[тщ][а-яё]*/g, 'отведение'],
+    // extend the arm (MT: "вытянуть" → should be "разогнуть")
+    [/вытягивать\s+руку/g, 'разгибать руку'], [/вытянуть\s+руку/g, 'разогнуть руку'],
+    [/вытягивает\s+руку/g, 'разгибает руку'], [/вытяните\s+руку/g, 'разогните руку'],
+    // scalene (MT: "scale/чешуя")
+    [/чешуйчат[а-яё]+\s+мышц[а-яё]+/g, 'лестничная мышца'],
+    [/передн[а-яё]+\s+чешу[а-яё]+/g, 'передняя лестничная мышца'],
+    [/чешу[ияю][а-яё]*/g, 'лестничная мышца'],
+    // misc terminology
+    [/нейроваскулярн[а-яё]+\s+пучок/g, 'сосудисто-нервный пучок'],
+    [/тендерн[а-яё]+\s+точк[а-яё]*/g, 'болезненная точка'],
+  ];
+  let out = s;
+  for (const [re, rep] of reps) out = out.replace(re, rep);
+  return out;
+}
+
+// Google Translate (en→ru) + medical glossary fix; falls back to original on error
+async function gtransFix(text) {
+  if (!text) return text;
+  try {
+    const r = await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ru&dt=t&q=' + encodeURIComponent(text));
+    const d = await r.json();
+    const out = (d[0] || []).map(seg => seg[0]).join('');
+    return fixMedicalRu(out || text);
+  } catch(e) { return text; }
+}
+
 async function toggleTranslate() {
   const tBtn = document.getElementById('translate-btn');
 
@@ -6326,14 +6363,7 @@ async function toggleTranslate() {
 
   const texts = [originalQuestionText, ...originalOptionTexts];
   try {
-    const translations = await Promise.all(
-      texts.map(text =>
-        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=en|ru')
-          .then(r => r.json())
-          .then(d => d.responseData.translatedText || text)
-          .catch(() => text)
-      )
-    );
+    const translations = await Promise.all(texts.map(gtransFix));
     document.getElementById('question-text').textContent = translations[0];
     document.querySelectorAll('.answer-text').forEach((el, i) => {
       if (translations[i + 1] !== undefined) el.textContent = translations[i + 1];
@@ -6364,14 +6394,7 @@ async function toggleRegionTranslate() {
 
   const allTexts = originalRegionTexts.flatMap(s => [s.complaint, s.condition]);
   try {
-    const translations = await Promise.all(
-      allTexts.map(text =>
-        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) + '&langpair=en|ru')
-          .then(r => r.json())
-          .then(d => d.responseData.translatedText || text)
-          .catch(() => text)
-      )
-    );
+    const translations = await Promise.all(allTexts.map(gtransFix));
     complaints.forEach((el, i) => { el.textContent = translations[i * 2]; });
     conditions.forEach((el, i) => { el.textContent = translations[i * 2 + 1]; });
     tBtn.textContent = '🇺🇸 EN';
@@ -6414,14 +6437,7 @@ async function toggleClinicalTranslate() {
   ].filter(f => f.text);
 
   try {
-    const translations = await Promise.all(
-      fields.map(f =>
-        fetch('https://api.mymemory.translated.net/get?q=' + encodeURIComponent(f.text) + '&langpair=en|ru')
-          .then(r => r.json())
-          .then(d => d.responseData.translatedText || f.text)
-          .catch(() => f.text)
-      )
-    );
+    const translations = await Promise.all(fields.map(f => gtransFix(f.text)));
     fields.forEach((f, i) => {
       document.getElementById(f.id).textContent = (f.prefix || '') + translations[i];
     });
