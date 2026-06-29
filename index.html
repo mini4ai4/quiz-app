@@ -5603,6 +5603,7 @@ let allQuizzes = [
     description: "The Soma Institute — Pathology 1 Test 2 Practice Test (50 questions)",
     code: "PATH1T2",
     excludeFromFinal: true,
+    practiceTest: true,
     questions: [
       { question: "Compartment syndrome most commonly occurs in the:", options: ["Forearm", "Lower leg", "Shoulder", "Neck"], correct: 1 },
       { question: "Which statement is true about chronic compartment syndrome?", options: ["It is a medical emergency.", "It is less serious than acute compartment syndrome.", "It always requires surgery.", "It only affects the upper body."], correct: 1 },
@@ -6734,9 +6735,6 @@ async function toggleClinicalTranslate() {
 }
 
 const subjectGroups = [
-  { label: 'Pathology Test', icon: '🩹', g1: '#ef4444', g2: '#991b1b',
-    noteIds: [],
-    match: q => /Pathology/.test(q.title) },
   { label: 'Physiology 1', icon: '🔬', g1: '#f97316', g2: '#c2410c',
     noteIds: ['phys1-lp12','phys1-lp34','phys1-lp56'],
     match: q => /Phys1/.test(q.title) || /Physiology 1 —/.test(q.title) },
@@ -6784,7 +6782,7 @@ const subjectGroups = [
     match: q => /CI3/.test(q.title) },
   { label: 'Pathology', icon: '🦠', g1: '#ef4444', g2: '#b91c1c',
     noteIds: ['path1-lp12','path1-lp34','path1-lp56','path1-lp78','path1-lp910'],
-    match: q => /Path/.test(q.title) },
+    match: q => /Path/.test(q.title) && !q.practiceTest },
   { label: 'Trigger Points', icon: '🎯', g1: '#e11d48', g2: '#9f1239',
     noteIds: ['trigger-points'],
     match: q => /Trigger Point/i.test(q.title) },
@@ -6810,6 +6808,23 @@ function renderHome() {
   if (!container) return;
   const bankTotal = allQuizzes.filter(x => !x.isFinal && !x.excludeFromFinal).reduce((s, x) => s + x.questions.length, 0);
   let html = '';
+
+  // Practice Test section (under Clinical Reasoning)
+  const practiceQuizzes = allQuizzes.map((q, i) => ({ q, i })).filter(({ q }) => q.practiceTest);
+  if (practiceQuizzes.length) {
+    html += `<div style="margin-bottom:18px"><div class="section-label" style="margin-top:10px">\u{1F4DD} Practice Test</div>`;
+    practiceQuizzes.forEach(({ q, i }) => {
+      html += `<div class="quiz-card" onclick="startQuiz(${i})" style="margin-top:10px">
+        <div class="quiz-card-icon" style="background:linear-gradient(135deg,#ef4444,#991b1b)"><span>\u{1F4DD}</span></div>
+        <div class="quiz-card-body">
+          <div class="quiz-card-title">${q.title}</div>
+          <div class="quiz-card-meta">${q.questions.length} questions</div>
+        </div>
+        <div class="quiz-card-arrow">\u203A</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
 
   // Final Exam card (always on top, standalone)
   const finalIdx = allQuizzes.findIndex(q => q.isFinal);
