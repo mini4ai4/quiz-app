@@ -1113,6 +1113,17 @@
     padding: 2px 7px; border-radius: 6px; flex-shrink: 0;
   }
   .inner-card-arrow { color: rgba(255,255,255,0.3); font-size: 16px; flex-shrink: 0; }
+  /* Last-addition ticker (бегущая строка) */
+  .ticker-wrap { overflow: hidden; white-space: nowrap; box-sizing: border-box;
+    background: linear-gradient(135deg, rgba(56,239,125,0.14), rgba(56,239,125,0.03));
+    border: 1px solid rgba(56,239,125,0.22); border-radius: 10px;
+    padding: 9px 0; margin: 2px 0 16px; }
+  .ticker { display: inline-block; white-space: nowrap; padding-left: 100%;
+    animation: ticker-scroll 16s linear infinite; }
+  .ticker:hover { animation-play-state: paused; }
+  .ticker span { font-size: 13px; font-weight: 700; color: #4fffaa; letter-spacing: .2px; }
+  @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .ticker { animation: none; padding-left: 0; text-align: center; display: block; } }
 </style>
 </head>
 <body>
@@ -5597,67 +5608,11 @@ const allStudyNotes = [
 // ============================================================
 // QUESTIONS DATABASE (embedded for instant loading)
 // ============================================================
-let allQuizzes = [
-  {
-    title: "Pathology 1 — Test 2 · TUES 6/30",
-    description: "The Soma Institute — Pathology 1 Test 2 Practice Test (50 questions)",
-    code: "PATH1T2",
-    excludeFromFinal: true,
-    practiceTest: true,
-    questions: [
-      { question: "Compartment syndrome most commonly occurs in the:", options: ["Forearm", "Lower leg", "Shoulder", "Neck"], correct: 1 },
-      { question: "Which statement is true about chronic compartment syndrome?", options: ["It is a medical emergency.", "It is less serious than acute compartment syndrome.", "It always requires surgery.", "It only affects the upper body."], correct: 1 },
-      { question: "Dupuytren's contracture primarily affects which digits?", options: ["1st and 2nd", "2nd and 3rd", "3rd and 4th", "4th and 5th"], correct: 3 },
-      { question: "Dupuytren's contracture is also known as:", options: ["Plantar fasciitis", "Palmar fibromatosis", "Carpal tunnel syndrome", "Trigger finger"], correct: 1 },
-      { question: "Ganglion cysts most commonly develop on:", options: ["Bones", "Muscles", "Joint capsules and tendon sheaths", "Blood vessels"], correct: 2 },
-      { question: "Pes planus refers to:", options: ["High arches", "Flat feet", "Hammer toes", "Club feet"], correct: 1 },
-      { question: "Pes cavus describes:", options: ["Flat feet", "Fallen arches", "High arches", "Bunions"], correct: 2 },
-      { question: "The peroneus muscles are located on the ________ aspect of the leg.", options: ["Medial", "Posterior", "Lateral", "Anterior"], correct: 2 },
-      { question: "Which hernia is the most common?", options: ["Femoral", "Paraumbilical", "Hiatal", "Inguinal"], correct: 3 },
-      { question: "A hiatal hernia involves the:", options: ["Liver", "Stomach protruding through the diaphragm", "Small intestine entering the femoral ring", "Colon protruding through the abdominal wall"], correct: 1 },
-      { question: "An epigastric hernia produces a lump:", options: ["At the groin", "At the navel", "Above the navel", "In the thigh"], correct: 2 },
-      { question: "A paraumbilical hernia produces a bulge:", options: ["Below the sternum", "At the navel", "In the groin", "Near the diaphragm"], correct: 1 },
-      { question: "A femoral hernia occurs when the intestines protrude through the:", options: ["Inguinal ring", "Diaphragm", "Femoral ring", "Umbilicus"], correct: 2 },
-      { question: "Disc herniations typically occur toward the:", options: ["Strongest ligament", "Path of least resistance", "Thickest portion of the disc", "Front of the spine"], correct: 1 },
-      { question: "The brachial plexus originates from which spinal nerve roots?", options: ["C1-C4", "C3-C6", "C5-T1", "T2-T6"], correct: 2 },
-      { question: "During thoracic outlet syndrome, the brachial plexus passes between the:", options: ["Trapezius muscles", "Anterior and middle scalenes", "Deltoid and pectoralis major", "Rhomboids"], correct: 1 },
-      { question: "Shoulder bursitis is specifically called:", options: ["Olecranon bursitis", "Trochanteric bursitis", "Subacromial bursitis", "Prepatellar bursitis"], correct: 2 },
-      { question: "Which muscles are most commonly involved in shin splints?", options: ["Gastrocnemius and soleus", "Tibialis anterior and tibialis posterior", "Hamstrings", "Quadriceps"], correct: 1 },
-      { question: "The only hydrotherapy treatment indicated for shin splints is:", options: ["Cryotherapy", "Whirlpool", "Contrast hydrotherapy", "Steam therapy"], correct: 2 },
-      { question: "Avascular necrosis most commonly affects the:", options: ["Humeral head", "Femoral head", "Radius", "Tibia"], correct: 1 },
-      { question: "Avascular necrosis frequently accompanies:", options: ["Diabetes", "Autoimmune disorders", "Hypertension", "Asthma"], correct: 1 },
-      { question: "Which fracture is produced by a twisting force?", options: ["Transverse", "Spiral", "Compression", "Impacted"], correct: 1 },
-      { question: "Which fracture consists of shattered bone fragments?", options: ["Greenstick", "Oblique", "Comminuted", "Stress"], correct: 2 },
-      { question: "A greenstick fracture is classified as a(n):", options: ["Complete fracture", "Open fracture", "Incomplete fracture", "Compression fracture"], correct: 2 },
-      { question: "Which fracture commonly occurs in the vertebrae?", options: ["Spiral", "Compression", "Oblique", "Impacted"], correct: 1 },
-      { question: "Muscular dystrophy primarily affects:", options: ["Females", "Children only", "Mainly males", "Elderly women"], correct: 2 },
-      { question: "A muscle spasm is best described as:", options: ["A brief muscle twitch", "A sustained involuntary contraction", "Muscle paralysis", "Tendon inflammation"], correct: 1 },
-      { question: "A \"charley horse\" is another name for a:", options: ["Sprain", "Cramp", "Strain", "Tendinitis"], correct: 1 },
-      { question: "A third-degree muscle strain involves:", options: ["Mild stretching", "Moderate tearing", "Complete rupture", "No tissue damage"], correct: 2 },
-      { question: "During the acute stage of a strain, massage therapy should emphasize:", options: ["Deep tissue massage", "Cross-fiber friction", "Lymphatic drainage", "Trigger point therapy"], correct: 2 },
-      { question: "Osgood-Schlatter disease involves inflammation of the:", options: ["Patella", "Tibial tuberosity", "Femoral head", "Achilles tendon"], correct: 1 },
-      { question: "Which helps reduce the risk of osteoporosis?", options: ["Bed rest", "Calcium, Vitamin D, estrogen replacement, and weight-bearing exercise", "Stretching only", "Massage alone"], correct: 1 },
-      { question: "Which postural deviation is commonly called \"humpback\"?", options: ["Lordosis", "Scoliosis", "Kyphosis", "Flat back"], correct: 2 },
-      { question: "A Baker's cyst is located in the:", options: ["Shoulder", "Popliteal fossa", "Wrist", "Hip"], correct: 1 },
-      { question: "Gout is caused by deposits of:", options: ["Calcium crystals", "Cholesterol", "Uric acid crystals", "Blood clots"], correct: 2 },
-      { question: "Which statement about sprains is TRUE?", options: ["They involve muscles.", "They heal faster than strains.", "They involve ligaments and heal slower than strains.", "They only occur in the ankle."], correct: 2 },
-      { question: "Osteoarthritis is best described as:", options: ["An autoimmune arthritis", "A bacterial infection", "A degenerative wear-and-tear joint disease", "A viral disease"], correct: 2 },
-      { question: "Spondylosis refers to:", options: ["Curvature of the spine", "Osteoarthritis of the spine", "Infection of the spine", "Disc herniation"], correct: 1 },
-      { question: "Which condition is commonly caused by a deer tick bite?", options: ["Rheumatoid arthritis", "Lyme disease", "Osteoporosis", "Gout"], correct: 1 },
-      { question: "Which abbreviation correctly matches its meaning?", options: ["HTN = Heart Tumor Necrosis; MI = Muscle Injury", "HTN = Hypertension; MI = Myocardial Infarction", "HTN = Hyperthyroidism; MI = Mitral Insufficiency", "HTN = Hypotension; MI = Muscle Inflammation"], correct: 1 },
-      { question: "Which bones are most commonly affected by Paget's disease?", options: ["Radius, ulna, clavicle", "Spine, skull, pelvis, femur, lower leg", "Hands and feet only", "Sternum and ribs"], correct: 1 },
-      { question: "Anemia is defined as a shortage of:", options: ["White blood cells", "Platelets", "Red blood cells and/or hemoglobin", "Plasma proteins"], correct: 2 },
-      { question: "Hemophilia is caused by:", options: ["Excess clotting factors", "Missing or inactive clotting factors", "Low calcium levels", "Low blood pressure"], correct: 1 },
-      { question: "An aneurysm is best described as:", options: ["A torn muscle", "A blood clot", "A permanent bulge in the wall of a blood vessel or the heart", "Narrowing of an artery"], correct: 2 },
-      { question: "Hypertension is generally defined as blood pressure consistently above:", options: ["120/80", "130/85", "140/90", "160/100"], correct: 2 },
-      { question: "What is considered the optimal blood pressure?", options: ["140/90", "130/80", "120/80", "110/70"], correct: 2 },
-      { question: "Which condition commonly causes clicking, jaw pain, headaches, and difficulty opening the mouth?", options: ["Carpal tunnel syndrome", "Temporomandibular disorder (TMD)", "Thoracic outlet syndrome", "Cervical strain"], correct: 1 },
-      { question: "What does the acronym PRICES stand for when treating acute injuries?", options: ["Protection, Rest, Ice, Compression, Elevation, Education", "Protection, Rotation, Ice, Compression, Exercise, Stretching", "Pressure, Rest, Immobilization, Cold, Exercise, Stabilization", "Prevention, Recovery, Ice, Circulation, Elevation, Strengthening"], correct: 0 },
-      { question: "Patellofemoral Pain Syndrome is most commonly caused by:", options: ["Infection", "Overuse and patellar misalignment", "Fracture", "Autoimmune disease"], correct: 1 },
-      { question: "Which disorder causes a lateral \"C\" or \"S\" shaped curvature of the spine?", options: ["Kyphosis", "Lordosis", "Scoliosis", "Spondylosis"], correct: 2 },
-    ]
-  },
+// 🆕 ОБНОВЛЯТЬ ПРИ КАЖДОМ НОВОМ ДОБАВЛЕНИИ контента (тест/конспект):
+// меняй name и date — это показывается в бегущей строке на главной.
+const LAST_ADDITION = { name: 'Physiology 2 — Test #1', date: '25.06.2026' };
 
+let allQuizzes = [
   {
     title: "🎓 Soma Final Exam — 100 Questions",
     description: "The Soma Institute — 100 random questions from all topics",
@@ -6808,6 +6763,12 @@ function renderHome() {
   if (!container) return;
   const bankTotal = allQuizzes.filter(x => !x.isFinal && !x.excludeFromFinal).reduce((s, x) => s + x.questions.length, 0);
   let html = '';
+
+  // Бегущая строка: последнее добавление
+  if (typeof LAST_ADDITION !== 'undefined' && LAST_ADDITION && LAST_ADDITION.name) {
+    const t = `\u{1F195} Последнее добавление: ${LAST_ADDITION.name}${LAST_ADDITION.date ? ' · ' + LAST_ADDITION.date : ''}`;
+    html += `<div class="ticker-wrap"><div class="ticker"><span>${t}&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;${t}</span></div></div>`;
+  }
 
   // Practice Test section (under Clinical Reasoning)
   const practiceQuizzes = allQuizzes.map((q, i) => ({ q, i })).filter(({ q }) => q.practiceTest);
