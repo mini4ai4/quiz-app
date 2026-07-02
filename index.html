@@ -6850,7 +6850,7 @@ function fixMedicalRu(s) {
     [/тендерн[а-яё]+\s+точк[а-яё]*/g, 'болезненная точка'],
     // Pes anatomical terms (Latin → correct Russian medical terms)
     [/Пес\s+гусин[а-яё]+/gi, 'Гусиная лапка'],  // Pes anserinus
-    [/Pes\s+anserinus/gi, 'Гусиная лапка'],
+    [/Pes\s+anse?rin[ue]s?/gi, 'Гусиная лапка'],  // Pes anserinus, anserine, anserinum
     [/Пес\s+кавус/gi, 'Полая стопа'],  // Pes cavus
     [/Pes\s+cavus/gi, 'Полая стопа'],
     [/Пес\s+планус/gi, 'Плоская стопа'],  // Pes planus
