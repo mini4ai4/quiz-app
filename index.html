@@ -6848,6 +6848,13 @@ function fixMedicalRu(s) {
     // misc terminology
     [/нейроваскулярн[а-яё]+\s+пучок/g, 'сосудисто-нервный пучок'],
     [/тендерн[а-яё]+\s+точк[а-яё]*/g, 'болезненная точка'],
+    // Pes anatomical terms (Latin → correct Russian medical terms)
+    [/Пес\s+гусин[а-яё]+/gi, 'Гусиная лапка'],  // Pes anserinus
+    [/Pes\s+anserinus/gi, 'Гусиная лапка'],
+    [/Пес\s+кавус/gi, 'Полая стопа'],  // Pes cavus
+    [/Pes\s+cavus/gi, 'Полая стопа'],
+    [/Пес\s+планус/gi, 'Плоская стопа'],  // Pes planus
+    [/Pes\s+planus/gi, 'Плоская стопа'],
   ];
   let out = s;
   for (const [re, rep] of reps) out = out.replace(re, rep);
