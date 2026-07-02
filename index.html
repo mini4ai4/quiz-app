@@ -6809,7 +6809,7 @@ function renderHome() {
 
   // Бегущая строка: последнее добавление
   if (typeof LAST_ADDITION !== 'undefined' && LAST_ADDITION && LAST_ADDITION.name) {
-    const t = `\u{1F195} Последнее добавление: ${LAST_ADDITION.name}${LAST_ADDITION.date ? ' · ' + LAST_ADDITION.date : ''}`;
+    const t = `\u{1F195} Latest addition: ${LAST_ADDITION.name}${LAST_ADDITION.date ? ' · ' + LAST_ADDITION.date : ''}`;
     html += `<div class="ticker-wrap"><div class="ticker"><span>${t}&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;${t}</span></div></div>`;
   }
 
