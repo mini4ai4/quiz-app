@@ -6848,8 +6848,11 @@ function fixMedicalRu(s) {
     // misc terminology
     [/нейроваскулярн[а-яё]+\s+пучок/g, 'сосудисто-нервный пучок'],
     [/тендерн[а-яё]+\s+точк[а-яё]*/g, 'болезненная точка'],
+    // Moles = родинки (not кроты - the animal)
+    [/Кроты/gi, 'Родинки'],  // Moles (nevi) - skin condition
+    [/кротов/gi, 'родинок'],
     // Pes anatomical terms (Latin → correct Russian medical terms)
-    [/Пес\s+гусин[а-яё]+/gi, 'Гусиная лапка'],  // Pes anserinus
+    [/Пес\s+гус[яи][а-яё]*/gi, 'Гусиная лапка'],  // Pes anserinus (covers гусиный, гусячий)
     [/Pes\s+anse?rin[ue]s?/gi, 'Гусиная лапка'],  // Pes anserinus, anserine, anserinum
     [/Пес\s+кавус/gi, 'Полая стопа'],  // Pes cavus
     [/Pes\s+cavus/gi, 'Полая стопа'],
