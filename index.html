@@ -6227,7 +6227,7 @@ const allStudyNotes = [
 // ============================================================
 // 🆕 ОБНОВЛЯТЬ ПРИ КАЖДОМ НОВОМ ДОБАВЛЕНИИ контента (тест/конспект):
 // меняй name и date — это показывается в бегущей строке на главной.
-const LAST_ADDITION = { name: 'Pathology 1 — Test #2 (35 Q)', date: '02.07.2026' };
+const LAST_ADDITION = { name: 'CI4 — Quiz #1 (25 Q) + Phys2 T2 (30 Q)', date: '21.07.2026' };
 
 let allQuizzes = [
   {
@@ -7198,6 +7198,75 @@ let allQuizzes = [
       { question: "When a person presents with a cervical rib, what is the number of cases that result in symptoms of TOS?", options: ["All of the cases", "A quarter of the cases", "Half of the cases", "None of the cases"], correct: 2 },
       { question: "What does the intra-scalene triangle consist of?", options: ["Anterior scalene, middle scalene and first rib", "Middle scalene, posterior scalene and first rib", "Anterior scalene, posterior scalene and second rib", "Anterior scalene, middle scalene and second rib"], correct: 0 },
       { question: "What structures are involved with costoclavicular syndrome?", options: ["Clavicle and second rib", "Clavicle and first rib", "Clavicle and cervical rib", "Clavicle and scapula"], correct: 1 }
+    ]
+  },
+  {
+    title: "Physiology 2 — Test #2 (Phys2 · T2)",
+    description: "The Soma Institute — Physiology 2: Cardiovascular System (cardiac cycle, conduction, blood flow), Immune System (B/T cells, antibodies), Digestive System (enzymes, absorption, metabolism)",
+    code: "Phys2 · T2",
+    questions: [
+      { question: "What is the first part of the cardiac conduction system to be stimulated?", options: ["AV bundle", "Purkinje fibers", "SA node", "AV node"], correct: 2 },
+      { question: "Which of the following is FALSE regarding the parasympathetic innervation of the heart?", options: ["The Vagus Nerve is responsible for parasympathetic innervation of the heart", "Increases in parasympathetic impulses to the heart causes an increase in heart rate", "The Vagus Nerve is also known as cranial nerve number ten", "Parasympathetic nerve fibers secrete acetylcholine, which decreases S-A and A-V nodal activity"], correct: 1 },
+      { question: "Which of the following factors causes an increase in blood pressure?", options: ["a decrease in blood volume", "a decrease in stroke volume", "a decrease in peripheral resistance", "an increase in heart rate"], correct: 3 },
+      { question: "Most of a human's blood volume is contained within the:", options: ["lungs", "capillaries", "heart", "veins"], correct: 3 },
+      { question: "During the cardiac cycle, the relaxation phase is known as _____.", options: ["diastole", "systole", "murmur", "fibrillation"], correct: 0 },
+      { question: "The pacemaker of the heart is the _____ node.", options: ["A-V node", "S-A node", "ventricular", "atrial"], correct: 1 },
+      { question: "The volume of blood ejected from the heart per minute is called _____.", options: ["stroke volume", "blood pressure", "viscosity", "cardiac output"], correct: 3 },
+      { question: "The _____ circuit consists of vessels that carry blood from the heart to the lungs and back to the heart.", options: ["systemic", "body", "cardiovascular", "pulmonary"], correct: 3 },
+      { question: "Blood flow through the venous system is only partly the direct result of heart action and depends on what other actions to push the blood back toward the heart?", options: ["An increase in diastolic blood pressure", "Contraction of skeletal muscle", "Respiratory movements", "Both B & C will move venous blood back toward the heart"], correct: 3 },
+      { question: "A mass of cardiac muscle cells that contract as a unit is:", options: ["referred to as the pacemaker", "functional syncytium", "located only in the ventricles", "located only in the atria"], correct: 1 },
+      { question: "The volume of blood discharged from the ventricle with each contraction is called the:", options: ["blood volume", "cardiac output", "stroke volume", "heart rate"], correct: 2 },
+      { question: "The correct order that cardiac impulses travel through the conduction system is:", options: ["A-V node to S-A node to Purkinje fibers to A-V bundle", "S-A node to A-V node to Purkinje fibers to A-V bundle", "Purkinje fibers to A-V bundle to A-V node to S-A node", "S-A node to A-V node to A-V bundle to Purkinje fibers"], correct: 3 },
+      { question: "In a secondary immune response, the _____ cells release antibodies.", options: ["astrocytes", "mast cells", "memory B cells", "plasma cells"], correct: 2 },
+      { question: "The four fat-soluble vitamins are:", options: ["A/B/C/D", "A/D/E/K", "A/C/D/G", "A/B6/B12/K"], correct: 1 },
+      { question: "The glycogen normally stored in the liver and muscle tissues is enough to meet the 'at rest' energy demands of body cells for about:", options: ["1 hour", "6 hours", "12 hours", "24 hours"], correct: 2 },
+      { question: "In a primary immune response, the _____ cells release antibodies.", options: ["mast cells", "astrocytes", "memory cells", "plasma cells"], correct: 3 },
+      { question: "Which of the following is TRUE of T lymphocytes?", options: ["They specialize from thymocytes to T lymphocytes in the thymus gland", "They are responsible for the cellular immune response (cell-mediated immunity)", "They develop into Helper T cells, Cytotoxic T cells or Memory T cells", "All of the above are true"], correct: 3 },
+      { question: "The three stages of gastric secretion are:", options: ["abdominal/ intestinal/ anal", "pharangeal/ thoracic/ rectal", "cephalic/ gastric/ intestinal", "esophageal/ gastric/ duodenal"], correct: 2 },
+      { question: "The _____ releases bile into the duodenum when stimulated by the hormone cholecystokinin (CCK).", options: ["liver", "gallbladder", "pancreas", "small intestine"], correct: 1 },
+      { question: "_____ impulses generally increase the digestive system's activities.", options: ["Parasympathetic", "Sympathetic", "Cardiac", "Peripheral"], correct: 0 },
+      { question: "Intrinsic factor is necessary for the normal absorption of _____ from the small intestine.", options: ["Vitamin B12", "Vitamin D", "Vitamin C", "Vitamin A"], correct: 0 },
+      { question: "Carbohydrate digestion begins in the _____, whereas protein digestion starts in the _____.", options: ["stomach/ mouth", "stomach/ large intestine", "large intestine/ stomach", "mouth/ stomach"], correct: 3 },
+      { question: "The function of mucus in salivary secretions is to:", options: ["split starch and glycogen molecules into disaccharides", "bind food particles and act as a lubricant for swallowing", "absorb essential amino acids from food", "remove unnecessary nutritional compounds from food"], correct: 1 },
+      { question: "What gets absorbed by the large intestine?", options: ["amino acids", "carbohydrates", "water and electrolytes", "fatty acids"], correct: 2 },
+      { question: "Saliva contains the enzyme _____ that begins the digestion of _____.", options: ["pepsin/ protein", "lipase/ fats", "amylase/ carbohydrates", "pepsin/ carbohydrates"], correct: 2 },
+      { question: "Vitamin _____ promotes absorption of calcium and phosphorus so that bone and tooth formation can occur. This vitamin can be synthesized by the body when the skin is exposed to ultraviolet light.", options: ["B12", "B6", "C", "D"], correct: 3 },
+      { question: "The 'building blocks' of proteins are _____.", options: ["fats", "amino acids", "carbohydrates", "minerals"], correct: 1 },
+      { question: "Which of the following is an important component of hemoglobin?", options: ["copper", "calcium", "iron", "vitamin D"], correct: 2 },
+      { question: "The process by which large fat droplets are broken into small droplets is called _____.", options: ["emulsification", "absorption", "metabolism", "formation"], correct: 0 },
+      { question: "A metabolic rate measured under resting conditions (in a comfortable environment) is known as _____.", options: ["caloric intake", "fasting metabolism", "basal metabolic rate", "All of the above"], correct: 2 }
+    ]
+  },
+  {
+    title: "CI4 — Quiz #1 (CI4 · T1)",
+    description: "The Soma Institute — Clinical Integration 4: Hip Assessment, Special Tests (Patrick's/FABER, Modified Thomas, Trendelenburg, PACE, Modified Ober), ROM, Resisted Tests",
+    code: "CI4 · T1",
+    questions: [
+      { question: "Client is supine and places test leg in figure-four position. Therapist pushes down on the flexed knee and opposite ASIS. Which of the following tests is being performed?", options: ["PACE Abduction Test", "Modified Thomas Test", "Gillet's Test", "Patrick's Test"], correct: 3 },
+      { question: "The Modified Thomas test evaluates for tightness in which of the following muscles?", options: ["Iliopsoas", "Rectus femoris", "Semitendinosus", "Both a and b"], correct: 3 },
+      { question: "Which of the following would be considered a positive sign for Patrick's (FABER) test?", options: ["Pain in either SI joint or pain in the bent leg's hip joint", "Pain in the unbent leg's hip joint", "Tightness in the straight leg's adductors", "Sharp, shooting pain down the back of the leg"], correct: 0 },
+      { question: "When a client complains of achy pain in the lateral hip, which resisted hip test would most likely create the strongest positive?", options: ["Flexion", "Extension", "Abduction", "Adduction"], correct: 2 },
+      { question: "Which of the following is considered normal Active Range of Motion for hip flexion with the knee flexed?", options: ["120 degrees", "70-90 degrees", "180 degrees", "90 degrees"], correct: 0 },
+      { question: "Normal Active Range of Motion for hip internal rotation is:", options: ["30 degrees", "45 degrees", "60 degrees", "75 degrees"], correct: 0 },
+      { question: "During assessment, you want the client to rotate both hips externally. What instructions would you give the client?", options: ["Please lie face down on the table and lift your thigh up toward the ceiling", "Please lie on your back and straighten your legs, then turn the entire leg so you point your toes toward each other", "Please lie on your back and straighten your legs, then turn the entire leg so that you point your toes away from each other", "Please lie on your back and bring your knee toward your chest"], correct: 2 },
+      { question: "When performing a resisted flexion test for the hip, which of the following muscles are you testing?", options: ["Hamstrings", "Iliopsoas", "Gluteus maximus", "Piriformis"], correct: 1 },
+      { question: "Normal Active Range of Motion for hip extension is:", options: ["40 degrees", "45 degrees", "30 degrees", "70 degrees"], correct: 2 },
+      { question: "What should the end-feel be for passive adduction of the hip?", options: ["Tissue stretch", "Tissue stretch (soft)", "Soft-tissue approximation", "Tissue stretch (firm)"], correct: 2 },
+      { question: "What is normal Active Range of Motion for hip adduction?", options: ["45 degrees", "30 degrees", "55 degrees", "0 degrees"], correct: 1 },
+      { question: "Normal Active Range of Motion for external hip rotation is:", options: ["30 degrees", "45 degrees", "60 degrees", "75 degrees"], correct: 1 },
+      { question: "When performing a resisted adduction test for the hip, which of the following muscles are you testing?", options: ["Gluteus Medius", "Gluteus Minimus", "Piriformis", "Gracilis"], correct: 3 },
+      { question: "To use Patrick's (Faber's) test for the hip, what chief complaint would most likely be reported by a client?", options: ["Shooting pain down the posterior leg", "Anterior hip joint pain", "Numbness and tingling on the entire medial thigh", "Sharp, localized pain in the medial thigh"], correct: 1 },
+      { question: "Which of the following is used to test for an SI joint issue or anterior hip problem?", options: ["Gillet's Test", "Modified Thomas' Test", "Patrick's Test", "None of the above"], correct: 2 },
+      { question: "When performing a resisted abduction test for the hip, which of the following muscles are you testing?", options: ["Adductor Longus", "Gluteus Medius", "Gracilis", "All of the above"], correct: 1 },
+      { question: "When performing a resisted extension test for the hip, which of the following muscles are you testing?", options: ["Iliopsoas", "Rectus Femoris", "Gluteus Maximus", "Sartorius"], correct: 2 },
+      { question: "Which of the following would be a positive finding with Trendelenburg's Test?", options: ["Increased pain in the medial thigh", "Client cannot hold hips level and or balanced when lifting the non-weight-bearing leg", "Numbness and tingling down the posterior thigh and leg", "If the thigh on the test side is not horizontal with the table"], correct: 1 },
+      { question: "When performing a resisted medial rotation test for the hip, which of the following muscles are you testing?", options: ["Rectus Femoris", "TFL", "Biceps Femoris", "All of the above"], correct: 1 },
+      { question: "When performing a resisted adduction test for the hip, which of the following is the proper way to position your client and instruct them on how contract their adductors of the hip?", options: ["Client should be in a supine position with thighs partially abducted. Have client spread legs apart to a combined 45 degrees. Place your fists onto the table just proximal to the client's medial ankles. Have client attempt to slowly bring their legs together.", "Client is prone with the knee flexed to 90 degrees. Place a hand on the medial aspect of the client's distal leg. The client holds this position as you attempt to push the leg in a lateral direction.", "Client is prone with thigh on table with knee flexed to 90 degrees. Place hand near the distal portion of the client's thigh as the client attempts to lift against your resistance.", "Client is seated, feet off floor, hips and knees flexed to 90 degrees. Have client hold onto edge of table. Brace client at hip with free hand, hold client's leg just proximal to knee and apply downward pressure."], correct: 0 },
+      { question: "Which of the following could be a positive for the Pace Abduction Test?", options: ["Weakness and/or pain", "Nerve pain along the sciatic nerve", "Sharp, local pain in the SI joint", "Both a and b"], correct: 3 },
+      { question: "While observing your client's gait as they walk back to the treatment room, you notice they have a 'models walk'. You ask your client where they are experiencing pain and they point to their lateral hip. Which muscle might be causing your client's abnormal gait and what special test do you want to perform?", options: ["Gluteus maximus; Patrick's test", "Gluteus Medius; Trendelenburg's test", "Piriformis; Piriformis Length test", "Rectus Femoris; Modified Thomas Test"], correct: 1 },
+      { question: "When a client flexes the hip to 90 degrees during a Trendelenburg's test, it is a positive when:", options: ["the non-weight bearing hip drops inferiorly", "the weight bearing hip drops inferiorly", "the hips stay level", "the PSIS moves first or farthest"], correct: 0 },
+      { question: "Your client complains of lateral hip pain that gets worse with running. You perform Modified Ober's test and get a positive. What structures are being tested and what would be a positive finding?", options: ["Rectus femoris; leg drops to the level of table", "Hamstrings; leg cannot drop to level of table", "Abductors and iliotibial band; leg cannot drop to level of table", "Adductors; leg drops to level of table"], correct: 2 },
+      { question: "What is the correct procedure for performing the Pace Abduction Test?", options: ["Client lies in the prone position with knees together, therapist flexes client's knees to 90 degrees, then allows client's feet to separate from midline (internal rotation).", "Client lies in the supine position with knees together, therapist flexes client's knees to 90 degrees, then allows client's feet to separate from midline (internal rotation).", "Client is seated on the edge of the treatment table with the hips partially adducted. The therapist places each hand on the medial sides of the client's knee and instructs the client to hold this position while the therapist attempts to pull the client's knees together.", "Client is seated on the edge of the treatment table with the hips partially abducted. The therapist places each hand on the lateral sides of the client's knee and instructs the client to hold this position while the therapist attempts to press the client's knees together."], correct: 3 }
     ]
   }
 ];
